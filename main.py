@@ -21,12 +21,14 @@ bus = smbus.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
 imu.begin()
 
+imu.loadCalibDataFromFile("./calib.json")
+
+imu.readSensor()
+imu.computeOrientation()
 kalman_filter.roll = imu.roll
 kalman_filter.pitch = imu.pitch
 kalman_filter.yaw = imu.yaw
 
-
-imu.loadCalibDataFromFile("./calib.json")
 
 currTime = time.time()
 kal_currTime = time.time()
