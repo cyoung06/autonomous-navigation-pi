@@ -16,7 +16,6 @@ if __name__ == "__main__":
     with open("log.csv", "a") as log:
         print('recording data')
         while 1:
-            random.randint(10)
             if platform.isDone():
                 if random.random() > 0.5:
                     platform.goForward(random.randint(1, 10) * 10)
