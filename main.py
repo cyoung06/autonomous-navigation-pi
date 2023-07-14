@@ -15,14 +15,16 @@ if __name__ == "__main__":
     platform = MovingPlatform(sys.argv[1])
     time.sleep(1)  # delay necessary to allow mpu9250 to settle
 
+    status = False
     with open("log.csv", "a") as log:
         print('recording data')
         while 1:
             if platform.isDone():
-                if random.random() > 0.5:
+                if status:
                     platform.goForward(random.randint(5, 10) * 10)
                 else:
                     platform.rotateCW(choices[random.randint(0, len(choices)-1)])
+                status = not status
             try:
                 ax, ay, az, wx, wy, wz = mpu6050_conv()  # read and convert mpu6050 data
                 mx, my, mz = AK8963_conv()  # read and convert AK8963 magnetometer data
