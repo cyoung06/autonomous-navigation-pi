@@ -27,7 +27,7 @@ if __name__ == "__main__":
     time.sleep(1)  # delay necessary to allow mpu9250 to settle
 
     status = False
-    with open("data/log.csv", "a") as log:
+    with open("log.csv", "a") as log:
         print('recording data')
         while 1:
             if platform.isDone():
