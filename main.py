@@ -54,9 +54,9 @@ if __name__ == "__main__":
             kal_dt = kal_newTime - kal_currTime
             kal_currTime = kal_newTime
 
-            kalman_filter.computeAndUpdateRollPitchYaw(imu.AccelVals[0], imu.AccelVals[1], imu.AccelVals[2],
-                                                       imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2],
-                                                       imu.MagVals[0], imu.MagVals[1], imu.MagVals[2], kal_dt)
+            # kalman_filter.computeAndUpdateRollPitchYaw(imu.AccelVals[0], imu.AccelVals[1], imu.AccelVals[2],
+            #                                            imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2],
+            #                                            imu.MagVals[0], imu.MagVals[1], imu.MagVals[2], kal_dt)
 
             print("Accel x: {0} ; Accel y : {1} ; Accel z : {2}".format(imu.AccelVals[0], imu.AccelVals[1],
                                                                         imu.AccelVals[2]))
@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 imu.MagVals[0],
                 imu.MagVals[1],
                 imu.MagVals[2],
-                kalman_filter.roll,
-                kalman_filter.pitch,
-                kalman_filter.yaw))
+                imu.roll,
+                imu.pitch,
+                imu.yaw))
             time.sleep(0.001)
