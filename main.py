@@ -11,6 +11,8 @@ import time
 import smbus
 
 from imusensor.MPU9250 import MPU9250
+from imusensor.filters import kalman
+kalman_filter = kalman.Kalman()
 
 choices = [15, 30, 60, 45, -45, -15, -30, -60]
 
@@ -19,26 +21,40 @@ bus = smbus.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
 imu.begin()
 
+kalman_filter.roll = imu.roll
+kalman_filter.pitch = imu.pitch
+kalman_filter.yaw = imu.yaw
+
 
 imu.loadCalibDataFromFile("./calib.json")
 
+currTime = time.time()
+kal_currTime = time.time()
 if __name__ == "__main__":
     platform = MovingPlatform(sys.argv[1])
     time.sleep(1)  # delay necessary to allow mpu9250 to settle
 
     status = False
-    with open("log.csv", "a") as log:
+    with open("log.csv", "w") as log:
+        log.write("ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw")
         print('recording data')
         while 1:
-            if platform.isDone():
-                if status:
-                    platform.goForward(random.randint(2, 5) * 100)
-                else:
-                    platform.rotateCW(choices[random.randint(0, len(choices)-1)])
-                status = not status
+            # if platform.isDone():
+            #     if status:
+            #         platform.goForward(random.randint(2, 5) * 100)
+            #     else:
+            #         platform.rotateCW(choices[random.randint(0, len(choices)-1)])
+            #     status = not status
 
             imu.readSensor()
             imu.computeOrientation()
+            kal_newTime = time.time()
+            kal_dt = kal_newTime - kal_currTime
+            kal_currTime = kal_newTime
+
+            kalman_filter.computeAndUpdateRollPitchYaw(imu.AccelVals[0], imu.AccelVals[1], imu.AccelVals[2],
+                                                       imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2],
+                                                       imu.MagVals[0], imu.MagVals[1], imu.MagVals[2], kal_dt)
 
             print("Accel x: {0} ; Accel y : {1} ; Accel z : {2}".format(imu.AccelVals[0], imu.AccelVals[1],
                                                                         imu.AccelVals[2]))
@@ -56,7 +72,7 @@ if __name__ == "__main__":
                 imu.MagVals[0],
                 imu.MagVals[1],
                 imu.MagVals[2],
-                imu.roll,
-                imu.pitch,
-                imu.yaw))
-            time.sleep(0.03)
+                kalman_filter.roll,
+                kalman_filter.pitch,
+                kalman_filter.yaw))
+            time.sleep(0.001)
