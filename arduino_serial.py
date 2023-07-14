@@ -9,7 +9,7 @@ class MovingPlatform:
     def __init__(self, port):
         self.port = serial.Serial(port)
         read = ""
-        while b'Cnc shield init!' != read:
+        while b'Cnc shield init!\r\n' != read:
             read = self.port.readline()
             print(read)
 
@@ -39,4 +39,4 @@ class MovingPlatform:
         self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
 
     def isDone(self):
-        return self.lastLine == b"MOVED"
+        return self.lastLine == b"MOVED\r\n"
