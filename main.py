@@ -16,7 +16,7 @@ if __name__ == "__main__":
     print('recording data')
     while 1:
         if platform.isDone():
-            platform.goForward(50)
+            platform.goForward(10)
         try:
             ax, ay, az, wx, wy, wz = mpu6050_conv()  # read and convert mpu6050 data
             mx, my, mz = AK8963_conv()  # read and convert AK8963 magnetometer data
@@ -28,3 +28,4 @@ if __name__ == "__main__":
         print('gyro [dps]:  x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(wx, wy, wz))
         print('mag [uT]:   x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(mx, my, mz))
         print('{}'.format('-' * 30))
+        time.sleep(0.03)
