@@ -30,7 +30,7 @@ class MovingPlatform:
         if not self.isDone():
             raise "Not done"
         self.lastLine = ""
-        self.port.write(f"{vec[0]} {vec[1]} {dist} 0 0 ")
+        self.port.write(f"{vec[0]} {vec[1]} {dist} 0 0 ".encode())
         print("Sending... " + f"{vec[0]} {vec[1]} {dist} 0 0 ")
         self.port.flush()
 
@@ -41,7 +41,7 @@ class MovingPlatform:
         if not self.isDone():
             raise "Not done"
         self.lastLine = ""
-        self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
+        self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}'.encode())
         print("Sending... " + f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
         self.port.flush()
 
