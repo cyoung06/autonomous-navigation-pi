@@ -8,8 +8,10 @@ from threading import Thread
 class MovingPlatform:
     def __init__(self, port):
         self.port = serial.Serial(port)
-        while b'Cnc shield init!' != self.port.readline():
-            pass
+        read = ""
+        while b'Cnc shield init!' != read:
+            read = self.port.readline()
+            print(read)
 
         self.thread = threading.Thread(target=self.readLines)
         self.thread.start()
