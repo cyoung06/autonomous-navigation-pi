@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     status = False
     with open("log.csv", "w") as log:
-        log.write("ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw")
+        log.write("ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw\n")
         print('recording data')
         while 1:
             # if platform.isDone():
