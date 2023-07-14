@@ -15,6 +15,7 @@ class MovingPlatform:
             print(read)
 
         self.thread = threading.Thread(target=self.readLines)
+        self.thread.daemon = True
         self.thread.start()
         self.ready = True
 
