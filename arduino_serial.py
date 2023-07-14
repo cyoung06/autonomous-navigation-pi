@@ -16,7 +16,7 @@ class MovingPlatform:
 
         self.thread = threading.Thread(target=self.readLines)
         self.thread.start()
-        self.lastLine = b"DONE\r\n"
+        self.lastLine = b"MOVED\r\n"
 
         time.sleep(2.0)
 
