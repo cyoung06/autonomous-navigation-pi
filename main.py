@@ -9,7 +9,7 @@ print(sys.path)
 
 from mpu9250_i2c import *
 
-choices = [15, 30, 60, 90, -15, -30, -60, -90, -180, 180]
+choices = [15, 30, 60, 45, -45, -15, -30, -60]
 
 if __name__ == "__main__":
     platform = MovingPlatform(sys.argv[1])
@@ -21,7 +21,7 @@ if __name__ == "__main__":
         while 1:
             if platform.isDone():
                 if status:
-                    platform.goForward(random.randint(5, 10) * 10)
+                    platform.goForward(random.randint(2, 5) * 100)
                 else:
                     platform.rotateCW(choices[random.randint(0, len(choices)-1)])
                 status = not status
