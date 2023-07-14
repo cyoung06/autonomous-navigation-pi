@@ -23,7 +23,7 @@ class MovingPlatform:
     def readLines(self):
         while True:
             lastLine = self.port.readline()
-            print(f"received... {self.lastLine}")
+            print(f"received... {lastLine}")
             if lastLine == b'Cnc shield init!\r\n':
                 self.ready = True
             if lastLine == b'MOVED\r\n':
