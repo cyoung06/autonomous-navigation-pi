@@ -28,3 +28,4 @@ if __name__ == "__main__":
         print('gyro [dps]:  x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(wx, wy, wz))
         print('mag [uT]:   x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(mx, my, mz))
         print('{}'.format('-' * 30))
+        time.sleep(1)

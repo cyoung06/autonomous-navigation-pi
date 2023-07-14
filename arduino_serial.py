@@ -1,5 +1,6 @@
 import math
 import threading
+import time
 
 import serial
 from threading import Thread
@@ -17,6 +18,8 @@ class MovingPlatform:
         self.thread.start()
         self.lastLine = b"DONE"
 
+        time.sleep(2.0)
+
     def readLines(self):
         while True:
             self.lastLine = self.port.readline()
@@ -28,6 +31,8 @@ class MovingPlatform:
             raise "Not done"
         self.lastLine = ""
         self.port.write(f"{vec[0]} {vec[1]} {dist} 0 0 ")
+        print("Sending... " + f"{vec[0]} {vec[1]} {dist} 0 0 ")
+        self.port.flush()
 
     def goForward(self, dist):
         self.goVector([0, 1], dist)
@@ -37,6 +42,8 @@ class MovingPlatform:
             raise "Not done"
         self.lastLine = ""
         self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
+        print("Sending... " + f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
+        self.port.flush()
 
     def isDone(self):
         return self.lastLine == b"MOVED\r\n"
