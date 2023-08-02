@@ -3,14 +3,14 @@
 # refer to datasheet and register map for full explanation
 
 class Sensors:
-    def __init__(self, bus, id):
+    def __init__(self, bus, id2):
         self.bus = bus
-        self.id = id
+        self.id2 = id2
 
     def readUltra(self):
-        front = self.bus.read_word_data(id, 0)
-        right = self.bus.read_word_data(id, 0)
-        left = self.bus.read_word_data(id, 0)
+        front = self.bus.read_word_data(self.id2, 0)
+        right = self.bus.read_word_data(self.id2, 0)
+        left = self.bus.read_word_data(self.id2, 0)
         return {
             "front": front,
             "left": left,

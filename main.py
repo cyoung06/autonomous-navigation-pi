@@ -20,7 +20,7 @@ choices = [15, 30, 60, 45, -45, -15, -30, -60]
 address = 0x68
 bus = smbus.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
-ultra = Sensors(bus,2)
+ultra = Sensors(bus, 2)
 
 imu.begin()
 
