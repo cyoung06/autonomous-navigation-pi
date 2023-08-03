@@ -9,13 +9,9 @@ class Sensors:
         msg = i2c_msg.read(self.id2, 6)
         self.bus.i2c_rdwr(msg)
         data = list(msg)
-        print(data)
         front = data[0] * 256 + data[1]
         right = data[2] * 256 + data[3]
         left = data[4] * 256 + data[5]
-        print(front)
-        print(left)
-        print(right)
         return {
             "front": front / 100.0,
             "left": left / 100.0,
