@@ -63,13 +63,13 @@ if __name__ == "__main__":
                         length = 10 if goal["len"] > 0 else -10
                         platform.goForward(length)
                         goal["curr"] += length
-                        if abs(goal["len"] - goal["curr"]) <= 1:
+                        if abs(goal["len"] - goal["curr"]) <= 10:
                             goal["end"] = True
                     else:
-                        deg = 1 if goal["deg"] > 0 else -1
+                        deg = 10 if goal["deg"] > 0 else -10
                         platform.rotateCW(deg)
                         goal["curr"] += deg
-                        if abs(goal["deg"] - goal["curr"]) <= 1:
+                        if abs(goal["deg"] - goal["curr"]) <= 10:
                             goal["end"] = True
 
             imu.readSensor()
@@ -83,11 +83,11 @@ if __name__ == "__main__":
             #                                            imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2],
             #                                            imu.MagVals[0], imu.MagVals[1], imu.MagVals[2], kal_dt)
 
-            print("Accel x: {0} ; Accel y : {1} ; Accel z : {2}".format(imu.AccelVals[0], imu.AccelVals[1],
-                                                                        imu.AccelVals[2]))
-            print("Gyro x: {0} ; Gyro y : {1} ; Gyro z : {2}".format(imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2]))
-            print("Mag x: {0} ; Mag y : {1} ; Mag z : {2}".format(imu.MagVals[0], imu.MagVals[1], imu.MagVals[2]))
-            print("roll: {0} ; pitch : {1} ; yaw : {2}".format(imu.roll, imu.pitch, imu.yaw))
+            # print("Accel x: {0} ; Accel y : {1} ; Accel z : {2}".format(imu.AccelVals[0], imu.AccelVals[1],
+            #                                                             imu.AccelVals[2]))
+            # print("Gyro x: {0} ; Gyro y : {1} ; Gyro z : {2}".format(imu.GyroVals[0], imu.GyroVals[1], imu.GyroVals[2]))
+            # print("Mag x: {0} ; Mag y : {1} ; Mag z : {2}".format(imu.MagVals[0], imu.MagVals[1], imu.MagVals[2]))
+            # print("roll: {0} ; pitch : {1} ; yaw : {2}".format(imu.roll, imu.pitch, imu.yaw))
 
             # log.write('{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}\n'.format(
             #     time.time(),
