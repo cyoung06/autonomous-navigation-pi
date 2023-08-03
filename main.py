@@ -46,7 +46,8 @@ if __name__ == "__main__":
                     if status:
                         goal = {"type": "forward", "len": random.randint(2, 5) * 100, "curr": 0, "end": False}
                     else:
-                        goal = {"type": "turn", "deg": choices[random.randint(0, len(choices)-1)], "curr": 0, "end": False}
+                        deg = choices[random.randint(0, len(choices)-1)]
+                        goal = {"type": "turn", "deg": deg, "curr": 0, "end": False}
                     status = not status
 
                 ultrasonic = ultra.readUltra()
@@ -59,9 +60,9 @@ if __name__ == "__main__":
                     print("WELP!!!")
                 else:
                     if goal["type"] == "forward":
-                        len = 5 if goal["len"] > 0 else 0
-                        platform.goForward(len)
-                        goal["curr"] += len
+                        length = 10 if goal["len"] > 0 else -10
+                        platform.goForward(length)
+                        goal["curr"] += length
                         if abs(goal["len"] - goal["curr"]) <= 1:
                             goal["end"] = True
                     else:
