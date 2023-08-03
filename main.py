@@ -53,7 +53,7 @@ if __name__ == "__main__":
                 print(ultrasonic)
                 welp = False
                 for k, v in ultrasonic.items():
-                    if v > 7 or v == 0:
+                    if v > 8 or v == 0:
                         welp = True
                 if welp:
                     print("WELP!!!")
