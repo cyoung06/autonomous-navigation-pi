@@ -8,7 +8,7 @@ sys.path.append(dirname(__file__))
 print(sys.path)
 
 import time
-import smbus
+import smbus2
 
 from imusensor.MPU9250 import MPU9250
 from imusensor.filters import kalman
@@ -18,7 +18,7 @@ from sensors_i2c import Sensors
 choices = [15, 30, 60, 45, -45, -15, -30, -60]
 
 address = 0x68
-bus = smbus.SMBus(1)
+bus = smbus2.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
 ultra = Sensors(bus, 0x11)
 
