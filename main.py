@@ -59,7 +59,7 @@ if __name__ == "__main__":
                     print("WELP!!!")
                 else:
                     if goal["type"] == "forward":
-                        len = 1 if goal["len"] > 0 else 0
+                        len = 5 if goal["len"] > 0 else 0
                         platform.goForward(len)
                         goal["curr"] += len
                         if abs(goal["len"] - goal["curr"]) <= 1:
