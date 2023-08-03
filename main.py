@@ -3,6 +3,8 @@ import random
 import sys
 from os.path import dirname
 from arduino_serial import MovingPlatform
+from lcd import LiquidCrystal
+import ip_utils
 
 sys.path.append(dirname(__file__))
 print(sys.path)
@@ -21,6 +23,10 @@ address = 0x68
 bus = smbus2.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
 ultra = Sensors(bus, 0x11)
+lcd = LiquidCrystal(bus, 0x27)
+
+lcd.lcd_display_string("IP ADDR", 1,0)
+lcd.lcd_display_string(ip_utils.get_ip(), 2,0)
 
 imu.begin()
 
