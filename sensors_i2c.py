@@ -1,6 +1,4 @@
-# this is to be saved in the local folder under the name "mpu9250_i2c.py"
-# it will be used as the I2C controller and function harbor for the project
-# refer to datasheet and register map for full explanation
+from smbus2 import i2c_msg
 
 class Sensors:
     def __init__(self, bus, id2):
@@ -8,11 +6,13 @@ class Sensors:
         self.id2 = id2
 
     def readUltra(self):
-        front = self.bus.read_word_data(self.id2, 0)
-        right = self.bus.read_word_data(self.id2, 0)
-        left = self.bus.read_word_data(self.id2, 0)
+        msg = i2c_msg.read(self.id2, 6)
+
+        front = msg.buf[0] * 255 + msg.buf[1]
+        left = msg.buf[2] * 255 + msg.buf[3]
+        right = msg.buf[4] * 255 + msg.buf[5]
         return {
-            "front": front,
-            "left": left,
-            "right": right
+            "front": front / 100.0,
+            "left": left / 100.0,
+            "right": right / 100.0
         }
