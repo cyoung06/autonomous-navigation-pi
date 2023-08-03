@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
             imu.readSensor()
             imu.computeOrientation()
-            time.sleep(5)
+            # time.sleep(5)
             # kal_newTime = time.time()
             # kal_dt = kal_newTime - kal_currTime
             # kal_currTime = kal_newTime
