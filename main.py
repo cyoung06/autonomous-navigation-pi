@@ -42,8 +42,6 @@ if __name__ == "__main__":
         # print('recording data')
         while 1:
             if platform.isDone():
-                ultrasonic = ultra.readUltra()
-                print(ultrasonic)
                 if goal["end"]:
                     if status:
                         goal = {"type": "forward", "len": random.randint(2, 5) * 100, "curr": 0, "end": False}
@@ -51,18 +49,27 @@ if __name__ == "__main__":
                         goal = {"type": "turn", "deg": choices[random.randint(0, len(choices)-1)], "curr": 0, "end": False}
                     status = not status
 
-                if goal["type"] == "forward":
-                    len = 1 if goal["len"] > 0 else 0
-                    platform.goForward(len)
-                    goal["curr"] += len
-                    if abs(goal["len"] - goal["curr"]) <= 1:
-                        goal["end"] = True
+                ultrasonic = ultra.readUltra()
+                print(ultrasonic)
+                welp = False
+                for k, v in ultrasonic.items():
+                    if v > 7 or v == 0:
+                        welp = True
+                if welp:
+                    print("WELP!!!")
                 else:
-                    deg = 1 if goal["deg"] > 0 else -1
-                    platform.rotateCW(deg)
-                    goal["curr"] += deg
-                    if abs(goal["deg"] - goal["curr"]) <= 1:
-                        goal["end"] = True
+                    if goal["type"] == "forward":
+                        len = 1 if goal["len"] > 0 else 0
+                        platform.goForward(len)
+                        goal["curr"] += len
+                        if abs(goal["len"] - goal["curr"]) <= 1:
+                            goal["end"] = True
+                    else:
+                        deg = 1 if goal["deg"] > 0 else -1
+                        platform.rotateCW(deg)
+                        goal["curr"] += deg
+                        if abs(goal["deg"] - goal["curr"]) <= 1:
+                            goal["end"] = True
 
             imu.readSensor()
             imu.computeOrientation()
