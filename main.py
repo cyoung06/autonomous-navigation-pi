@@ -30,6 +30,7 @@ imu.computeOrientation()
 
 
 currTime = time.time()
+goal = {"end": True}
 # kal_currTime = time.time()
 if __name__ == "__main__":
     platform = MovingPlatform(sys.argv[1])
@@ -40,16 +41,31 @@ if __name__ == "__main__":
         # log.write("t,ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw\n")
         # print('recording data')
         while 1:
-            # if platform.isDone():
-            #     if status:
-            #         platform.goForward(random.randint(2, 5) * 100)
-            #     else:
-            #         platform.rotateCW(choices[random.randint(0, len(choices)-1)])
-            #     status = not status
+            if platform.isDone():
+                ultrasonic = ultra.readUltra()
+                print(ultrasonic)
+                if goal["end"]:
+                    if status:
+                        goal = {"type": "forward", "len": random.randint(2, 5) * 100, "curr": 0, "end": False}
+                    else:
+                        goal = {"type": "turn", "deg": choices[random.randint(0, len(choices)-1)], "curr": 0, "end": False}
+                    status = not status
+
+                if goal["type"] == "forward":
+                    len = 1 if goal["len"] > 0 else 0
+                    platform.goForward(len)
+                    goal["curr"] += len
+                    if abs(goal["len"] - goal["curr"]) <= 1:
+                        goal["end"] = True
+                else:
+                    deg = 1 if goal["deg"] > 0 else -1
+                    platform.rotateCW(deg)
+                    goal["curr"] += deg
+                    if abs(goal["deg"] - goal["curr"]) <= 1:
+                        goal["end"] = True
 
             imu.readSensor()
             imu.computeOrientation()
-            print(ultra.readUltra())
             time.sleep(5)
             # kal_newTime = time.time()
             # kal_dt = kal_newTime - kal_currTime
