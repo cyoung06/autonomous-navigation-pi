@@ -46,8 +46,8 @@ class MovingPlatform:
         if not self.isDone():
             raise "Not done"
         self.ready = False
-        self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}'.encode())
-        print("Sending... " + f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)}')
+        self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} '.encode())
+        print("Sending... " + f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} ')
         self.port.flush()
 
     def isDone(self):
