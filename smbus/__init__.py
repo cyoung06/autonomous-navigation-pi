@@ -1,2 +1,3 @@
 import sys
-import smbus2 as smbus
+
+sys.modules[__name__] = __import__('smbus')
