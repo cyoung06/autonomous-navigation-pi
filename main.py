@@ -25,8 +25,9 @@ imu = MPU9250.MPU9250(bus, address)
 ultra = Sensors(bus, 0x11)
 lcd = LiquidCrystal(bus)
 
-lcd.lcd_display_string("IP ADDR", 1,0)
-lcd.lcd_display_string(ip_utils.get_ip(), 2,0)
+lcd.backlight(1)
+lcd.lcd_display_string("IP ADDR", 1, 0)
+lcd.lcd_display_string(ip_utils.get_ip(), 2, 0)
 
 imu.begin()
 
