@@ -47,6 +47,7 @@ if __name__ == "__main__":
     with open("log.csv", "w") as log:
         # log.write("t,ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw\n")
         # print('recording data')
+        stack = 0
         while 1:
 
             ultrasonic = ultra.readUltra()
@@ -55,8 +56,20 @@ if __name__ == "__main__":
             for k, v in ultrasonic.items():
                 if v > 8 or v == 0:
                     welp = True
-            if welp and not platform.isDone():
-                platform.eStop()
+            if not platform.isDone():
+                if welp:
+                    if stack == 0:
+                        platform.stop()
+                    else:
+                        stack += 1
+
+                    if stack > 10:
+                        platform.cancel()
+                        stack = 0
+            if not welp:
+                if stack != 0:
+                    platform.resume()
+                stack = 0
 
             if platform.isDone() and not welp:
                 time.sleep(0.1)
