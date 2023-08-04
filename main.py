@@ -51,13 +51,13 @@ if __name__ == "__main__":
         while 1:
 
             ultrasonic = ultra.readUltra()
-            print(ultrasonic)
             welp = False
             for k, v in ultrasonic.items():
                 if v > 8 or v == 0:
                     welp = True
             if not platform.isDone():
                 if welp:
+                    print(ultrasonic)
                     if stack == 0:
                         platform.stop()
                     stack += 1
