@@ -48,36 +48,22 @@ if __name__ == "__main__":
         # log.write("t,ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw\n")
         # print('recording data')
         while 1:
-            if platform.isDone():
-                if goal["end"]:
-                    if status:
-                        goal = {"type": "forward", "len": random.randint(2, 5) * 100, "curr": 0, "end": False}
-                    else:
-                        deg = choices[random.randint(0, len(choices)-1)]
-                        goal = {"type": "turn", "deg": deg, "curr": 0, "end": False}
-                    status = not status
 
-                ultrasonic = ultra.readUltra()
-                print(ultrasonic)
-                welp = False
-                for k, v in ultrasonic.items():
-                    if v > 20 or v == 0:
-                        welp = True
-                if welp:
-                    print("WELP!!!")
+            ultrasonic = ultra.readUltra()
+            print(ultrasonic)
+            welp = False
+            for k, v in ultrasonic.items():
+                if v > 20 or v == 0:
+                    welp = True
+            if welp and not platform.isDone():
+                platform.eStop()
+
+            if platform.isDone() and not welp:
+                if status:
+                    platform.goForward(random.randint(2, 5) * 100)
                 else:
-                    if goal["type"] == "forward":
-                        length = 10 if goal["len"] > 0 else -10
-                        platform.goForward(length)
-                        goal["curr"] += length
-                        if abs(goal["len"] - goal["curr"]) <= 10:
-                            goal["end"] = True
-                    else:
-                        deg = 5 if goal["deg"] > 0 else -5
-                        platform.rotateCW(deg)
-                        goal["curr"] += deg
-                        if abs(goal["deg"] - goal["curr"]) <= 5:
-                            goal["end"] = True
+                    platform.rotateCW(choices[random.randint(0, len(choices)-1)])
+                status = not status
 
             imu.readSensor()
             imu.computeOrientation()

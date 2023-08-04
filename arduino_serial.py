@@ -31,24 +31,30 @@ class MovingPlatform:
                 self.ready = True
 
     # y is forward x is sideways
+
+    def sendCommand(self, command):
+        self.port.write(command.encode())
+        print("Sending... " + command)
+        self.port.flush()
+
+
     def goVector(self, vec, dist):
         if not self.isDone():
             raise "Not done"
         self.ready = False
-        self.port.write(f"{vec[0]} {vec[1]} {dist} 0 0 ".encode())
-        print("Sending... " + f"{vec[0]} {vec[1]} {dist} 0 0 ")
-        self.port.flush()
+        self.sendCommand(f"G {vec[0]} {vec[1]} 0 {dist / math.sqrt(vec[0] * vec[0] + vec[1] * vec[1])}\n")
 
     def goForward(self, dist):
-        self.goVector([0, 1], dist)
+        self.goVector([0, 100], dist)
 
     def rotateCW(self, deg):
         if not self.isDone():
             raise "Not done"
         self.ready = False
-        self.port.write(f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} '.encode())
-        print("Sending... " + f'0 0 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} ')
-        self.port.flush()
+        self.sendCommand(f'G 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} 1\n')
+
+    def eStop(self):
+        self.sendCommand(f"E\n")
 
     def isDone(self):
         return self.ready
