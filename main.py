@@ -53,7 +53,7 @@ if __name__ == "__main__":
             print(ultrasonic)
             welp = False
             for k, v in ultrasonic.items():
-                if v > 20 or v == 0:
+                if v > 8 or v == 0:
                     welp = True
             if welp and not platform.isDone():
                 platform.eStop()
@@ -68,6 +68,7 @@ if __name__ == "__main__":
 
             imu.readSensor()
             imu.computeOrientation()
+            time.sleep(0.03)
             # time.sleep(5)
             # kal_newTime = time.time()
             # kal_dt = kal_newTime - kal_currTime
