@@ -15,6 +15,7 @@ import smbus2
 from imusensor.MPU9250 import MPU9250
 from imusensor.filters import kalman
 from sensors_i2c import Sensors
+
 # kalman_filter = kalman.Kalman()
 
 choices = [15, 30, 60, 45, -45, -15, -30, -60]
@@ -34,7 +35,6 @@ imu.begin()
 imu.loadCalibDataFromFile("./calib.json")
 imu.readSensor()
 imu.computeOrientation()
-
 
 currTime = time.time()
 goal = {"end": True}
@@ -62,7 +62,6 @@ if __name__ == "__main__":
                         platform.stop()
                     stack += 1
 
-
                     if stack > 10:
                         platform.cancel()
                         stack = 0
@@ -76,7 +75,7 @@ if __name__ == "__main__":
                 if status:
                     platform.goForward(random.randint(2, 5) * 100)
                 else:
-                    platform.rotateCW(choices[random.randint(0, len(choices)-1)])
+                    platform.rotateCW(choices[random.randint(0, len(choices) - 1)])
                 status = not status
 
             imu.readSensor()
