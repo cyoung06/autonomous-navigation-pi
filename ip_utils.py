@@ -1,5 +1,5 @@
 import socket
-
+import subprocess
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -13,3 +13,6 @@ def get_ip():
     finally:
         s.close()
     return IP
+
+def wifiname():
+    return subprocess.check_output('iwgetid  | sed \'s/wlan0     ESSID:"\\(.*\\)"/\\1/g\'')
