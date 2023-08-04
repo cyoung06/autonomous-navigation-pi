@@ -59,6 +59,7 @@ if __name__ == "__main__":
                 platform.eStop()
 
             if platform.isDone() and not welp:
+                time.sleep(0.1)
                 if status:
                     platform.goForward(random.randint(2, 5) * 100)
                 else:
