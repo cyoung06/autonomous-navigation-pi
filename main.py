@@ -26,9 +26,6 @@ imu = MPU9250.MPU9250(bus, address)
 ultra = Sensors(bus, 0x11)
 lcd = LiquidCrystal(bus)
 
-lcd.backlight(1)
-lcd.lcd_display_string(ip_utils.wifiname(), 1, 0)
-lcd.lcd_display_string(ip_utils.get_ip(), 2, 0)
 
 imu.begin()
 
@@ -47,6 +44,11 @@ if __name__ == "__main__":
     with open("log.csv", "w") as log:
         # log.write("t,ax,ay,az,mx,my,mz,gx,gy,gz,roll,pitch,yaw\n")
         # print('recording data')
+
+        lcd.backlight(1)
+        lcd.lcd_display_string(ip_utils.wifiname() + "          ", 1, 0)
+        lcd.lcd_display_string(ip_utils.get_ip() + "          ", 2, 0)
+
         stack = 0
         while 1:
 

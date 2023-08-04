@@ -10,6 +10,6 @@ lcd = LiquidCrystal(bus)
 lcd.backlight(1)
 
 while True:
-    lcd.lcd_display_string(ip_utils.wifiname(), 1, 0)
-    lcd.lcd_display_string(ip_utils.get_ip(), 2, 0)
+    lcd.lcd_display_string(ip_utils.wifiname()+"          ", 1, 0)
+    lcd.lcd_display_string(ip_utils.get_ip()+"          ", 2, 0)
     time.sleep(1)
