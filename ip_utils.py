@@ -15,4 +15,7 @@ def get_ip():
     return IP
 
 def wifiname():
-    return subprocess.check_output('iwgetid').decode().split("ESSID:")[-1].replace("\"", "").replace("\n", "")
+    try:
+        return subprocess.check_output('iwgetid').decode().split("ESSID:")[-1].replace("\"", "").replace("\n", "")
+    except Exception as e:
+        return "ERROR"
