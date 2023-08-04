@@ -15,4 +15,5 @@ def get_ip():
     return IP
 
 def wifiname():
-    return subprocess.check_output(['iwgetid'])
+    print(subprocess.check_output('iwgetid'))
+    return subprocess.check_output('iwgetid')
