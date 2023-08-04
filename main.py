@@ -23,7 +23,7 @@ address = 0x68
 bus = smbus2.SMBus(1)
 imu = MPU9250.MPU9250(bus, address)
 ultra = Sensors(bus, 0x11)
-lcd = LiquidCrystal(bus, 0x27)
+lcd = LiquidCrystal(bus)
 
 lcd.lcd_display_string("IP ADDR", 1,0)
 lcd.lcd_display_string(ip_utils.get_ip(), 2,0)
