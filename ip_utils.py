@@ -15,5 +15,4 @@ def get_ip():
     return IP
 
 def wifiname():
-    print(subprocess.check_output('iwgetid'))
-    return subprocess.check_output('iwgetid')
+    return subprocess.check_output('iwgetid').decode().split("ESSID:")[-1]
