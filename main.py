@@ -60,8 +60,8 @@ if __name__ == "__main__":
                 if welp:
                     if stack == 0:
                         platform.stop()
-                    else:
-                        stack += 1
+                    stack += 1
+
 
                     if stack > 10:
                         platform.cancel()
