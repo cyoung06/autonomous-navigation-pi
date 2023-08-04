@@ -73,7 +73,7 @@ if __name__ == "__main__":
             if platform.isDone() and not welp:
                 time.sleep(0.1)
                 if status:
-                    platform.goForward(random.randint(2, 5) * 100)
+                    platform.goForward(random.randint(5, 30) * 100)
                 else:
                     platform.rotateCW(choices[random.randint(0, len(choices) - 1)])
                 status = not status
