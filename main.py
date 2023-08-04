@@ -73,10 +73,10 @@ if __name__ == "__main__":
                         if abs(goal["len"] - goal["curr"]) <= 10:
                             goal["end"] = True
                     else:
-                        deg = 10 if goal["deg"] > 0 else -10
+                        deg = 5 if goal["deg"] > 0 else -5
                         platform.rotateCW(deg)
                         goal["curr"] += deg
-                        if abs(goal["deg"] - goal["curr"]) <= 10:
+                        if abs(goal["deg"] - goal["curr"]) <= 5:
                             goal["end"] = True
 
             imu.readSensor()
