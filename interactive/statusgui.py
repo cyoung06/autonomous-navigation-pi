@@ -17,7 +17,7 @@ class StatusGUI:
 
         Label(self.root, textvariable=self.statusLabel, width= 1000, height=100).pack()
 
-        self.root.after(500, self.updateGUI)
+        self.root.after(100, self.updateGUI)
         self.root.mainloop()
 
     def updateGUI(self):
@@ -25,4 +25,4 @@ class StatusGUI:
         for router in self.robot.routers:
             strin = strin + '\n' + str(router)
         self.statusLabel.set(f'Robot: {self.robot.orientation}\nRouters\n{strin}')
-        self.root.after(500, self.updateGUI)
+        self.root.after(100, self.updateGUI)
