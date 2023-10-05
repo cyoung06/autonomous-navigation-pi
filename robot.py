@@ -21,7 +21,7 @@ class Robot:
 
         self.imu.begin()
 
-        self.imu.loadCalibDataFromFile("./calib.json")
+        # self.imu.loadCalibDataFromFile("./calib.json")
         self.imu.readSensor()
         self.imu.computeOrientation()
 
