@@ -1,6 +1,6 @@
 from tkinter import *
 
-from main import Robot
+from robot import Robot
 from navigation.world import World
 
 class StatusGUI:
