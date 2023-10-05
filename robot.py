@@ -6,6 +6,7 @@ from peripherals.lcd import LiquidCrystal
 from imusensor.MPU9250 import MPU9250
 from peripherals.wifi import get_nearby_routers
 import ip_utils
+import time
 import threading
 
 class Robot:
@@ -30,8 +31,12 @@ class Robot:
         threading.Thread(target=self._readRouters, daemon=True).start()
 
     def _readI2C(self):
-        self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
-        self.ultrasonic = self.sensors.readUltra()
+        while True:
+            self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
+            self.ultrasonic = self.sensors.readUltra()
+            time.sleep(0.05)
 
     def _readRouters(self):
-        self.routers = get_nearby_routers()
+        while True:
+            self.routers = get_nearby_routers()
+            time.sleep(0.2)
