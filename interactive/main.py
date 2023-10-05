@@ -4,7 +4,7 @@ root = Tk()
 root.geometry('1000x1000')
 
 
-from ..peripherals.wifi import get_nearby_routers
+from peripherals.wifi import get_nearby_routers
 
 
 def task():
