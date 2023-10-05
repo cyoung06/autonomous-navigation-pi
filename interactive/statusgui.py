@@ -15,7 +15,7 @@ class StatusGUI:
         self.statusLabel = StringVar()
         self.statusLabel.set('hello')
 
-        Label(self.root, textvariable=self.statusLabel, width= 500, height=10).pack()
+        Label(self.root, textvariable=self.statusLabel, width= 1000, height=100).pack()
 
         self.root.after(500, self.updateGUI)
         self.root.mainloop()
