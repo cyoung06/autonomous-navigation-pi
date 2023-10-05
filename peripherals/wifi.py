@@ -39,7 +39,7 @@ if platform.system() == 'Darwin':
             exit("Unable to obtain authorization, exiting")
         sleep(1)
 else:
-    pass
+    import iw_parse
 
 def get_nearby_routers():
     def get_nearby_routers_macos():
@@ -57,7 +57,17 @@ def get_nearby_routers():
                 ))
             return list
     def get_nearby_routers_rpi():
-        pass
+        networks = iw_parse.get_interfaces(interface='wlan0')
+
+        list = []
+        for network in networks:
+            list.append(WifiRouter(
+                network['Address'],
+                network['Name'],
+                -int(network['Signal Level']),
+                int(network['Channel'])
+            ))
+        return list
 
     if platform.system() == 'Darwin':
         return get_nearby_routers_macos()
