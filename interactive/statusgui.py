@@ -21,5 +21,8 @@ class StatusGUI:
         self.root.mainloop()
 
     def updateGUI(self):
-        self.statusLabel.set(f'Robot: {self.robot.orientation} {self.robot.routers}')
+        str = ''
+        for router in self.robot.routers:
+            str = str + '\n' + router
+        self.statusLabel.set(f'Robot: {self.robot.orientation}\nRouters\n{str}')
         self.root.after(500, self.updateGUI)
