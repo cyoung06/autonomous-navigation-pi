@@ -57,7 +57,8 @@ def get_nearby_routers():
                 ))
             return list
     def get_nearby_routers_rpi():
-        networks = iw_parse.get_interfaces(interface='wlan0')
+        content = iwlist.scan(interface='wlan0')
+        networks = iwlist.parse(content)
 
         list = []
         for network in networks:
