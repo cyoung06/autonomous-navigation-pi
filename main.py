@@ -20,9 +20,8 @@ from peripherals.sensors_i2c import Sensors
 
 choices = [15, 30, 60, 45, -45, -15, -30, -60]
 
-address = 0x68
 bus = smbus2.SMBus(1)
-imu = MPU9250.MPU9250(bus, address)
+imu = MPU9250.MPU9250(bus, 0x68)
 ultra = Sensors(bus, 0x11)
 lcd = LiquidCrystal(bus)
 
