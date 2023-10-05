@@ -10,7 +10,7 @@ def MPU6050_start():
     samp_rate_div = 0  # sample rate = 8 kHz/(1+samp_rate_div)
     bus.write_byte_data(MPU6050_ADDR, SMPLRT_DIV, samp_rate_div)
     time.sleep(0.1)
-    # reset all sensors
+    # reset all peripherals
     bus.write_byte_data(MPU6050_ADDR, PWR_MGMT_1, 0x00)
     time.sleep(0.1)
     # power management and crystal settings

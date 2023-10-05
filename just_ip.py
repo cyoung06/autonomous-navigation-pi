@@ -1,7 +1,7 @@
 import time
 
 import smbus2
-from lcd import LiquidCrystal
+from peripherals.lcd import LiquidCrystal
 import ip_utils
 
 bus = smbus2.SMBus(1)

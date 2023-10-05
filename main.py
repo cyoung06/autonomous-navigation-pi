@@ -2,8 +2,8 @@
 import random
 import sys
 from os.path import dirname
-from arduino_serial import MovingPlatform
-from lcd import LiquidCrystal
+from peripherals.arduino_serial import MovingPlatform
+from peripherals.lcd import LiquidCrystal
 import ip_utils
 
 sys.path.append(dirname(__file__))
@@ -14,7 +14,7 @@ import smbus2
 
 from imusensor.MPU9250 import MPU9250
 from imusensor.filters import kalman
-from sensors_i2c import Sensors
+from peripherals.sensors_i2c import Sensors
 
 # kalman_filter = kalman.Kalman()
 
