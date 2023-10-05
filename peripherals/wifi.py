@@ -39,7 +39,7 @@ if platform.system() == 'Darwin':
             exit("Unable to obtain authorization, exiting")
         sleep(1)
 else:
-    import iwlist
+    import peripherals.iwlist
 
 def get_nearby_routers():
     def get_nearby_routers_macos():
