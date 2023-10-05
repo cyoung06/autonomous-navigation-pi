@@ -6,6 +6,7 @@ from peripherals.lcd import LiquidCrystal
 from imusensor.MPU9250 import MPU9250
 from peripherals.wifi import get_nearby_routers
 import ip_utils
+import threading
 
 class Robot:
     def __init__(self):
