@@ -10,17 +10,20 @@ import time
 import threading
 
 class Robot:
-    def __init__(self):
+    def __init__(self, port):
         self.orientation = [0,0,0]
         self.ultrasonic = {}
         self.routers = []
-        self.routerTime = 0
+        self.routerUpdate = 0
 
         self.bus = smbus2.SMBus(1)
 
         self.imu = MPU9250.MPU9250(self.bus, 0x68)
         self.sensors = Sensors(self.bus, 0x11)
         self.lcd = LiquidCrystal(self.bus)
+        self.i2cUpdate = 0
+
+        self.platform = MovingPlatform(port)
 
         self.imu.begin()
 
@@ -31,10 +34,13 @@ class Robot:
         threading.Thread(target=self._readI2C, daemon=True).start()
         threading.Thread(target=self._readRouters, daemon=True).start()
 
+
+
     def _readI2C(self):
         while True:
             self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
             self.ultrasonic = self.sensors.readUltra()
+            self.i2cUpdate = time.time()
             time.sleep(0.05)
 
     def _readRouters(self):
@@ -46,5 +52,5 @@ class Robot:
 
             self.routers = dict
 
-            self.routerTime = time.time()
-            time.sleep(0.2)
+            self.routerUpdate = time.time()
+            time.sleep(0.01)

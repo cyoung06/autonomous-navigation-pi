@@ -11,9 +11,9 @@ from numpy import ndarray
 
 class RelativePosition:
     def __init__(self, dx, dy, rot):
-        self.dx: float = dx  # in milimeters
-        self.dy: float = dy  # in milimeters
-        self.rot: float = rot  # in degrees
+        self.dx: float = dx  # in millimeters
+        self.dy: float = dy  # in millimeters
+        self.rot: float = rot  # in degrees, counterclockwise
 
     def reverse(self):
         return RelativePosition(-self.dx, -self.dy, -self.rot)
@@ -44,19 +44,19 @@ class Cell:
 class World:
     def __init__(self, similarity):
         self.nodes: List[Cell] = []
-        self.func: Callable[[array, array], float] = similarity
+        self.func: Callable[[ndarray, ndarray], float] = similarity
 
     def add_cell(self, cell: Cell):
         self.nodes.append(cell)
 
-    def probability(self, pos: array):
+    def probability(self, pos: ndarray):
         probMap = {}
         for cell in self.nodes:
             probMap[cell] = self.func(pos, cell.position)
 
         return probMap
 
-    def get_cell(self, pos: array) -> [Cell, float]:
+    def get_cell(self, pos: ndarray) -> [Cell, float]:
         map = self.probability(pos)
         newlist = sorted(map.keys(), key=lambda d: map[d])
         return newlist[0], max(map.values())
