@@ -3,6 +3,7 @@ from array import array
 from typing import List, Dict, Callable, NamedTuple
 
 import numpy as np
+from numpy import ndarray
 
 
 # Rotation is also an attribute in 3d space time lol
@@ -31,8 +32,8 @@ class Cell:
             self.origin: Cell = origin
             self.target: Cell = target
 
-    def __init__(self, position: array):  # position is a embedding
-        self.position: array = position
+    def __init__(self, position: ndarray):  # position is a embedding
+        self.position: ndarray = position
         self.neighbors: List[Cell.Connection] = []
 
     def connect(self, target, rel_pos: RelativePosition):

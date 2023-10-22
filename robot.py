@@ -14,6 +14,7 @@ class Robot:
         self.orientation = [0,0,0]
         self.ultrasonic = {}
         self.routers = []
+        self.routerTime = 0
 
         self.bus = smbus2.SMBus(1)
 
@@ -38,5 +39,12 @@ class Robot:
 
     def _readRouters(self):
         while True:
-            self.routers = get_nearby_routers()
+            routers = get_nearby_routers()
+            dict = {}
+            for router in routers:
+                dict[router.bssid] = router.rssi
+
+            self.routers = dict
+
+            self.routerTime = time.time()
             time.sleep(0.2)

@@ -13,16 +13,17 @@ class StatusGUI:
         self.root.geometry('1000x1000')
 
         self.statusLabel = StringVar()
+        self.macAddrsToListenTo = []
         self.statusLabel.set('hello')
 
-        Label(self.root, textvariable=self.statusLabel, width= 1000, height=100).pack()
+        Label(self.root, textvariable=self.statusLabel, width= 1000, height=100)\
+            .pack(side="left", fill="y")
 
         self.root.after(100, self.updateGUI)
         self.root.mainloop()
 
     def updateGUI(self):
-        strin = ''
-        for router in self.robot.routers:
-            strin = strin + '\n' + str(router)
-        self.statusLabel.set(f'Robot: {self.robot.orientation}\nRouters\n{strin}')
+        currrouters = '\n'.join([str(router) for router in self.robot.routers])
+        targetrouters = '\n'.join(self.macAddrsToListenTo)
+        self.statusLabel.set(f'Orientation: {self.robot.orientation}\nFloor: {self.robot.ultrasonic}\nRouters\n{currrouters}\n\nTarget:{targetrouters}')
         self.root.after(100, self.updateGUI)
