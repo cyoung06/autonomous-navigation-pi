@@ -53,6 +53,11 @@ class MovingPlatform:
         self.ready = False
         self.sendCommand(f'G 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} 1\n')
 
+    def waitForReady(self):
+        while not self.isDone():
+            pass
+        return
+
     def stop(self):
         self.sendCommand(f"C\n")
     def resume(self):

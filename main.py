@@ -2,8 +2,11 @@ import os.path
 import sys
 import threading
 import pickle
+import time
 from os.path import dirname
 import atexit
+
+import picamera2
 
 import numpy
 import numpy as np
@@ -45,6 +48,7 @@ if __name__ == '__main__':
             pickle.dump(world, f)
         with open('mac_addrs.dat', 'wb') as f:
             pickle.dump(macAddrsToListenTo, f)
+        picamera2.stop()
 
 
     atexit.register(exit_handler)
@@ -60,6 +64,12 @@ if __name__ == '__main__':
 
     # now we navigate.
 
+    config = picamera2.create_still_configuration()
+    picamera2.configure(config)
+
+    picamera2.start()
+
+
     lastCell = None
     while True:
         def amIsafe():
@@ -68,46 +78,63 @@ if __name__ == '__main__':
                 robot.ultrasonic["left"] < thresh and \
                 robot.ultrasonic["right"] < thresh
 
+        def measurePosition() -> ndarray:
+            measurements = 0
+            currentMeasurement = robot.routers
+            lastMeasurement = robot.routerUpdate
+
+            currentRot = robot.orientation
+            positionVector = [0] * (maxMacAddrs + 1)
+            measurementsPer = [0] * (maxMacAddrs + 1)
+            while measurements < 3:
+                while robot.routerUpdate == lastMeasurement:
+                    pass
+
+                measurements += 1
+                if len(macAddrMapping) < maxMacAddrs:
+                    for (k, router) in currentMeasurement.items():
+                        if k not in macAddrMapping:
+                            macAddrMapping[k] = len(macAddrMapping)
+                            macAddrsToListenTo.append(k)
+                        if len(macAddrMapping) >= maxMacAddrs:
+                            break
+                if gui is not None:
+                    gui.macAddrsToListenTo = macAddrsToListenTo
+
+                for (k, v) in macAddrMapping.items():
+                    positionVector[v] += currentMeasurement[k]
+                    measurementsPer[v] += 1
+
+            positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
+                              range(len(positionVector))]  # average them out
+            positionVector[-1] = currentRot[1]
+            positionVector = np.array(positionVector)
+            return positionVector
 
         if not amIsafe():
             pass
 
-        # listen for command
-        measurements = 0
-        currentMeasurement = robot.routers
-        lastMeasurement = robot.routerUpdate
+        for i in range(0, 6):
+            pos = measurePosition()
 
-        currentRot = robot.orientation
-        positionVector = [0] * (maxMacAddrs + 1)
-        measurementsPer = [0] * (maxMacAddrs + 1)
-        while measurements < 3:
-            while robot.routerUpdate == lastMeasurement:
-                pass
+            np_array = picamera2.capture_array()
+            name = f"{int(time.time()*1000)}.jpg"
+            picamera2.capture_file(name)
+            with open(f'{name}.data', 'wb') as f:
+                f.write(pickle.dumps([pos, robot.orientation]))
 
-            measurements += 1
-            if len(macAddrMapping) < maxMacAddrs:
-                for (k, router) in currentMeasurement.items():
-                    if k not in macAddrMapping:
-                        macAddrMapping[k] = len(macAddrMapping)
-                        macAddrsToListenTo.append(k)
-                    if len(macAddrMapping) >= maxMacAddrs:
-                        break
-            if gui is not None:
-                gui.macAddrsToListenTo = macAddrsToListenTo
+            robot.platform.rotateCW(60)
 
-            for (k, v) in macAddrMapping.items():
-                positionVector[v] += currentMeasurement[k]
-                measurementsPer[v] += 1
 
-        positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
-                          range(len(positionVector))]  # average them out
-        positionVector[-1] = currentRot[1]
-        positionVector = np.array(positionVector)
-
-        dirVector = RelativePosition(-50 * 1.732, 50, 60)
         if lastCell is not None:
             robot.platform.rotateCW(60)
             robot.platform.goForward(100)
+
+
+        # listen for command
+
+        positionVector = measurePosition()
+        dirVector = RelativePosition(-50 * 1.732, 50, 60)
 
         cell, probability = world.get_cell(positionVector)
         if probability < 0.8:
