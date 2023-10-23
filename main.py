@@ -23,8 +23,11 @@ def similarity(v1: ndarray, v2: ndarray):
     return numpy.linalg.norm(v1 - v2)
 
 
-with open('mac_addrs.dat', 'rb') as f:
-    macAddrsToListenTo = pickle.load(f)
+if os.path.isfile('mac_addrs.dat'):
+    with open('mac_addrs.dat', 'rb') as f:
+        macAddrsToListenTo = pickle.load(f)
+else:
+    macAddrsToListenTo = []
 macAddrMapping = {}
 maxMacAddrs = 63
 
