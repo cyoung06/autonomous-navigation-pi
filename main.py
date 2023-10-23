@@ -5,7 +5,6 @@ import pickle
 import time
 from os.path import dirname
 import atexit
-from types import NoneType
 
 import picamera2
 
