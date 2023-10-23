@@ -13,7 +13,7 @@ class Robot:
     def __init__(self, port):
         self.orientation = [0,0,0]
         self.ultrasonic = {}
-        self.routers = []
+        self.routers = {}
         self.routerUpdate = 0
 
         self.bus = smbus2.SMBus(1)
