@@ -108,8 +108,9 @@ if __name__ == '__main__':
                     gui.macAddrsToListenTo = macAddrsToListenTo
 
                 for (k, v) in macAddrMapping.items():
-                    positionVector[v] += currentMeasurement[k]
-                    measurementsPer[v] += 1
+                    if k in currentMeasurement:
+                        positionVector[v] += currentMeasurement[k]
+                        measurementsPer[v] += 1
 
             positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
                               range(len(positionVector))]  # average them out
