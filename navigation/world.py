@@ -57,6 +57,8 @@ class World:
         return probMap
 
     def get_cell(self, pos: ndarray) -> [Cell, float]:
+        if len(self.nodes) == 0:
+            return None, -1
         map = self.probability(pos)
         newlist = sorted(map.keys(), key=lambda d: map[d])
         return newlist[0], max(map.values())
