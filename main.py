@@ -123,9 +123,9 @@ if __name__ == '__main__':
         for i in range(0, 6):
             pos = measurePosition()
 
-            np_array = picamera2.capture_array()
+            np_array = cam.capture_array()
             name = f"{int(time.time()*1000)}.jpg"
-            picamera2.capture_file(name)
+            cam.capture_file(name)
             with open(f'{name}.data', 'wb') as f:
                 f.write(pickle.dumps([pos, robot.orientation]))
 
