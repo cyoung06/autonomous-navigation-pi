@@ -37,7 +37,7 @@ for addr in macAddrsToListenTo:
 
 from interactive.statusgui import StatusGUI
 
-gui: StatusGUI | NoneType = None
+gui: 'StatusGUI | None' = None
 
 
 def runGUI():
