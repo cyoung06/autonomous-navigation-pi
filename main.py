@@ -6,7 +6,7 @@ import time
 from os.path import dirname
 import atexit
 
-import picamera2
+from picamera2 import Picamera2
 
 import numpy
 import numpy as np
@@ -14,6 +14,8 @@ from numpy import ndarray
 
 from robot import Robot
 from navigation.world import World, Cell, RelativePosition
+
+
 
 sys.path.append(dirname(__file__))
 print(sys.path)
@@ -45,13 +47,14 @@ def runGUI():
 
 
 if __name__ == '__main__':
+    cam = Picamera2()
     def exit_handler():
         print('My application is ending!')
         with open('world.dat', 'wb') as f:
             pickle.dump(world, f)
         with open('mac_addrs.dat', 'wb') as f:
             pickle.dump(macAddrsToListenTo, f)
-        picamera2.stop()
+        cam.stop()
 
 
     atexit.register(exit_handler)
@@ -67,10 +70,10 @@ if __name__ == '__main__':
 
     # now we navigate.
 
-    config = picamera2.create_still_configuration()
-    picamera2.configure(config)
+    config = cam.create_still_configuration()
+    cam.configure(config)
 
-    picamera2.start()
+    cam.start()
 
 
     lastCell = None
