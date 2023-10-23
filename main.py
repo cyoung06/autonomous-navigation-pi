@@ -138,7 +138,7 @@ if __name__ == '__main__':
         if lastCell is not None:
             robot.platform.rotateCW(60)
             robot.platform.waitForReady()
-            robot.platform.goForward(100)
+            robot.platform.goForward(1000)
             robot.platform.waitForReady()
 
 
