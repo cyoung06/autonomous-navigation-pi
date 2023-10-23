@@ -125,9 +125,9 @@ if __name__ == '__main__':
             pos = measurePosition()
 
             np_array = cam.capture_array()
-            name = f"{int(time.time()*1000)}.jpg"
+            name = f"images/{int(time.time()*1000)}.jpg"
             cam.capture_file(name)
-            with open(f'{name}.data', 'wb') as f:
+            with open(f'images/{name}.data', 'wb') as f:
                 f.write(pickle.dumps([pos, robot.orientation]))
 
             robot.platform.rotateCW(60)
