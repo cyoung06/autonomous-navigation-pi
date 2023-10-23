@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     atexit.register(exit_handler)
 
-    robot = Robot()
+    robot = Robot(sys.argv[1])
     if os.path.isfile('world.dat'):
         with open('world.dat', 'rb') as f:
             world = pickle.load(f)
