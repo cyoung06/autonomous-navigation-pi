@@ -5,6 +5,7 @@ import pickle
 import time
 from os.path import dirname
 import atexit
+from types import NoneType
 
 import picamera2
 
@@ -36,7 +37,7 @@ for addr in macAddrsToListenTo:
 
 from interactive.statusgui import StatusGUI
 
-gui: StatusGUI | None = None
+gui: StatusGUI | NoneType = None
 
 
 def runGUI():
