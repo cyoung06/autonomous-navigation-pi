@@ -67,7 +67,8 @@ if __name__ == '__main__':
     else:
         world = World(similarity)
 
-    threading.Thread(target=runGUI).start()
+    if sys.argv[2] == 'go':
+        threading.Thread(target=runGUI).start()
 
     # now we navigate.
 
