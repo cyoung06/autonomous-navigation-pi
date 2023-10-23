@@ -130,11 +130,14 @@ if __name__ == '__main__':
                 f.write(pickle.dumps([pos, robot.orientation]))
 
             robot.platform.rotateCW(60)
+            robot.platform.waitForReady()
 
 
         if lastCell is not None:
             robot.platform.rotateCW(60)
+            robot.platform.waitForReady()
             robot.platform.goForward(100)
+            robot.platform.waitForReady()
 
 
         # listen for command
