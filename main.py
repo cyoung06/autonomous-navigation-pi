@@ -129,7 +129,8 @@ if __name__ == '__main__':
             return positionVector
 
         grid[currPos[1]][currPos[0]] = 1 # visited
-        print(f"Visited:  {currPos} : currGyro is {robot.imu.yaw} / {robot.imu.roll} / {robot.imu.pitch}")
+
+        print(f"Visited:  {currPos} : currGyro is {robot.orientation}")
 
         hasTarget = False
         for i in range(0,4):

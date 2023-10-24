@@ -38,6 +38,8 @@ class Robot:
 
     def _readI2C(self):
         while True:
+            self.imu.readSensor()
+            self.imu.computeOrientation()
             self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
             self.ultrasonic = self.sensors.readUltra()
             self.i2cUpdate = time.time()
