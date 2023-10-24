@@ -84,8 +84,12 @@ if __name__ == '__main__':
     currPos = (250, 250)
     currDirection = 0 # y+, x+, y-, x-
     directions = [(0,1), (1,0), (0, -1), (-1, 0)]
+    currDeg = robot.orientation[0]
+    targetSensorDegrees = [currDeg, currDeg + 90, currDeg + 180, currDeg + 270]
+    targetSensorDegrees = [val if val < 180 else val - 360 for val in targetSensorDegrees]
     currMoves = []
     visitedPoses = []
+
 
     while True:
         def amIsafe():
@@ -132,11 +136,37 @@ if __name__ == '__main__':
 
         print(f"Visited:  {currPos}")
 
+        print(f"Performing Course correction: {robot.orientation}")
+        supposedTobe = targetSensorDegrees[currDirection]
+        currentVal = robot.orientation[0]
+        robot.platform.rotateCW(supposedTobe - currentVal)
+
+        while True:
+            while amIsafe() and not robot.platform.isDone():
+                if welp > 0:
+                    welp = 0
+                    robot.platform.resume()
+                pass
+            if not amIsafe():
+                if welp == 0:
+                    robot.platform.stop()
+                welp += 1
+                time.sleep(0.1)
+                if welp == 10:
+                    raise Exception("noooo")
+                continue
+            break
+        print(f"Now at {robot.orientation} after coarse correction!")
+
+
         hasTarget = False
         for i in range(0,4):
             dir = directions[(currDirection + i) % 4]
             newPos = (currPos[0] + dir[0], currPos[1] + dir[1])
+
             print(f"Checking if i visited {newPos}? {grid[newPos[1]][newPos[0]]}")
+
+
             if (grid[newPos[1]][newPos[0]] != 0):
                 continue
 
