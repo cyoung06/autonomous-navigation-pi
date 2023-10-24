@@ -30,7 +30,7 @@ class StatusGUI:
         self.root.after(100, self.updateGUI)
         self.root.mainloop()
     def go(self):
-        self.robot.platform.goForward(50)
+        self.robot.platform.goForward(1000)
     def rotate(self):
         self.robot.platform.rotateCW(15)
 
