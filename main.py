@@ -148,7 +148,7 @@ if __name__ == '__main__':
                     robot.platform.stop()
                     raise Exception("noooo")
 
-            print("Ultrasonic says "+robot.ultrasonic)
+            print(f"Ultrasonic says {robot.ultrasonic}")
             if (robot.ultrasonic["forward"] != 0):  # fine to go
                 grid[newPos[1]][newPos[0]] = -1 # can't go
                 continue
