@@ -54,7 +54,7 @@ if __name__ == '__main__':
             pickle.dump(world, f)
         with open('mac_addrs.dat', 'wb') as f:
             pickle.dump(macAddrsToListenTo, f)
-        cam.stop()
+        # cam.stop()
 
 
     atexit.register(exit_handler)
@@ -72,10 +72,10 @@ if __name__ == '__main__':
 
     # now we navigate.
 
-    config = cam.create_still_configuration()
-    cam.configure(config)
-
-    cam.start()
+    # config = cam.create_still_configuration()
+    # cam.configure(config)
+    #
+    # cam.start()
 
 
     lastCell = None
