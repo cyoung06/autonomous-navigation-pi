@@ -143,7 +143,6 @@ if __name__ == '__main__':
             if i != 0:
                 print(f"B4 Rot: {robot.orientation}")
                 robot.platform.rotateCW(90 * i)
-                print(f"B4 Rot: {robot.orientation}")
                 currDirection = (currDirection + i) % 4
                 welp = 0
                 while True:
@@ -161,6 +160,7 @@ if __name__ == '__main__':
                             raise Exception("noooo")
                         continue
                     break
+                print(f"B4 Rot: {robot.orientation}")
             print(f"Ultrasonic says {robot.ultrasonic}")
             if (robot.ultrasonic["forward"] != 0):  # fine to go
                 grid[newPos[1]][newPos[0]] = -1 # can't go
