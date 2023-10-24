@@ -132,6 +132,9 @@ if __name__ == '__main__':
             positionVector = np.array(positionVector)
             return positionVector
 
+        while True:
+            print(f"Curr Pos: {robot.orientation}")
+
         grid[currPos[1]][currPos[0]] = 1 # visited
 
         print(f"Visited:  {currPos}")
