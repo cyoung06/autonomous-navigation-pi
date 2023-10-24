@@ -56,6 +56,44 @@ if __name__ == '__main__':
             pickle.dump(macAddrsToListenTo, f)
         # cam.stop()
 
+    def rotateTo(deg):
+        supposedTobe = deg
+        currentVal = robot.orientation[0]
+        print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
+        toMove = currentVal - supposedTobe
+        if toMove > 180:
+            toMove -= 360
+        if toMove < -180:
+            toMove += 360
+        while abs(toMove) > 1:
+            robot.platform.rotateCW(toMove)
+
+            welp = 0
+            while True:
+                while amIsafe() and not robot.platform.isDone():
+                    if welp > 0:
+                        welp = 0
+                        robot.platform.resume()
+                    pass
+                if not amIsafe():
+                    if welp == 0:
+                        robot.platform.stop()
+                    welp += 1
+                    time.sleep(0.1)
+                    if welp == 10:
+                        raise Exception("noooo")
+                    continue
+                break
+            time.sleep(0.5)
+
+            supposedTobe = deg
+            currentVal = robot.orientation[0]
+            toMove = currentVal - supposedTobe
+            if toMove > 180:
+                toMove -= 360
+            if toMove < -180:
+                toMove += 360
+            print(f"Performed Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
 
     atexit.register(exit_handler)
 
@@ -137,46 +175,9 @@ if __name__ == '__main__':
         print(f"Visited:  {currPos}")
 
         time.sleep(0.5)
-        supposedTobe = targetSensorDegrees[currDirection]
-        currentVal = robot.orientation[0]
-        print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
-        toMove = currentVal - supposedTobe
-        if toMove > 180:
-            toMove -= 360
-        if toMove < -180:
-            toMove += 360
-        while abs(toMove) > 1:
-            robot.platform.rotateCW(toMove)
-
-            welp = 0
-            while True:
-                while amIsafe() and not robot.platform.isDone():
-                    print(f"Performing Course correction: {robot.orientation} : {supposedTobe}")
-                    if welp > 0:
-                        welp = 0
-                        robot.platform.resume()
-                    pass
-                if not amIsafe():
-                    if welp == 0:
-                        robot.platform.stop()
-                    welp += 1
-                    time.sleep(0.1)
-                    if welp == 10:
-                        raise Exception("noooo")
-                    continue
-                break
-            time.sleep(0.5)
-
-            supposedTobe = targetSensorDegrees[currDirection]
-            currentVal = robot.orientation[0]
-            toMove = currentVal - supposedTobe
-            if toMove > 180:
-                toMove -= 360
-            if toMove < -180:
-                toMove += 360
-            print(f"Performed Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
         print(f"Now at {robot.orientation} after coarse correction!")
 
+        rotateTo(targetSensorDegrees[currDirection])
 
         hasTarget = False
         for i in range(0,4):
@@ -191,24 +192,9 @@ if __name__ == '__main__':
 
             if i != 0:
                 print(f"B4 Rot: {robot.orientation}")
-                robot.platform.rotateCW(90 * i)
+
                 currDirection = (currDirection + i) % 4
-                welp = 0
-                while True:
-                    while amIsafe() and not robot.platform.isDone():
-                        if welp > 0:
-                            welp = 0
-                            robot.platform.resume()
-                        pass
-                    if not amIsafe():
-                        if welp == 0:
-                            robot.platform.stop()
-                        welp += 1
-                        time.sleep(0.1)
-                        if welp == 10:
-                            raise Exception("noooo")
-                        continue
-                    break
+                rotateTo(targetSensorDegrees[currDirection])
                 print(f"B4 Rot: {robot.orientation}")
             print(f"Ultrasonic says {robot.ultrasonic}")
             if (robot.ultrasonic["forward"] != 0):  # fine to go
@@ -248,26 +234,8 @@ if __name__ == '__main__':
         currPos = visitedPoses.pop()
         wentDir = (prevPos[0] - currPos[0], prevPos[1] - currPos[1])
         realDir = directions.index(wentDir)
-        if realDir != currDirection:
-            robot.platform.rotateCW(90*(realDir - currDirection))
-            currDirection = realDir
-            welp = 0
-            while True:
-                while amIsafe() and not robot.platform.isDone():
-                    if welp > 0:
-                        welp = 0
-                        robot.platform.resume()
-                    pass
-                if not amIsafe():
-                    if welp == 0:
-                        robot.platform.stop()
-                    welp += 1
-                    time.sleep(0.1)
-                    if welp == 10:
-                        raise Exception("noooo")
-                    continue
-                break
-
+        currDirection = realDir
+        rotateTo(targetSensorDegrees[currDirection])
 
         robot.platform.goForward(-500)
         welp = 0
