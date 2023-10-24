@@ -27,9 +27,8 @@ class Robot:
 
         self.imu.begin()
 
-        # self.imu.loadCalibDataFromFile("./calib.json")
+        self.imu.loadCalibDataFromFile("./calib.json")
         self.imu.readSensor()
-        self.imu.caliberateMagPrecise()
         self.imu.computeOrientation()
 
         threading.Thread(target=self._readI2C, daemon=True).start()
