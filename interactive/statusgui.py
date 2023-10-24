@@ -21,10 +21,10 @@ class StatusGUI:
 
         button = Button(self.root, overrelief="solid", width=150, height=20,command=self.rotate, repeatdelay=1000,
                                 repeatinterval=100, text="rotate 15")
-        button.pack(side="bottom", fill="x")
+        button.pack(side="right", fill="y")
         button = Button(self.root, overrelief="solid", width=150, height=20, command=self.go, repeatdelay=1000,
                                 repeatinterval=100, text="go 50")
-        button.pack(side="bottom", fill="x")
+        button.pack(side="right", fill="y")
 
 
         self.root.after(100, self.updateGUI)
