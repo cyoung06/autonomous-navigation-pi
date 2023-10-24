@@ -139,7 +139,7 @@ if __name__ == '__main__':
         supposedTobe = targetSensorDegrees[currDirection]
         currentVal = robot.orientation[0]
         print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
-        if abs(supposedTobe - currentVal) > 1:
+        while abs(supposedTobe - currentVal) > 1:
             robot.platform.rotateCW(currentVal - supposedTobe)
 
             welp = 0
@@ -159,6 +159,10 @@ if __name__ == '__main__':
                         raise Exception("noooo")
                     continue
                 break
+
+            supposedTobe = targetSensorDegrees[currDirection]
+            currentVal = robot.orientation[0]
+            print(f"Performed Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
         print(f"Now at {robot.orientation} after coarse correction!")
 
 
