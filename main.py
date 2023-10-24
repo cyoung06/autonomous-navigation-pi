@@ -129,11 +129,13 @@ if __name__ == '__main__':
             return positionVector
 
         grid[currPos[1]][currPos[0]] = 1 # visited
+        print("Visited: "+currPos)
 
         hasTarget = False
         for i in range(0,4):
             dir = directions[(currDirection + i) % 4]
             newPos = currPos + dir
+            print(f"Checking if i visited {newPos}? {grid[newPos[1]][newPos[0]]}")
             if (grid[newPos[1]][newPos[0]] != 0):
                 continue
 
@@ -146,6 +148,7 @@ if __name__ == '__main__':
                     robot.platform.stop()
                     raise Exception("noooo")
 
+            print("Ultrasonic says "+robot.ultrasonic)
             if (robot.ultrasonic["forward"] != 0):  # fine to go
                 grid[newPos[1]][newPos[0]] = -1 # can't go
                 continue
