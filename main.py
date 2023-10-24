@@ -61,9 +61,9 @@ if __name__ == '__main__':
         currentVal = robot.orientation[0]
         print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
         toMove = currentVal - supposedTobe
-        if toMove > 180:
+        while toMove > 180:
             toMove -= 360
-        if toMove < -180:
+        while toMove < -180:
             toMove += 360
         while abs(toMove) > 1:
             robot.platform.rotateCW(toMove)
@@ -89,9 +89,9 @@ if __name__ == '__main__':
             supposedTobe = deg
             currentVal = robot.orientation[0]
             toMove = currentVal - supposedTobe
-            if toMove > 180:
+            while toMove > 180:
                 toMove -= 360
-            if toMove < -180:
+            while toMove < -180:
                 toMove += 360
             print(f"Performed Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
 
