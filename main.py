@@ -133,7 +133,7 @@ if __name__ == '__main__':
             return positionVector
 
         while True:
-            print(f"Curr Pos: {robot.orientation}")
+            print(f"Curr Pos: {robot.orientation} / {robot.imu.yaw}")
 
         grid[currPos[1]][currPos[0]] = 1 # visited
 
