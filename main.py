@@ -129,7 +129,7 @@ if __name__ == '__main__':
             return positionVector
 
         grid[currPos[1]][currPos[0]] = 1 # visited
-        print(f"Visited:  {currPos}")
+        print(f"Visited:  {currPos} : currGyro is {robot.imu.yaw} / {robot.imu.roll} / {robot.imu.pitch}")
 
         hasTarget = False
         for i in range(0,4):
@@ -197,8 +197,8 @@ if __name__ == '__main__':
         wentDir = (prevPos[0] - currPos[0], prevPos[1] - currPos[1])
         realDir = directions.index(wentDir)
         if realDir != currDirection:
-            currDirection = realDir
             robot.platform.rotateCW(90*(realDir - currDirection))
+            currDirection = realDir
             welp = 0
             while True:
                 while amIsafe() and not robot.platform.isDone():
