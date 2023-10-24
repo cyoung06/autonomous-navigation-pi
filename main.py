@@ -191,8 +191,33 @@ if __name__ == '__main__':
 
         if len(visitedPoses) == 0:
             break
-        robot.platform.goForward(-500)
 
+        prevPos = currPos
+        currPos = visitedPoses.pop()
+        wentDir = (prevPos[0] - currPos[0], prevPos[1] - currPos[1])
+        realDir = directions.index(wentDir)
+        if realDir != currDirection:
+            currDirection = realDir
+            robot.platform.rotateCW(90*(realDir - currDirection))
+            welp = 0
+            while True:
+                while amIsafe() and not robot.platform.isDone():
+                    if welp > 0:
+                        welp = 0
+                        robot.platform.resume()
+                    pass
+                if not amIsafe():
+                    if welp == 0:
+                        robot.platform.stop()
+                    welp += 1
+                    time.sleep(0.1)
+                    if welp == 10:
+                        raise Exception("noooo")
+                    continue
+                break
+
+
+        robot.platform.goForward(-500)
         welp = 0
         while True:
             while amIsafe() and not robot.platform.isDone():
@@ -209,7 +234,6 @@ if __name__ == '__main__':
                     raise Exception("noooo")
                 continue
             break
-        currPos = visitedPoses.pop()
 
     print(grid)
         # if not amIsafe():
