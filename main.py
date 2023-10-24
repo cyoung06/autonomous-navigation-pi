@@ -139,7 +139,7 @@ if __name__ == '__main__':
         supposedTobe = targetSensorDegrees[currDirection]
         currentVal = robot.orientation[0]
         print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {supposedTobe - currentVal}")
-        if supposedTobe - currentVal > 1:
+        if abs(supposedTobe - currentVal) > 1:
             robot.platform.rotateCW(supposedTobe - currentVal)
 
             welp = 0
