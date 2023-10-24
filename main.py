@@ -136,6 +136,7 @@ if __name__ == '__main__':
 
         print(f"Visited:  {currPos}")
 
+        time.sleep(0.5)
         supposedTobe = targetSensorDegrees[currDirection]
         currentVal = robot.orientation[0]
         print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
@@ -164,7 +165,7 @@ if __name__ == '__main__':
                         raise Exception("noooo")
                     continue
                 break
-            time.sleep(0.1)
+            time.sleep(0.5)
 
             supposedTobe = targetSensorDegrees[currDirection]
             currentVal = robot.orientation[0]
