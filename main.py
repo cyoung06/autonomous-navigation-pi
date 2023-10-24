@@ -134,7 +134,7 @@ if __name__ == '__main__':
         hasTarget = False
         for i in range(0,4):
             dir = directions[(currDirection + i) % 4]
-            newPos = currPos + dir
+            newPos = (currPos[0] + dir[0], currPos[1] + dir[1])
             print(f"Checking if i visited {newPos}? {grid[newPos[1]][newPos[0]]}")
             if (grid[newPos[1]][newPos[0]] != 0):
                 continue
