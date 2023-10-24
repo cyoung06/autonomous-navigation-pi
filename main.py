@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     lastCell = None
 
-    grid = [[0] * 500] * 500
+    grid = [[0] * 500 for i in range(0 ,500)]
     currPos = (250, 250)
     currDirection = 0 # y+, x+, y-, x-
     directions = [(0,1), (1,0), (0, -1), (-1, 0)]
