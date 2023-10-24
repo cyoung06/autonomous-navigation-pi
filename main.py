@@ -145,6 +145,7 @@ if __name__ == '__main__':
             welp = 0
             while True:
                 while amIsafe() and not robot.platform.isDone():
+                    print(f"Performing Course correction: {robot.orientation} : {supposedTobe}")
                     if welp > 0:
                         welp = 0
                         robot.platform.resume()
