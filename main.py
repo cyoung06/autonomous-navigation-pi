@@ -85,7 +85,7 @@ if __name__ == '__main__':
     currDirection = 0 # y+, x+, y-, x-
     directions = [(0,1), (1,0), (0, -1), (-1, 0)]
     currDeg = robot.orientation[0]
-    targetSensorDegrees = [currDeg, currDeg + 90, currDeg + 180, currDeg + 270]
+    targetSensorDegrees = [currDeg, currDeg + 270, currDeg + 180, currDeg + 90]
     targetSensorDegrees = [val if val < 180 else val - 360 for val in targetSensorDegrees]
     currMoves = []
     visitedPoses = []
@@ -132,18 +132,15 @@ if __name__ == '__main__':
             positionVector = np.array(positionVector)
             return positionVector
 
-        while True:
-            print(f"Curr Pos: {robot.orientation} / {robot.imu.yaw}")
-
         grid[currPos[1]][currPos[0]] = 1 # visited
 
         print(f"Visited:  {currPos}")
 
         supposedTobe = targetSensorDegrees[currDirection]
         currentVal = robot.orientation[0]
-        print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {supposedTobe - currentVal}")
+        print(f"Performing Course correction: {robot.orientation} : {supposedTobe} : {-supposedTobe + currentVal}")
         if abs(supposedTobe - currentVal) > 1:
-            robot.platform.rotateCW(supposedTobe - currentVal)
+            robot.platform.rotateCW(currentVal - supposedTobe)
 
             welp = 0
             while True:
