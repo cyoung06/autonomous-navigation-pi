@@ -79,6 +79,14 @@ if __name__ == '__main__':
 
 
     lastCell = None
+
+    grid = [[0] * 500] * 500
+    currPos = (250, 250)
+    currDirection = 0 # y+, x+, y-, x-
+    directions = [(0,1), (1,0), (0, -1), (-1, 0)]
+    currMoves = []
+    visitedPoses = []
+
     while True:
         def amIsafe():
             thresh = 10
@@ -120,42 +128,94 @@ if __name__ == '__main__':
             positionVector = np.array(positionVector)
             return positionVector
 
-        if not amIsafe():
-            pass
+        grid[currPos[1]][currPos[0]] = 1 # visited
 
-        for i in range(0, 6):
-            pos = measurePosition()
+        hasTarget = False
+        for i in range(0,4):
+            dir = directions[(currDirection + i) % 4]
+            newPos = currPos + dir
+            if (grid[newPos[1]][newPos[0]] != 0):
+                continue
 
-            np_array = cam.capture_array()
-            name = f"images/{int(time.time()*1000)}.jpg"
-            cam.capture_file(name)
-            with open(f'{name}.data', 'wb') as f:
-                f.write(pickle.dumps([pos, robot.orientation]))
+            if i != 0:
+                robot.platform.rotateCW(90 * i)
+                currDirection = (currDirection + i) % 4
+                while amIsafe() and not robot.platform.isDone():
+                    pass
+                if not amIsafe():
+                    robot.platform.stop()
+                    raise Exception("noooo")
 
-            robot.platform.rotateCW(60)
-            robot.platform.waitForReady()
+            if (robot.ultrasonic["forward"] != 0):  # fine to go
+                grid[newPos[1]][newPos[0]] = -1 # can't go
+                continue
 
+            robot.platform.goForward(100)
 
-        if lastCell is not None:
-            robot.platform.rotateCW(60)
-            robot.platform.waitForReady()
-            robot.platform.goForward(1000)
-            robot.platform.waitForReady()
+            while amIsafe() and not robot.platform.isDone():
+                pass
+            if not amIsafe():
+                robot.platform.stop()
+                raise Exception("noooo")
 
+            visitedPoses.append(currPos)
+            currPos = newPos
+            hasTarget = True
+            break
+        if hasTarget:
+            continue
 
-        # listen for command
+        if len(visitedPoses) == 0:
+            break
+        robot.platform.goForward(-100)
+        currPos = visitedPoses.pop()
 
-        positionVector = measurePosition()
-        dirVector = RelativePosition(-50 * 1.732, 50, 60)
-
-        cell, probability = world.get_cell(positionVector)
-        if probability < 0.8:
-            cell = Cell(positionVector)  # ehh
-
-        if lastCell is not None:
-            lastCell.connect(cell, dirVector)
-        world.add_cell(cell)
-        lastCell = cell
-
-        print(world)
-        pass
+    print(grid)
+        # if not amIsafe():
+        #     pass
+        #
+        # for i in range(0, 6):
+        #     pos = measurePosition()
+        #
+        #     np_array = cam.capture_array()
+        #     name = f"images/{int(time.time()*1000)}.jpg"
+        #     cam.capture_file(name)
+        #     with open(f'{name}.data', 'wb') as f:
+        #         f.write(pickle.dumps([pos, robot.orientation]))
+        #
+        #     robot.platform.rotateCW(60)
+        #     while amIsafe() and not robot.platform.isDone():
+        #         pass
+        #     if not amIsafe():
+        #         robot.platform.stop()
+        #
+        #
+        # if lastCell is not None:
+        #     robot.platform.rotateCW(60)
+        #     while amIsafe() and not robot.platform.isDone():
+        #         pass
+        #     if not amIsafe():
+        #         robot.platform.stop()
+        #
+        #     robot.platform.goForward(1000)
+        #     while amIsafe() and not robot.platform.isDone():
+        #         pass
+        #     if not amIsafe():
+        #         robot.platform.stop()
+        #
+        # # listen for command
+        #
+        # positionVector = measurePosition()
+        # dirVector = RelativePosition(-50 * 1.732, 50, 60)
+        #
+        # cell, probability = world.get_cell(positionVector)
+        # if probability < 0.8:
+        #     cell = Cell(positionVector)  # ehh
+        #
+        # if lastCell is not None:
+        #     lastCell.connect(cell, dirVector)
+        # world.add_cell(cell)
+        # lastCell = cell
+        #
+        # print(world)
+        # pass
