@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 grid[newPos[1]][newPos[0]] = -1 # can't go
                 continue
 
-            robot.platform.goForward(100)
+            robot.platform.goForward(500)
 
             while amIsafe() and not robot.platform.isDone():
                 pass
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 
         if len(visitedPoses) == 0:
             break
-        robot.platform.goForward(-100)
+        robot.platform.goForward(-500)
         currPos = visitedPoses.pop()
 
     print(grid)
