@@ -171,6 +171,12 @@ if __name__ == '__main__':
         if len(visitedPoses) == 0:
             break
         robot.platform.goForward(-500)
+
+        while amIsafe() and not robot.platform.isDone():
+            pass
+        if not amIsafe():
+            robot.platform.stop()
+            raise Exception("noooo")
         currPos = visitedPoses.pop()
 
     print(grid)
