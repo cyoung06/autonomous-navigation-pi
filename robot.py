@@ -43,7 +43,7 @@ class Robot:
             self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
             self.ultrasonic = self.sensors.readUltra()
             self.i2cUpdate = time.time()
-            time.sleep(0.05)
+            time.sleep(0.01)
 
     def _readRouters(self):
         while True:
