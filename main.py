@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
         grid[currPos[1]][currPos[0]] = 1 # visited
 
-        print(f"Visited:  {currPos} : currGyro is {robot.orientation}")
+        print(f"Visited:  {currPos}")
 
         hasTarget = False
         for i in range(0,4):
@@ -141,7 +141,9 @@ if __name__ == '__main__':
                 continue
 
             if i != 0:
+                print(f"B4 Rot: {robot.orientation}")
                 robot.platform.rotateCW(90 * i)
+                print(f"B4 Rot: {robot.orientation}")
                 currDirection = (currDirection + i) % 4
                 welp = 0
                 while True:
