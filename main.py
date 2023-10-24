@@ -164,6 +164,7 @@ if __name__ == '__main__':
                         raise Exception("noooo")
                     continue
                 break
+            time.sleep(0.1)
 
             supposedTobe = targetSensorDegrees[currDirection]
             currentVal = robot.orientation[0]
