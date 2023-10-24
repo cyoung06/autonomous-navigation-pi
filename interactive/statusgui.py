@@ -19,10 +19,10 @@ class StatusGUI:
         Label(self.root, textvariable=self.statusLabel, width= 1000, height=100)\
             .pack(side="left", fill="y")
 
-        button = Button(self.root, overrelief="solid", width=15, command=self.rotate, repeatdelay=1000,
+        button = Button(self.root, overrelief="solid", width=150, height=20,command=self.rotate, repeatdelay=1000,
                                 repeatinterval=100, text="rotate 15")
         button.pack(side="bottom", fill="x")
-        button = Button(self.root, overrelief="solid", width=15, command=self.go, repeatdelay=1000,
+        button = Button(self.root, overrelief="solid", width=150, height=20, command=self.go, repeatdelay=1000,
                                 repeatinterval=100, text="go 50")
         button.pack(side="bottom", fill="x")
 
