@@ -129,7 +129,7 @@ if __name__ == '__main__':
             return positionVector
 
         grid[currPos[1]][currPos[0]] = 1 # visited
-        print("Visited: "+currPos)
+        print(f"Visited:  {currPos}")
 
         hasTarget = False
         for i in range(0,4):
