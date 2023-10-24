@@ -141,6 +141,7 @@ if __name__ == '__main__':
         currentVal = robot.orientation[0]
         robot.platform.rotateCW(supposedTobe - currentVal)
 
+        welp = 0
         while True:
             while amIsafe() and not robot.platform.isDone():
                 if welp > 0:
