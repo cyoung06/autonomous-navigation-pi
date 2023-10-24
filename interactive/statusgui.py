@@ -19,8 +19,21 @@ class StatusGUI:
         Label(self.root, textvariable=self.statusLabel, width= 1000, height=100)\
             .pack(side="left", fill="y")
 
+        button = Button(self.root, overrelief="solid", width=15, command=self.rotate, repeatdelay=1000,
+                                repeatinterval=100, text="rotate 15")
+        button.pack()
+        button = Button(self.root, overrelief="solid", width=15, command=self.go, repeatdelay=1000,
+                                repeatinterval=100, text="go 50")
+        button.pack()
+
+
         self.root.after(100, self.updateGUI)
         self.root.mainloop()
+    def go(self):
+        self.robot.platform.goForward(50)
+    def rotate(self):
+        self.robot.platform.rotateCW(15)
+
 
     def updateGUI(self):
         currrouters = '\n'.join([str(router) for router in self.robot.routers])
