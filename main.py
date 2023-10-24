@@ -142,12 +142,22 @@ if __name__ == '__main__':
             if i != 0:
                 robot.platform.rotateCW(90 * i)
                 currDirection = (currDirection + i) % 4
-                while amIsafe() and not robot.platform.isDone():
-                    pass
-                if not amIsafe():
-                    robot.platform.stop()
-                    raise Exception("noooo")
-
+                welp = 0
+                while True:
+                    while amIsafe() and not robot.platform.isDone():
+                        if welp > 0:
+                            welp = 0
+                            robot.platform.resume()
+                        pass
+                    if not amIsafe():
+                        if welp == 0:
+                            robot.platform.stop()
+                        welp += 1
+                        time.sleep(0.1)
+                        if welp == 10:
+                            raise Exception("noooo")
+                        continue
+                    break
             print(f"Ultrasonic says {robot.ultrasonic}")
             if (robot.ultrasonic["forward"] != 0):  # fine to go
                 grid[newPos[1]][newPos[0]] = -1 # can't go
@@ -155,11 +165,22 @@ if __name__ == '__main__':
 
             robot.platform.goForward(500)
 
-            while amIsafe() and not robot.platform.isDone():
-                pass
-            if not amIsafe():
-                robot.platform.stop()
-                raise Exception("noooo")
+            welp = 0
+            while True:
+                while amIsafe() and not robot.platform.isDone():
+                    if welp > 0:
+                        welp = 0
+                        robot.platform.resume()
+                    pass
+                if not amIsafe():
+                    if welp == 0:
+                        robot.platform.stop()
+                    welp += 1
+                    time.sleep(0.1)
+                    if welp == 10:
+                        raise Exception("noooo")
+                    continue
+                break
 
             visitedPoses.append(currPos)
             currPos = newPos
@@ -172,11 +193,22 @@ if __name__ == '__main__':
             break
         robot.platform.goForward(-500)
 
-        while amIsafe() and not robot.platform.isDone():
-            pass
-        if not amIsafe():
-            robot.platform.stop()
-            raise Exception("noooo")
+        welp = 0
+        while True:
+            while amIsafe() and not robot.platform.isDone():
+                if welp > 0:
+                    welp = 0
+                    robot.platform.resume()
+                pass
+            if not amIsafe():
+                if welp == 0:
+                    robot.platform.stop()
+                welp += 1
+                time.sleep(0.1)
+                if welp == 10:
+                    raise Exception("noooo")
+                continue
+            break
         currPos = visitedPoses.pop()
 
     print(grid)
