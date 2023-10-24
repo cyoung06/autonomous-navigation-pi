@@ -47,7 +47,7 @@ def runGUI():
 
 
 if __name__ == '__main__':
-    cam = Picamera2()
+    # cam = Picamera2()
     def exit_handler():
         print('My application is ending!')
         with open('world.dat', 'wb') as f:
