@@ -29,7 +29,7 @@ print ("Mag caliberation Finished")
 print (imu.MagBias)
 print (imu.Magtransform)
 print (imu.Mags)
-imu.saveCalibDataToFile("calib_real_bolder.json")
+imu.saveCalibDataToFile("./calib_real_bolder.json")
 
 while True:
 	imu.readSensor()
