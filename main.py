@@ -101,9 +101,6 @@ if __name__ == '__main__':
 
     while True:
 
-        print(robot.orientation)
-        continue
-
         def measurePosition() -> ndarray:
             measurements = 0
             currentMeasurement = robot.routers
