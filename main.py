@@ -165,7 +165,7 @@ if __name__ == '__main__':
                 grid[newPos[1]][newPos[0]] = -1 # can't go
                 continue
 
-            robot.goForward(500)
+            robot.goForward(1000)
 
             visitedPoses.append(currPos)
             currPos = newPos
@@ -184,7 +184,7 @@ if __name__ == '__main__':
         currDirection = realDir
         robot.rotateTo(targetSensorDegrees[currDirection])
 
-        robot.goForward(-100)
+        robot.goForward(-1000)
 
     # print(grid)
         # if not amIsafe():
