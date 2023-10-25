@@ -84,7 +84,7 @@ class Robot:
             time.sleep(0.01)
 
     def amIsafe(self):
-            thresh = 7
+            thresh = 10
             return self.ultrasonic["front"] < thresh and \
                 self.ultrasonic["left"] < thresh and \
                 self.ultrasonic["right"] < thresh
