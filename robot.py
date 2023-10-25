@@ -56,7 +56,7 @@ class Robot:
         while True:
             self.imu.readSensor()
             self.imu.computeOrientation()
-            self.orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
+            self.smh_orientation = [self.imu.yaw, self.imu.roll, self.imu.pitch]
             self.ultrasonic = self.sensors.readUltra()
 
             newTime = time.time()
@@ -67,7 +67,7 @@ class Robot:
                                                       self.imu.GyroVals[0], self.imu.GyroVals[1], self.imu.GyroVals[2], \
                                                       self.imu.MagVals[0], self.imu.MagVals[1], self.imu.MagVals[2], dt)
 
-            self.smh_orientation = [self.sensorfusion.yaw, self.sensorfusion.roll, self.sensorfusion.pitch]
+            self.orientation = [self.sensorfusion.yaw, self.sensorfusion.roll, self.sensorfusion.pitch]
 
             time.sleep(0.01)
 
