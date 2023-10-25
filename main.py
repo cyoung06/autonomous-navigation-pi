@@ -102,7 +102,7 @@ if __name__ == '__main__':
     while True:
 
         print(robot.orientation)
-        pass
+        continue
 
         def measurePosition() -> ndarray:
             measurements = 0
