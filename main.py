@@ -130,6 +130,11 @@ if __name__ == '__main__':
 
 
     while True:
+        print(robot.orientation)
+        print(robot.imu.AccelVals)
+        print(robot.imu.GyroVals)
+        print("----")
+        time.sleep(0.1)
         pass
         # def amIsafe():
         #     thresh = 10
