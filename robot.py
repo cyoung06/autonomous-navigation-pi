@@ -99,6 +99,7 @@ class Robot:
             toMove -= 360
         while toMove < -180:
             toMove += 360
+        time.sleep(0.05)
         while abs(toMove) > 2:
             print(f"Performing rotation!: {self.orientation} : {supposedTobe} : {toMove}")
             self.platform.rotateCW(toMove/2)
@@ -123,6 +124,7 @@ class Robot:
             supposedTobe = deg
             currentVal = self.orientation[0]
             toMove = currentVal - supposedTobe
+            time.sleep(0.05)
             while toMove > 180:
                 toMove -= 360
             while toMove < -180:
