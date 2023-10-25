@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     lastCell = None
 
-    time.sleep(20)
+    # time.sleep(20)
     grid = [[0] * 500 for i in range(0 ,500)]
     currPos = (250, 250)
     currDirection = 0 # y+, x+, y-, x-
@@ -100,6 +100,10 @@ if __name__ == '__main__':
 
 
     while True:
+
+        while True:
+            robot.goForward(500)
+            robot.justRotate(120)
 
         def measurePosition() -> ndarray:
             measurements = 0
