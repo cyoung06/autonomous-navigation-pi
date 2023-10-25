@@ -130,6 +130,7 @@ if __name__ == '__main__':
 
 
     while True:
+        print(robot.old_orientation)
         print(robot.orientation)
         print(robot.imu.AccelVals)
         print(robot.imu.GyroVals)
