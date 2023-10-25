@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     lastCell = None
 
-    time.sleep(10)
+    time.sleep(20)
     grid = [[0] * 500 for i in range(0 ,500)]
     currPos = (250, 250)
     currDirection = 0 # y+, x+, y-, x-
