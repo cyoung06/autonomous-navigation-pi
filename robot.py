@@ -81,3 +81,86 @@ class Robot:
 
             self.routerUpdate = time.time()
             time.sleep(0.01)
+
+    def amIsafe(self):
+            thresh = 7
+            return self.ultrasonic["front"] < thresh and \
+                self.ultrasonic["left"] < thresh and \
+                self.ultrasonic["right"] < thresh
+
+
+
+    def rotateTo(self, deg):
+        supposedTobe = deg
+        time.sleep(0.03)
+        currentVal = self.orientation[0]
+        toMove = currentVal - supposedTobe
+        while toMove > 180:
+            toMove -= 360
+        while toMove < -180:
+            toMove += 360
+        while abs(toMove) > 1:
+            print(f"Performing rotation!: {self.orientation} : {supposedTobe} : {toMove}")
+            self.platform.rotateCW(toMove)
+
+            welp = 0
+            while True:
+                while self.amIsafe() and not self.platform.isDone():
+                    if welp > 0:
+                        welp = 0
+                        self.platform.resume()
+                    pass
+                if not self.amIsafe():
+                    if welp == 0:
+                        self.platform.stop()
+                    welp += 1
+                    time.sleep(0.1)
+                    if welp == 10:
+                        raise Exception("noooo")
+                    continue
+                break
+            time.sleep(0.5)
+
+            supposedTobe = deg
+            currentVal = self.orientation[0]
+            toMove = currentVal - supposedTobe
+            while toMove > 180:
+                toMove -= 360
+            while toMove < -180:
+                toMove += 360
+    def justRotate(self, deg):
+        self.platform.rotateCW(deg)
+        welp = 0
+        while True:
+            while self.amIsafe() and not self.platform.isDone():
+                if welp > 0:
+                    welp = 0
+                    self.platform.resume()
+                pass
+            if not self.amIsafe():
+                if welp == 0:
+                    self.platform.stop()
+                welp += 1
+                time.sleep(0.1)
+                if welp == 10:
+                    raise Exception("noooo")
+                continue
+            break
+    def goForward(self, dist):
+        self.platform.goForward(dist)
+        welp = 0
+        while True:
+            while self.amIsafe() and not self.platform.isDone():
+                if welp > 0:
+                    welp = 0
+                    self.platform.resume()
+                pass
+            if not self.amIsafe():
+                if welp == 0:
+                    self.platform.stop()
+                welp += 1
+                time.sleep(0.1)
+                if welp == 10:
+                    raise Exception("noooo")
+                continue
+            break
