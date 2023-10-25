@@ -1,3 +1,4 @@
+import numpy
 import smbus2
 from peripherals.wifi import get_nearby_routers
 from peripherals.sensors_i2c import Sensors
@@ -101,7 +102,7 @@ class Robot:
             toMove += 360
         while abs(toMove) > 1:
             print(f"Performing rotation!: {self.orientation} : {supposedTobe} : {toMove}")
-            self.platform.rotateCW(toMove/100)
+            self.platform.rotateCW(numpy.clip([toMove], -10, 10)[0])
 
             welp = 0
             while True:
