@@ -93,7 +93,6 @@ class Robot:
 
     def rotateTo(self, deg):
         supposedTobe = deg
-        time.sleep(0.03)
         currentVal = self.orientation[0]
         toMove = currentVal - supposedTobe
         while toMove > 180:
@@ -115,12 +114,11 @@ class Robot:
                     if welp == 0:
                         self.platform.stop()
                     welp += 1
-                    time.sleep(0.1)
+                    time.sleep(0.5)
                     if welp == 10:
                         raise Exception("noooo")
                     continue
                 break
-            time.sleep(0.5)
 
             supposedTobe = deg
             currentVal = self.orientation[0]
