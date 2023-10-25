@@ -102,8 +102,14 @@ if __name__ == '__main__':
     while True:
 
         while True:
-            robot.goForward(500)
-            robot.justRotate(120)
+            robot.platform.goVector((500,0), 500)
+            robot.platform.waitForReady()
+            robot.platform.goVector((0,-500), 500)
+            robot.platform.waitForReady()
+            robot.platform.goVector((-500,0), 500)
+            robot.platform.waitForReady()
+            robot.platform.goVector((0,500), 500)
+            robot.platform.waitForReady()
 
         def measurePosition() -> ndarray:
             measurements = 0
