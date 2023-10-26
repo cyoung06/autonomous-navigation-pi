@@ -120,7 +120,7 @@ if __name__ == '__main__':
         lastCell = Cell(pos)
         world.add_cell(lastCell)
 
-    toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, 270, 1000]]
+    toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, -90, 1000]]
     while True:
         cell, dir, dist = toVisit.pop()
         print(f"Curr at {cell}")
@@ -176,7 +176,7 @@ if __name__ == '__main__':
         toVisit.append([currCell, 0, 1000])
         toVisit.append([currCell, 90, 1000])
         toVisit.append([currCell, 180, 1000])
-        toVisit.append([currCell, 270, 1000])
+        toVisit.append([currCell, -90, 1000])
         # move to cell
 
 
