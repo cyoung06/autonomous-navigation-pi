@@ -117,7 +117,7 @@ if __name__ == '__main__':
         if prob > 10:
             cell = Cell(pos)
             world.add_cell(cell)
-            if (gui != None):
+            if gui is not None:
                 gui.newCell(cell)
         return cell, prob <= 10
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
                     robot.justRotate(part.rot)
                 else:
                     robot.goForward(part.dy)
-                if gui != None:
+                if gui is not None:
                     gui.focus(part.target)
 
 
@@ -152,9 +152,10 @@ if __name__ == '__main__':
 
         currCell, isNotNew = getCell(measurePosition())
         hmm = currCell.connect(lastCell, RelativePosition(0, 0, -dir))
-        gui.newConnection(hmm)
+        if gui is not None:
+            gui.newConnection(hmm)
         lastCell = currCell
-        if gui != None:
+        if gui is not None:
             gui.focus(lastCell)
 
         if isNotNew:
@@ -169,9 +170,10 @@ if __name__ == '__main__':
 
         currCell, isNotNew = getCell(measurePosition())
         hmm = currCell.connect(lastCell, RelativePosition(0, -dist, 0))
-        gui.newConnection(hmm)
+        if gui is not None:
+            gui.newConnection(hmm)
         lastCell = currCell
-        if gui != None:
+        if gui is not None:
             gui.focus(lastCell)
         if isNotNew:
             continue
