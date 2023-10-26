@@ -142,7 +142,7 @@ if __name__ == '__main__':
             gui.focus(lastCell)
 
         print(f"Ultra: {robot.ultrasonic}")
-        if robot.ultrasonic["front"] != 0:
+        if robot.ultrasonic["forward"] != 0:
             continue
         robot.goForward(dist)
 
