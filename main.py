@@ -141,6 +141,10 @@ if __name__ == '__main__':
         if gui != None:
             gui.focus(lastCell)
 
+        if prob >= 0.9:
+            print("OMG MATCH")
+            continue
+
         print(f"Ultra: {robot.ultrasonic}")
         if robot.ultrasonic["forward"] != 0:
             continue
@@ -151,10 +155,13 @@ if __name__ == '__main__':
         if prob < 0.9:
             currCell = Cell(pos)
             world.add_cell(currCell)
-        currCell.connect(lastCell, RelativePosition(0, dist, 0))
+        currCell.connect(lastCell, RelativePosition(0, -dist, 0))
         lastCell = currCell
         if gui != None:
             gui.focus(lastCell)
+        if prob >= 0.9:
+            print("OMG MATCH")
+            continue
 
         toVisit.append([currCell, 0, 1000])
         toVisit.append([currCell, 90, 1000])
