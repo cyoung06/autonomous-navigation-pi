@@ -85,6 +85,7 @@ if __name__ == '__main__':
         while measurements < 3:
             while robot.routerUpdate == lastMeasurement:
                 pass
+            lastMeasurement = robot.routerUpdate
 
             measurements += 1
             if len(macAddrMapping) < maxMacAddrs:
