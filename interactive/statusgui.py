@@ -32,13 +32,13 @@ class StatusGUI:
         running = True
         glTranslatef(0.0, 0.0, -5)
         while running:
+            glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
             # Did the user click the window close button?
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
             # Fill the background with white
-            screen.fill((255, 255, 255))
             if self.focusedCell == None:
                 continue
 
@@ -62,6 +62,8 @@ class StatusGUI:
 
             # Flip the display
             pygame.display.flip()
+            pygame.time.wait(10)
+
 
         # Done! Time to quit.
         pygame.quit()
