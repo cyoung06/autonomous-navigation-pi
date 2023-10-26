@@ -66,6 +66,10 @@ if __name__ == '__main__':
     else:
         world = World(similarity)
 
+    print("CELLS: ")
+    for cell in world.nodes:
+        print(f"Pos: {cell.position}")
+
     if sys.argv[2] == 'go':
         threading.Thread(target=runGUI).start()
 
@@ -106,9 +110,10 @@ if __name__ == '__main__':
 
     pos = measurePosition()
     lastCell, prob = world.get_cell(pos)
-    if prob < 0:
+    if prob < 0.9:
         lastCell = Cell(pos)
         world.add_cell(lastCell)
+    print(f"OMG MATCH! \nCell vec: {lastCell.position}\nCurr Vec: {pos}")
 
     toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, 270, 1000]]
     while True:
