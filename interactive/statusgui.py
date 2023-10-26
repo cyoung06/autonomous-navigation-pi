@@ -30,6 +30,7 @@ class StatusGUI:
 
         # Run until the user asks to quit
         running = True
+        glTranslatef(0.0, 0.0, -5)
         while running:
 
             # Did the user click the window close button?
