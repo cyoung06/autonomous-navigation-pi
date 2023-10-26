@@ -50,7 +50,7 @@ class StatusGUI:
                 glBegin(GL_TRIANGLE_STRIP)
                 glVertex2d(0, 5)
                 glVertex2d(3, 9)
-                glVertex2d(-3, -9)
+                glVertex2d(-3, 5)
                 glEnd()
                 for neighbor in cell.neighbors:
                     glPushMatrix()
