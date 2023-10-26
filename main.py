@@ -132,7 +132,7 @@ if __name__ == '__main__':
         pos = measurePosition()
 
         currCell, prob = world.get_cell(pos)
-        if prob < 0:
+        if prob < 0.9:
             currCell = Cell(pos)
             world.add_cell(currCell)
         currCell.connect(lastCell, RelativePosition(0, 0, -dir))
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
 
         currCell, prob = world.get_cell(pos)
-        if prob < 0:
+        if prob < 0.9:
             currCell = Cell(pos)
             world.add_cell(currCell)
         currCell.connect(lastCell, RelativePosition(0, dist, 0))
