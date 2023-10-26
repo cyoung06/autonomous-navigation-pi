@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
     def getCell(pos):
         cell, prob = world.get_cell(pos)
-        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
+        print(f"OMG MATCH! \nCell vec: {cell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         if prob > 10:
             cell = Cell(pos)
             world.add_cell(cell)
