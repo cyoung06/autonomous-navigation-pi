@@ -1,3 +1,4 @@
+import math
 import os.path
 import sys
 import threading
@@ -23,8 +24,11 @@ print(sys.path)
 
 
 def similarity(v1: ndarray, v2: ndarray):
-    return numpy.linalg.norm(v1 - v2)
-
+    dist = 0
+    for i in range(0, len(v1)):
+        if v1[i] != 0 and v2[i] !=0:
+            dist += (v1[i]-v2[i]) ** 2
+    return math.sqrt(dist)
 
 if os.path.isfile('mac_addrs.dat'):
     with open('mac_addrs.dat', 'rb') as f:
