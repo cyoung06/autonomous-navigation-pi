@@ -113,9 +113,10 @@ if __name__ == '__main__':
     toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, 270, 1000]]
     while True:
         cell, dir, dist = toVisit.pop()
-
+        print(f"Curr at {cell}")
         if lastCell != cell:
             path = find_path(lastCell, cell, world)
+            print(f"Found path! {path}")
             for part in path:
                 if part.rot > 0:
                     robot.justRotate(part.rot)
@@ -140,6 +141,7 @@ if __name__ == '__main__':
         if gui != None:
             gui.focus(lastCell)
 
+        print(f"Ultra: {robot.ultrasonic}")
         if robot.ultrasonic["front"] != 0:
             continue
         robot.goForward(dist)
