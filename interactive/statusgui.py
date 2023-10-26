@@ -1,42 +1,66 @@
-from tkinter import *
+from threading import Thread
+
+import pygame
+from pygame import DOUBLEBUF, OPENGL
 
 from robot import Robot
 from navigation.world import World
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 class StatusGUI:
-    def __init__(self, robot: Robot, world: World):
-        self.robot = robot
+    def __init__(self, world: World):
         self.world = world
+        self.focusedCell = None
 
+        Thread(target=self.run, daemon=True).start()
 
-        self.root = Tk()
-        self.root.geometry('1000x1000')
+    def focus(self, cell):
+        self.focusedCell = cell
 
-        self.statusLabel = StringVar()
-        self.macAddrsToListenTo = []
-        self.statusLabel.set('hello')
+    def run(self):
+        pygame.init()
 
-        Label(self.root, textvariable=self.statusLabel, width= 1000, height=100)\
-            .pack(side="left", fill="y")
+        display = (800, 600)
+        pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 
-        button = Button(self.root, overrelief="solid", width=150, height=20,command=self.rotate, repeatdelay=1000,
-                                repeatinterval=100, text="rotate 15")
-        button.place(x=0, y=0)
-        button = Button(self.root, overrelief="solid", width=150, height=20, command=self.go, repeatdelay=1000,
-                                repeatinterval=100, text="go 50")
-        button.place(x=0, y=30)
+        gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+        # Set up the drawing window
+        screen = pygame.display.set_mode([500, 500])
 
+        # Run until the user asks to quit
+        running = True
+        while running:
 
-        self.root.after(100, self.updateGUI)
-        self.root.mainloop()
-    def go(self):
-        self.robot.platform.goForward(1000)
-    def rotate(self):
-        self.robot.platform.rotateCW(15)
+            # Did the user click the window close button?
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            # Fill the background with white
+            screen.fill((255, 255, 255))
+            if self.focusedCell == None:
+                continue
 
+            visited = []
+            def drawTriangle(cell):
+                if cell in visited:
+                    return
+                visited.append(cell)
+                glBegin(GL_TRIANGLE_FAN)
+                glVertex2d(0, 5)
+                glVertex2d(1, 4)
+                glVertex2d(-1, -4)
+                glEnd()
+                for neighbor in cell.neighbors:
+                    glPushMatrix()
+                    glRotate(neighbor.rel_pos.rot, 0, 0, 1)
+                    glTranslate(neighbor.rel_pos.dx, neighbor.rel_pos.dy / 50, 0)
+                    drawTriangle(neighbor.target)
+                    glPopMatrix()
+            drawTriangle(self.focusedCell)
 
-    def updateGUI(self):
-        currrouters = '\n'.join([str(router) for router in self.robot.routers])
-        targetrouters = '\n'.join(self.macAddrsToListenTo)
-        self.statusLabel.set(f'Orientation: {self.robot.orientation}\nFloor: {self.robot.ultrasonic}\nRouters\n{currrouters}\n\nTarget:{targetrouters}')
-        self.root.after(100, self.updateGUI)
+            # Flip the display
+            pygame.display.flip()
+
+        # Done! Time to quit.
+        pygame.quit()
