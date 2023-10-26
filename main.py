@@ -146,13 +146,13 @@ if __name__ == '__main__':
         if prob > 10:
             currCell = Cell(pos)
             world.add_cell(currCell)
+        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         currCell.connect(lastCell, RelativePosition(0, 0, -dir))
         lastCell = currCell
         if gui != None:
             gui.focus(lastCell)
 
         if prob <= 10:
-            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
             continue
 
         print(f"Ultra: {robot.ultrasonic}")
@@ -165,6 +165,7 @@ if __name__ == '__main__':
         if prob > 10:
             currCell = Cell(pos)
             world.add_cell(currCell)
+        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         currCell.connect(lastCell, RelativePosition(0, -dist, 0))
         lastCell = currCell
         if gui != None:
