@@ -142,7 +142,7 @@ if __name__ == '__main__':
             gui.focus(lastCell)
 
         if prob >= 0.9:
-            print("OMG MATCH")
+            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}")
             continue
 
         print(f"Ultra: {robot.ultrasonic}")
@@ -160,7 +160,7 @@ if __name__ == '__main__':
         if gui != None:
             gui.focus(lastCell)
         if prob >= 0.9:
-            print("OMG MATCH")
+            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}")
             continue
 
         toVisit.append([currCell, 0, 1000])
