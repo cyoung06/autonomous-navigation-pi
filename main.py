@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
         positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
                           range(len(positionVector))]  # average them out
-        positionVector[-1] = currentRot[1]
+        positionVector[-1] = currentRot[0]
         positionVector = np.array(positionVector)
         return positionVector
 
