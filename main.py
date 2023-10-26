@@ -111,6 +111,16 @@ if __name__ == '__main__':
         positionVector = np.array(positionVector)
         return positionVector
 
+    def getCell(pos):
+        cell, prob = world.get_cell(pos)
+        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
+        if prob > 10:
+            cell = Cell(pos)
+            world.add_cell(cell)
+            if (gui != None):
+                gui.newCell(cell)
+        return cell, prob <= 10
+
     pos = measurePosition()
     robot.justRotate(90)
     robot.justRotate(-90)
@@ -140,19 +150,14 @@ if __name__ == '__main__':
 
         robot.justRotate(dir)
 
-        pos = measurePosition()
-
-        currCell, prob = world.get_cell(pos)
-        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
-        if prob > 10:
-            currCell = Cell(pos)
-            world.add_cell(currCell)
-        currCell.connect(lastCell, RelativePosition(0, 0, -dir))
+        currCell, isNotNew = getCell(measurePosition())
+        hmm = currCell.connect(lastCell, RelativePosition(0, 0, -dir))
+        gui.newConnection(hmm)
         lastCell = currCell
         if gui != None:
             gui.focus(lastCell)
 
-        if prob <= 10:
+        if isNotNew:
             continue
 
         print(f"Ultra: {robot.ultrasonic}")
@@ -161,16 +166,14 @@ if __name__ == '__main__':
         robot.goForward(dist)
 
 
-        currCell, prob = world.get_cell(pos)
-        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
-        if prob > 10:
-            currCell = Cell(pos)
-            world.add_cell(currCell)
-        currCell.connect(lastCell, RelativePosition(0, -dist, 0))
+
+        currCell, isNotNew = getCell(measurePosition())
+        hmm = currCell.connect(lastCell, RelativePosition(0, -dist, 0))
+        gui.newConnection(hmm)
         lastCell = currCell
         if gui != None:
             gui.focus(lastCell)
-        if prob <= 10:
+        if isNotNew:
             continue
 
         toVisit.append([currCell, 0, 1000])

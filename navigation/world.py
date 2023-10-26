@@ -37,8 +37,10 @@ class Cell:
         self.neighbors: List[Cell.Connection] = []
 
     def connect(self, target, rel_pos: RelativePosition):
-        self.neighbors.append(Cell.Connection(self, target, rel_pos))
-        target.neighbors.append(Cell.Connection(target, self, rel_pos.reverse()))
+        stuff = [Cell.Connection(self, target, rel_pos), Cell.Connection(target, self, rel_pos.reverse())]
+        self.neighbors.append(stuff[0])
+        target.neighbors.append(stuff[1])
+        return stuff
 
 
 class World:
