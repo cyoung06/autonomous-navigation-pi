@@ -103,7 +103,7 @@ if __name__ == '__main__':
                     positionVector[v] += currentMeasurement[k]
                     measurementsPer[v] += 1
 
-            print(measurementsPer)
+            print(positionVector)
 
         positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
                           range(len(positionVector))]  # average them out
