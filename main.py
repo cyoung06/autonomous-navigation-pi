@@ -102,14 +102,8 @@ if __name__ == '__main__':
     while True:
 
         while True:
-            robot.platform.goVector((500,0), 500)
-            robot.platform.waitForReady()
-            robot.platform.goVector((0,-500), 500)
-            robot.platform.waitForReady()
-            robot.platform.goVector((-500,0), 500)
-            robot.platform.waitForReady()
-            robot.platform.goVector((0,500), 500)
-            robot.platform.waitForReady()
+            print(robot.imu.GyroVals)
+            time.sleep(0.01)
 
         def measurePosition() -> ndarray:
             measurements = 0
