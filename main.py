@@ -125,7 +125,7 @@ if __name__ == '__main__':
         cell, dir, dist = toVisit.pop()
         print(f"Curr at {cell}")
         if lastCell != cell:
-            path = find_path(lastCell, cell, world)
+            path = find_path(lastCell.position, cell.position, world)
             print(f"Found path! {path}")
             for part in path:
                 if part.rot > 0:
