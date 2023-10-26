@@ -18,7 +18,7 @@ def find_path(origin: array, target: array, world: World):
 
     while queue:  # queue에 남아 있는 노드가 없으면 끝
         current_distance, current_destination = heapq.heappop(queue)  # 탐색 할 노드, 거리를 가져옴.
-
+        print(f"Checking {current_distance} {current_destination}")
         if distances[current_destination] < current_distance:  # 기존에 있는 거리보다 길다면, 볼 필요도 없음
             continue
 
