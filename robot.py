@@ -79,7 +79,6 @@ class Robot:
                 dict[router.bssid] = router.rssi
 
             self.routers = dict
-            print(f"??? {dict}")
             self.routerUpdate = time.time()
             time.sleep(0.01)
 
