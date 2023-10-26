@@ -60,5 +60,5 @@ class World:
         if len(self.nodes) == 0:
             return None, -1
         map = self.probability(pos)
-        newlist = sorted(map.keys(), key=lambda d: map[d])
+        newlist = sorted(map.keys(), key=lambda d: map[d], reverse=True)
         return newlist[0], max(map.values())

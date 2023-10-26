@@ -112,8 +112,11 @@ if __name__ == '__main__':
         return positionVector
 
     pos = measurePosition()
+    robot.justRotate(90)
+    robot.justRotate(-90)
+    pos = measurePosition()
     lastCell, prob = world.get_cell(pos)
-    if prob < 0.9:
+    if prob > 100 or prob < -1:
         lastCell = Cell(pos)
         world.add_cell(lastCell)
     print(f"OMG MATCH! \nCell vec: {lastCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
@@ -141,7 +144,7 @@ if __name__ == '__main__':
         pos = measurePosition()
 
         currCell, prob = world.get_cell(pos)
-        if prob < 0.9:
+        if prob > 100:
             currCell = Cell(pos)
             world.add_cell(currCell)
         currCell.connect(lastCell, RelativePosition(0, 0, -dir))
@@ -149,7 +152,7 @@ if __name__ == '__main__':
         if gui != None:
             gui.focus(lastCell)
 
-        if prob >= 0.9:
+        if prob < 100:
             print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
             continue
 
@@ -160,7 +163,7 @@ if __name__ == '__main__':
 
 
         currCell, prob = world.get_cell(pos)
-        if prob < 0.9:
+        if prob > 100:
             currCell = Cell(pos)
             world.add_cell(currCell)
         currCell.connect(lastCell, RelativePosition(0, -dist, 0))
