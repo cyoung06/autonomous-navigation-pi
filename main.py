@@ -44,7 +44,7 @@ gui: 'StatusGUI | None' = None
 
 def runGUI():
     global gui
-    gui = StatusGUI(world)
+    gui = StatusGUI(robot, world)
 
 
 if __name__ == '__main__':
