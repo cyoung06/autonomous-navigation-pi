@@ -47,10 +47,10 @@ class StatusGUI:
                 if cell in visited:
                     return
                 visited.append(cell)
-                glBegin(GL_TRIANGLE_FAN)
+                glBegin(GL_TRIANGLE_STRIP)
                 glVertex2d(0, 5)
-                glVertex2d(1, 4)
-                glVertex2d(-1, -4)
+                glVertex2d(3, 9)
+                glVertex2d(-3, -9)
                 glEnd()
                 for neighbor in cell.neighbors:
                     glPushMatrix()
