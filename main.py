@@ -116,10 +116,9 @@ if __name__ == '__main__':
     robot.justRotate(-90)
     pos = measurePosition()
     lastCell, prob = world.get_cell(pos)
-    if prob > 100 or prob < -1:
+    if prob > 100 or prob < 0:
         lastCell = Cell(pos)
         world.add_cell(lastCell)
-    print(f"OMG MATCH! \nCell vec: {lastCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
 
     toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, 270, 1000]]
     while True:
