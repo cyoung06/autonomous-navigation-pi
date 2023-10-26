@@ -26,7 +26,7 @@ class StatusGUI:
 
         gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
         # Set up the drawing window
-        screen = pygame.display.set_mode([500, 500])
+        screen = pygame.display.set_mode([800, 600])
 
         # Run until the user asks to quit
         running = True
