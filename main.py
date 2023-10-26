@@ -138,10 +138,10 @@ if __name__ == '__main__':
             path = find_path(lastCell.position, cell.position, world)
             print(f"Found path! {path}")
             for part in path:
-                if part.rot > 0:
-                    robot.justRotate(part.rot)
+                if part.rel_pos.rot != 0:
+                    robot.justRotate(part.rel_pos.rot)
                 else:
-                    robot.goForward(part.dy)
+                    robot.goForward(part.rel_pos.dy)
                 if gui is not None:
                     gui.focus(part.target)
 
