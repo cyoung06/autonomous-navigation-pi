@@ -6,8 +6,8 @@ from navigation.world import World
 
 
 def find_path(origin: array, target: array, world: World):
-    originCell = world.get_cell(origin)
-    targetCell = world.get_cell(target)
+    originCell, _ = world.get_cell(origin)
+    targetCell, _ = world.get_cell(target)
 
     distances = {node: float('inf') for node in world.nodes}  # start로 부터의 거리 값을 저장하기 위함
     distances[originCell] = 0  # 시작 값은 0이어야 함

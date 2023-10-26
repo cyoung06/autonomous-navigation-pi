@@ -143,10 +143,10 @@ if __name__ == '__main__':
         pos = measurePosition()
 
         currCell, prob = world.get_cell(pos)
+        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         if prob > 10:
             currCell = Cell(pos)
             world.add_cell(currCell)
-        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         currCell.connect(lastCell, RelativePosition(0, 0, -dir))
         lastCell = currCell
         if gui != None:
@@ -162,16 +162,15 @@ if __name__ == '__main__':
 
 
         currCell, prob = world.get_cell(pos)
+        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         if prob > 10:
             currCell = Cell(pos)
             world.add_cell(currCell)
-        print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
         currCell.connect(lastCell, RelativePosition(0, -dist, 0))
         lastCell = currCell
         if gui != None:
             gui.focus(lastCell)
         if prob <= 10:
-            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
             continue
 
         toVisit.append([currCell, 0, 1000])
