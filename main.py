@@ -116,7 +116,7 @@ if __name__ == '__main__':
     if prob < 0.9:
         lastCell = Cell(pos)
         world.add_cell(lastCell)
-    print(f"OMG MATCH! \nCell vec: {lastCell.position}\nCurr Vec: {pos}")
+    print(f"OMG MATCH! \nCell vec: {lastCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
 
     toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, 270, 1000]]
     while True:
@@ -150,7 +150,7 @@ if __name__ == '__main__':
             gui.focus(lastCell)
 
         if prob >= 0.9:
-            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}")
+            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
             continue
 
         print(f"Ultra: {robot.ultrasonic}")
@@ -168,7 +168,7 @@ if __name__ == '__main__':
         if gui != None:
             gui.focus(lastCell)
         if prob >= 0.9:
-            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}")
+            print(f"OMG MATCH! \nCell vec: {currCell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
             continue
 
         toVisit.append([currCell, 0, 1000])
