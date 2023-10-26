@@ -64,7 +64,7 @@ def get_nearby_routers():
         for network in networks:
             list.append(WifiRouter(
                 network['mac'],
-                network['essid'],
+                network['essid'] if 'essid' in network else '',
                 -int(network['signal_level_dBm']),
                 int(network['channel'])
             ))

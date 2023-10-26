@@ -21,7 +21,6 @@ class StatusGUI:
 
         self.server = WebsocketServer(host='0.0.0.0', port=13254, loglevel=logging.INFO)
         self.server.set_fn_new_client(self.new_client)
-        self.server.run_forever()
 
 
         Thread(target=self.server.run_forever, daemon=True).start()
