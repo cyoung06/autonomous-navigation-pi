@@ -135,74 +135,73 @@ if __name__ == '__main__':
         return np.array(meanVals), np.array(devitation)
 
 
-    pos = measurePosition(3)
-    robot.justRotate(90)
-    robot.justRotate(-90)
-    pos = measurePosition(3)
+    # pos = measurePosition(3)
+    robot.justRotate(360 * 100)
+    # pos = measurePosition(3)
 
-    posVecMap = {}
-
-    lines = [
-        (pos, (0, 0), (0, 10000), 500)
-    ]
-
-    currentBelief = (0, 0, 0)
-
-    while len(lines) > 0:
-        toPos, fromCoord, toCoord, segLen = lines.pop()
-
-        print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
-
-        pathVec = tuple(map(sub, toCoord, fromCoord))
-        pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
-        measurements = pathLen / segLen
-
-        angle = math.atan2(pathVec[0], pathVec[1])
-        deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
-
-        # move to angle
-        # move to fromCoord
-
-        posVecMap[currentBelief] = measurePosition(3)
-        print(posVecMap[currentBelief])
-
-        for i in range(math.ceil(measurements)):
-            beliefX, beliefY, beliefTheta = currentBelief
-            currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
-            robot.goForward(segLen)
-            posVecMap[currentBelief] = measurePosition(3)
-            print(posVecMap[currentBelief])
-
-    print(posVecMap)
-
-    robot.goForward(-5000)
-    beliefs = [ (0, random.uniform(0, 10000)) for i in range(1000) ] # start with 1000 points
-    print(f"Starting with: {beliefs}")
-    while True:
-        smh = random.randint(-5, 5) * 250
-        if smh == 0:
-            smh = 1500
-
-        robot.goForward(smh)
-        def lolz(pos, access, idx):
-            a1 = math.floor(pos[1] / 500)
-            a2 = math.ceil(pos[1] / 500)
-            return (access[(0, a1*500, 0)][idx] * (a2*500 - pos[1]) + access[(0, a2*500, 0)][idx] * (pos[1] - a1 * 500)) / 500
-
-        beliefs = monteCarloLocalization(
-            beliefs,
-            updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 500)),
-            probabilityFunc=calculateProbability(
-                lambda pos: lolz(pos, posVecMap, 0)
-                , lambda pos: lolz(pos, posVecMap, 1)
-                , measureSingle(robot.routerUpdate)[0]
-            ),
-            size=980,
-            gaussian=lambda t: (t[0], t[1] + random.gauss(0, 300))
-        )
-        print(beliefs)
-        print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
-        beliefs += [ (0, random.uniform(0, 10000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
-        input()
-        time.sleep(2)
-
+    # posVecMap = {}
+    #
+    # lines = [
+    #     (pos, (0, 0), (0, 10000), 500)
+    # ]
+    #
+    # currentBelief = (0, 0, 0)
+    #
+    # while len(lines) > 0:
+    #     toPos, fromCoord, toCoord, segLen = lines.pop()
+    #
+    #     print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
+    #
+    #     pathVec = tuple(map(sub, toCoord, fromCoord))
+    #     pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
+    #     measurements = pathLen / segLen
+    #
+    #     angle = math.atan2(pathVec[0], pathVec[1])
+    #     deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
+    #
+    #     # move to angle
+    #     # move to fromCoord
+    #
+    #     posVecMap[currentBelief] = measurePosition(3)
+    #     print(posVecMap[currentBelief])
+    #
+    #     for i in range(math.ceil(measurements)):
+    #         beliefX, beliefY, beliefTheta = currentBelief
+    #         currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
+    #         robot.goForward(segLen)
+    #         posVecMap[currentBelief] = measurePosition(3)
+    #         print(posVecMap[currentBelief])
+    #
+    # print(posVecMap)
+    #
+    # robot.goForward(-5000)
+    # beliefs = [ (0, random.uniform(0, 10000)) for i in range(1000) ] # start with 1000 points
+    # print(f"Starting with: {beliefs}")
+    # while True:
+    #     smh = random.randint(-5, 5) * 250
+    #     if smh == 0:
+    #         smh = 1500
+    #
+    #     robot.goForward(smh)
+    #     def lolz(pos, access, idx):
+    #         a1 = math.floor(pos[1] / 500)
+    #         a2 = math.ceil(pos[1] / 500)
+    #         return (access[(0, a1*500, 0)][idx] * (a2*500 - pos[1]) + access[(0, a2*500, 0)][idx] * (pos[1] - a1 * 500)) / 500
+    #
+    #     beliefs = monteCarloLocalization(
+    #         beliefs,
+    #         updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 500)),
+    #         probabilityFunc=calculateProbability(
+    #             lambda pos: lolz(pos, posVecMap, 0)
+    #             , lambda pos: lolz(pos, posVecMap, 1)
+    #             , measureSingle(robot.routerUpdate)[0]
+    #         ),
+    #         size=980,
+    #         gaussian=lambda t: (t[0], t[1] + random.gauss(0, 300))
+    #     )
+    #     print(beliefs)
+    #     print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
+    #     beliefs += [ (0, random.uniform(0, 10000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+    #     input()
+    #     time.sleep(2)
+    #
