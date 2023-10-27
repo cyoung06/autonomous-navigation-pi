@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
         for (k, v) in macAddrMapping.items():
             if k in currentMeasurement:
-                positionVector[v] += currentMeasurement[k]
+                positionVector[v] = currentMeasurement[k]
         positionVector[-1] = robot.orientation[0]
         return numpy.array(positionVector), measuredAt
 
