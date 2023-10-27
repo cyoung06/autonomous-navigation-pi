@@ -147,20 +147,22 @@ class Robot:
                 continue
             break
     def goForward(self, dist):
-        self.platform.goForward(dist)
-        welp = 0
-        while True:
-            while self.amIsafe() and not self.platform.isDone():
-                if welp > 0:
-                    welp = 0
-                    self.platform.resume()
-                pass
-            if not self.amIsafe():
-                if welp == 0:
-                    self.platform.stop()
-                welp += 1
-                time.sleep(0.1)
-                if welp == 10:
-                    raise Exception("noooo")
-                continue
-            break
+        print(f"YOU!! DEV!! go forward {dist}")
+        input("lol")
+        # self.platform.goForward(dist)
+        # welp = 0
+        # while True:
+        #     while self.amIsafe() and not self.platform.isDone():
+        #         if welp > 0:
+        #             welp = 0
+        #             self.platform.resume()
+        #         pass
+        #     if not self.amIsafe():
+        #         if welp == 0:
+        #             self.platform.stop()
+        #         welp += 1
+        #         time.sleep(0.1)
+        #         if welp == 10:
+        #             raise Exception("noooo")
+        #         continue
+        #     break
