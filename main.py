@@ -135,10 +135,10 @@ if __name__ == '__main__':
         return np.array(meanVals), np.array(devitation)
 
 
-    pos = measurePosition(2)
+    pos = measurePosition(3)
     robot.justRotate(90)
     robot.justRotate(-90)
-    pos = measurePosition(5)
+    pos = measurePosition(3)
 
     posVecMap = {}
 
@@ -163,13 +163,15 @@ if __name__ == '__main__':
         # move to angle
         # move to fromCoord
 
-        posVecMap[currentBelief] = measurePosition(5)
+        posVecMap[currentBelief] = measurePosition(3)
+        print(posVecMap[currentBelief])
 
         for i in range(math.ceil(measurements)):
             beliefX, beliefY, beliefTheta = currentBelief
             currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
             robot.goForward(segLen)
-            posVecMap[currentBelief] = measurePosition(5)
+            posVecMap[currentBelief] = measurePosition(3)
+            print(posVecMap[currentBelief])
 
     print(posVecMap)
 
@@ -183,7 +185,7 @@ if __name__ == '__main__':
         def lolz(pos, access, idx):
             a1 = math.floor(pos[1] / 500)
             a2 = math.ceil(pos[1] / 500)
-            return access[(0, a1*500)][idx] * (a2*500 - pos[1]) + access[(0, a2*500)][idx] * (pos[1] - a1 * 500)
+            return access[(0, a1*500, 0)][idx] * (a2*500 - pos[1]) + access[(0, a2*500, 0)][idx] * (pos[1] - a1 * 500)
 
 
         beliefs = monteCarloLocalization(
