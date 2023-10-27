@@ -127,9 +127,9 @@ if __name__ == '__main__':
             return mean(vec)
         meanVals = [math.inf if measurementsPer[i] == 0 else sum[i] /  measurementsPer[i] for i in range(len(sum))]
         devitation = [
-            math.sqrt(smhmin([(positionVectors[j][i] - meanVals[i]) ** 2
+            max(0.5, math.sqrt(smhmin([(positionVectors[j][i] - meanVals[i]) ** 2
                             for j in range(len(positionVectors))
-                            if positionVectors[j][i] != math.inf]))
+                            if positionVectors[j][i] != math.inf])))
             for i in range(len(sum))
         ]
         return np.array(meanVals), np.array(devitation)
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     print(posVecMap)
 
     robot.goForward(-5000)
-    beliefs = [ (0, random.uniform(0, 10000)) for i in range(50) ] # start with 500 points
+    beliefs = [ (0, random.uniform(0, 10000)) for i in range(1000) ] # start with 1000 points
     print(f"Starting with: {beliefs}")
     while True:
         smh = random.randint(-5, 5) * 250
@@ -202,6 +202,7 @@ if __name__ == '__main__':
         )
         print(beliefs)
         print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
+        beliefs += [ (0, random.uniform(0, 10000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
 
