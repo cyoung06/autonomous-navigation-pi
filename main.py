@@ -143,7 +143,7 @@ if __name__ == '__main__':
     posVecMap = {}
 
     lines = [
-        (pos, (0, 0), (0, 5000), 500)
+        (pos, (0, 0), (0, 10000), 500)
     ]
 
     currentBelief = (0, 0, 0)
@@ -175,10 +175,11 @@ if __name__ == '__main__':
 
     print(posVecMap)
 
-    robot.goForward(-2500)
+    robot.goForward(-500)
 
-    currentBelief = (0, 2500)
-    beliefs = [ (0, random.uniform(0, 5000)) for i in range(50) ] # start with 500 points
+    currentBelief = (0,5500)
+    beliefs = [ (0, random.uniform(0, 10000)) for i in range(50) ] # start with 500 points
+    print(f"Starting with: {beliefs}")
     while True:
         smh = random.randint(-5, 5) * 500
         if smh == 0:
@@ -201,6 +202,8 @@ if __name__ == '__main__':
             size=50,
             gaussian=lambda t: (t[0], t[1] + random.gauss(0, 250))
         )
+        print(beliefs)
         print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
+        input()
         time.sleep(2)
 
