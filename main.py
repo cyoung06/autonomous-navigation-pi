@@ -176,7 +176,6 @@ if __name__ == '__main__':
     print(posVecMap)
 
     robot.goForward(-5000)
-
     beliefs = [ (0, random.uniform(0, 10000)) for i in range(50) ] # start with 500 points
     print(f"Starting with: {beliefs}")
     while True:
