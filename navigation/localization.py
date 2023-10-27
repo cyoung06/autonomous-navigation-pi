@@ -5,7 +5,7 @@ import numpy
 
 def calculateProbability(averageFunc, stdFunc, measurement):
     def actualStuff(loc):
-        return numpy.prod(numpy.exp(-1/2 * (numpy.divide(measurement-averageFunc(loc),stdFunc(loc)) ** 2)))
+        return numpy.prod(numpy.exp(-1/2 * (numpy.divide(measurement-averageFunc(loc), stdFunc(loc)) ** 2)))
         # proportional to probabilty of measuring smth in gaussian distribution.
     return actualStuff
 
