@@ -1,11 +1,17 @@
 import math
 import os.path
+import random
 import sys
 import threading
 import pickle
 import time
 from os.path import dirname
 import atexit
+from statistics import mean
+from typing import Tuple
+from operator import sub, truediv
+
+from navigation.localization import monteCarloLocalization, calculateProbability
 from navigation.pathfinding import find_path
 
 from picamera2 import Picamera2
@@ -17,8 +23,6 @@ from numpy import ndarray
 from robot import Robot
 from navigation.world import World, Cell, RelativePosition
 
-
-
 sys.path.append(dirname(__file__))
 print(sys.path)
 
@@ -26,9 +30,10 @@ print(sys.path)
 def similarity(v1: ndarray, v2: ndarray):
     dist = 0
     for i in range(0, len(v1)):
-        if v1[i] != 0 and v2[i] !=0:
-            dist += (v1[i]-v2[i]) ** 2
+        if v1[i] != 0 and v2[i] != 0:
+            dist += (v1[i] - v2[i]) ** 2
     return math.sqrt(dist)
+
 
 if os.path.isfile('mac_addrs.dat'):
     with open('mac_addrs.dat', 'rb') as f:
@@ -60,15 +65,17 @@ if __name__ == '__main__':
         with open('mac_addrs.dat', 'wb') as f:
             pickle.dump(macAddrsToListenTo, f)
         # cam.stop()
-    atexit.register(exit_handler)
 
-    print("Trying to connect to "+sys.argv[1])
+
+
+    print("Trying to connect to " + sys.argv[1])
     robot = Robot(sys.argv[1])
     if os.path.isfile('world.dat'):
         with open('world.dat', 'rb') as f:
             world = pickle.load(f)
     else:
         world = World(similarity)
+    atexit.register(exit_handler)
 
     print("CELLS: ")
     for cell in world.nodes:
@@ -78,114 +85,115 @@ if __name__ == '__main__':
         threading.Thread(target=runGUI).start()
 
 
-    def measurePosition() -> ndarray:
-        measurements = 0
+    def measureSingle(lastMeasurement) -> Tuple[ndarray, int]:
+        while robot.routerUpdate == lastMeasurement:
+            pass
+        measuredAt = robot.routerUpdate
         currentMeasurement = robot.routers
-        lastMeasurement = robot.routerUpdate
+        positionVector = [math.inf] * (maxMacAddrs + 1)
+        if len(macAddrMapping) < maxMacAddrs:
+            for (k, router) in currentMeasurement.items():
+                if k not in macAddrMapping:
+                    macAddrMapping[k] = len(macAddrMapping)
+                    macAddrsToListenTo.append(k)
+                if len(macAddrMapping) >= maxMacAddrs:
+                    break
 
-        currentRot = robot.orientation
-        positionVector = [0] * (maxMacAddrs + 1)
+        for (k, v) in macAddrMapping.items():
+            if k in currentMeasurement:
+                positionVector[v] += currentMeasurement[k]
+        positionVector[-1] = robot.orientation[0]
+        return numpy.array(positionVector), measuredAt
+
+
+    def measurePosition(samples) -> Tuple[ndarray, ndarray]:
+        measurements = 0
+
+        positionVectors = []
+        sum = [0] * (maxMacAddrs + 1)
         measurementsPer = [0] * (maxMacAddrs + 1)
-        while measurements < 3:
-            while robot.routerUpdate == lastMeasurement:
-                pass
-            lastMeasurement = robot.routerUpdate
-
+        lastMeasurement = robot.routerUpdate
+        while measurements < samples:
+            vec, lastMeasurement = measureSingle(lastMeasurement)
+            positionVectors.append(vec)
+            for i in range(len(vec)):
+                if vec[i] != math.inf:
+                    sum[i] += vec[i]
+                    measurementsPer[i] += 1
             measurements += 1
-            if len(macAddrMapping) < maxMacAddrs:
-                for (k, router) in currentMeasurement.items():
-                    if k not in macAddrMapping:
-                        macAddrMapping[k] = len(macAddrMapping)
-                        macAddrsToListenTo.append(k)
-                    if len(macAddrMapping) >= maxMacAddrs:
-                        break
-            if gui is not None:
-                gui.macAddrsToListenTo = macAddrsToListenTo
 
-            for (k, v) in macAddrMapping.items():
-                if k in currentMeasurement:
-                    positionVector[v] += currentMeasurement[k]
-                    measurementsPer[v] += 1
+        meanVals = [sum[i] / max(1, measurementsPer[i]) for i in range(len(sum))]
+        devitation = [
+            math.sqrt(mean([(positionVectors[j][i] - meanVals[i]) ** 2
+                            for j in range(len(positionVectors))
+                            if positionVectors[j][i] != math.inf]))
+            for i in range(len(sum))
+        ]
+        return np.array(meanVals), np.array(devitation)
 
-            print(positionVector)
 
-        positionVector = [positionVector[i] / max(1, measurementsPer[i]) for i in
-                          range(len(positionVector))]  # average them out
-        positionVector[-1] = currentRot[0]
-        positionVector = np.array(positionVector)
-        return positionVector
-
-    def getCell(pos):
-        cell, prob = world.get_cell(pos)
-        print(f"OMG MATCH! \nCell vec: {cell.position}\nCurr Vec: {pos}\ncosTheta {prob}")
-        if prob > 10:
-            cell = Cell(pos)
-            world.add_cell(cell)
-            if gui is not None:
-                gui.newCell(cell)
-        return cell, prob <= 10
-
-    pos = measurePosition()
+    pos = measurePosition(2)
     robot.justRotate(90)
     robot.justRotate(-90)
-    pos = measurePosition()
-    lastCell, prob = world.get_cell(pos)
-    if prob > 100 or prob < 0:
-        lastCell = Cell(pos)
-        world.add_cell(lastCell)
+    pos = measurePosition(5)
 
-    toVisit = [ [lastCell, 0, 1000], [lastCell, 90, 1000], [lastCell, 180, 1000], [lastCell, -90, 1000]]
+    posVecMap = {}
+
+    lines = [
+        (pos, (0, 0), (0, 10000), 500)
+    ]
+
+    currentBelief = (0, 0, 0)
+
+    while len(lines) > 0:
+        toPos, fromCoord, toCoord, segLen = lines.pop()
+
+        print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
+
+        pathVec = tuple(map(sub, toCoord, fromCoord))
+        pathLen = math.sqrt(len[0] ** 2 + len[1] ** 2)
+        measurements = pathLen / segLen
+
+        angle = math.atan2(pathVec[0], pathVec[1])
+        deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
+
+        # move to angle
+        # move to fromCoord
+
+        posVecMap[currentBelief] = measurePosition(5)
+
+        for i in range(math.ceil(measurements)):
+            beliefX, beliefY, beliefTheta = currentBelief
+            currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
+            robot.goForward(segLen)
+            posVecMap[currentBelief] = measurePosition(5)
+
+    print(posVecMap)
+
+    robot.goForward(-5000)
+
+    currentBelief = (0, 5000)
+    beliefs = [ (0, random.uniform(0, 10000)) for i in range(100) ] # start with 500 points
     while True:
-        cell, dir, dist = toVisit.pop()
-        print(f"Curr at {cell}")
-        if lastCell != cell:
-            path = find_path(lastCell.position, cell.position, world)
-            print(f"Found path! {path}")
-            for part in path:
-                if part.rel_pos.rot != 0:
-                    robot.justRotate(part.rel_pos.rot)
-                else:
-                    robot.goForward(part.rel_pos.dy)
-                if gui is not None:
-                    gui.focus(part.target)
+        smh = random.randint(-5, 5) * 500
+        robot.goForward(smh)
+        def lolz(pos, access, idx):
+            a1 = math.floor(pos[1] / 500)
+            a2 = math.ceil(pos[1] / 500)
+            return access[(0, a1*500)][idx] * (a2*500 - pos[1]) + access[(0, a2*500)][idx] * (pos[1] - a1 * 500)
 
 
-            # navigate!
-
-        robot.justRotate(dir)
-
-        currCell, isNotNew = getCell(measurePosition())
-        hmm = currCell.connect(lastCell, RelativePosition(0, 0, -dir))
-        if gui is not None:
-            gui.newConnection(hmm)
-        lastCell = currCell
-        if gui is not None:
-            gui.focus(lastCell)
-
-        if isNotNew:
-            continue
-
-        print(f"Ultra: {robot.ultrasonic}")
-        if robot.ultrasonic["forward"] != 0:
-            continue
-        robot.goForward(dist)
-
-
-
-        currCell, isNotNew = getCell(measurePosition())
-        hmm = currCell.connect(lastCell, RelativePosition(0, -dist, 0))
-        if gui is not None:
-            gui.newConnection(hmm)
-        lastCell = currCell
-        if gui is not None:
-            gui.focus(lastCell)
-        if isNotNew:
-            continue
-
-        toVisit.append([currCell, 0, 1000])
-        toVisit.append([currCell, 90, 1000])
-        toVisit.append([currCell, 180, 1000])
-        toVisit.append([currCell, -90, 1000])
-        # move to cell
-
+        beliefs = monteCarloLocalization(
+            beliefs,
+            updateFunc=lambda t: (t[0] + random.gauss(0, 5), t[1]+smh + random.gauss(0, 5)),
+            probabilityFunc=calculateProbability(
+                lambda pos: lolz(pos, posVecMap, 0)
+                , lambda pos: lolz(pos, posVecMap, 1)
+                , measureSingle(robot.routerUpdate)
+            ),
+            size=100,
+            gaussian=lambda t: (t[0] + random.gauss(0, 5), t[1] + random.gauss(0, 5))
+        )
+        print(beliefs)
+        time.sleep(2)
 
