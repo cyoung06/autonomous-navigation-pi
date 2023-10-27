@@ -6,9 +6,12 @@ import numpy
 def calculateProbability(averageFunc, stdFunc, measurement):
     def actualStuff(loc):
         avg = averageFunc(loc)
-        vals = numpy.exp(-1/2 * (numpy.divide(
-            measurement[numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True)]
-            - avg[numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True)], stdFunc(loc)) ** 2))
+        std = stdFunc(loc)
+        invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
+
+
+        vals = numpy.exp(-1/2 * (numpy.divide(measurement[invalidIdx] - avg[invalidIdx], std[invalidIdx]) ** 2))
+
         print(vals)
         return numpy.prod(vals)
         # proportional to probabilty of measuring smth in gaussian distribution.
