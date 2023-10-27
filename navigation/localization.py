@@ -12,7 +12,7 @@ def calculateProbability(averageFunc, stdFunc, measurement):
 
         vals = numpy.exp(-1/2 * (numpy.divide(measurement[invalidIdx] - avg[invalidIdx], std[invalidIdx]) ** 2))
 
-        print(vals)
+        # print(vals)
         return numpy.prod(vals)
         # proportional to probabilty of measuring smth in gaussian distribution.
     return actualStuff
