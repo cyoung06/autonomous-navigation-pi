@@ -197,7 +197,7 @@ if __name__ == '__main__':
                 , lambda pos: lolz(pos, posVecMap, 1)
                 , measureSingle(robot.routerUpdate)[0]
             ),
-            size=50,
+            size=980,
             gaussian=lambda t: (t[0], t[1] + random.gauss(0, 300))
         )
         print(beliefs)
