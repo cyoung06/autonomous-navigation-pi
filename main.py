@@ -201,6 +201,6 @@ if __name__ == '__main__':
             size=50,
             gaussian=lambda t: (t[0], t[1] + random.gauss(0, 250))
         )
-        print(f'MEAN y coord: {mean(beliefs[..., 1])}')
+        print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
         time.sleep(2)
 
