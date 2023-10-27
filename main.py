@@ -187,14 +187,13 @@ if __name__ == '__main__':
             a2 = math.ceil(pos[1] / 500)
             return access[(0, a1*500, 0)][idx] * (a2*500 - pos[1]) + access[(0, a2*500, 0)][idx] * (pos[1] - a1 * 500)
 
-
         beliefs = monteCarloLocalization(
             beliefs,
             updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 5)),
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, posVecMap, 0)
                 , lambda pos: lolz(pos, posVecMap, 1)
-                , measureSingle(robot.routerUpdate)
+                , measureSingle(robot.routerUpdate)[0]
             ),
             size=100,
             gaussian=lambda t: (t[0], t[1] + random.gauss(0, 5))
