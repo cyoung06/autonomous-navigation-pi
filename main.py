@@ -121,10 +121,13 @@ if __name__ == '__main__':
                     sum[i] += vec[i]
                     measurementsPer[i] += 1
             measurements += 1
-
+        def smhmin(vec):
+            if (len(vec) == 0):
+                return math.inf
+            return mean(vec)
         meanVals = [sum[i] / max(1, measurementsPer[i]) for i in range(len(sum))]
         devitation = [
-            math.sqrt(mean([(positionVectors[j][i] - meanVals[i]) ** 2
+            math.sqrt(smhmin([(positionVectors[j][i] - meanVals[i]) ** 2
                             for j in range(len(positionVectors))
                             if positionVectors[j][i] != math.inf]))
             for i in range(len(sum))
