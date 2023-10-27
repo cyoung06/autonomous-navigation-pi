@@ -136,7 +136,7 @@ if __name__ == '__main__':
 
 
     # pos = measurePosition(3)
-    robot.justRotate(360 * 10)
+    robot.justRotate(360 * 100)
     # pos = measurePosition(3)
 
     # posVecMap = {}
