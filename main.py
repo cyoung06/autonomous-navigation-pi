@@ -188,14 +188,14 @@ if __name__ == '__main__':
 
         beliefs = monteCarloLocalization(
             beliefs,
-            updateFunc=lambda t: (t[0] + random.gauss(0, 5), t[1]+smh + random.gauss(0, 5)),
+            updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 5)),
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, posVecMap, 0)
                 , lambda pos: lolz(pos, posVecMap, 1)
                 , measureSingle(robot.routerUpdate)
             ),
             size=100,
-            gaussian=lambda t: (t[0] + random.gauss(0, 5), t[1] + random.gauss(0, 5))
+            gaussian=lambda t: (t[0], t[1] + random.gauss(0, 5))
         )
         print(beliefs)
         time.sleep(2)
