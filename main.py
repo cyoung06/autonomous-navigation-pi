@@ -154,7 +154,7 @@ if __name__ == '__main__':
         print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
 
         pathVec = tuple(map(sub, toCoord, fromCoord))
-        pathLen = math.sqrt(len[0] ** 2 + len[1] ** 2)
+        pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
         measurements = pathLen / segLen
 
         angle = math.atan2(pathVec[0], pathVec[1])
