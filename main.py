@@ -175,15 +175,14 @@ if __name__ == '__main__':
 
     print(posVecMap)
 
-    robot.goForward(-500)
+    robot.goForward(-5000)
 
-    currentBelief = (0,5500)
     beliefs = [ (0, random.uniform(0, 10000)) for i in range(50) ] # start with 500 points
     print(f"Starting with: {beliefs}")
     while True:
-        smh = random.randint(-5, 5) * 500
+        smh = random.randint(-5, 5) * 250
         if smh == 0:
-            smh = 3000
+            smh = 1500
 
         robot.goForward(smh)
         def lolz(pos, access, idx):
@@ -193,14 +192,14 @@ if __name__ == '__main__':
 
         beliefs = monteCarloLocalization(
             beliefs,
-            updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 300)),
+            updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 500)),
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, posVecMap, 0)
                 , lambda pos: lolz(pos, posVecMap, 1)
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=50,
-            gaussian=lambda t: (t[0], t[1] + random.gauss(0, 250))
+            gaussian=lambda t: (t[0], t[1] + random.gauss(0, 300))
         )
         print(beliefs)
         print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
