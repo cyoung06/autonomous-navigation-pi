@@ -155,12 +155,12 @@ if __name__ == '__main__':
                 currentDir = (i + refDir) % 4
                 # check
                 blocked = False
-                robot.justRotate(-45)
-                robot.platform.rotateCW(500, 90)
+                robot.justRotate(-20)
+                robot.platform.rotateCW(500, 40)
                 while not robot.platform.isDone():
                     if robot.ultrasonic["forward"] < 20:
                         blocked = True
-                robot.justRotate(-45)
+                robot.justRotate(-20)
 
                 if blocked:
                     nodes[dy + y][dx + x] = -1
