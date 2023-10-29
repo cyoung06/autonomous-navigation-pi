@@ -160,7 +160,7 @@ if __name__ == '__main__':
                 robot.justRotate(-20)
                 robot.platform.rotateCW(500, 40)
                 while not robot.platform.isDone():
-                    if robot.ultrasonic["forward"] < 20:
+                    if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 15:
                         print(f"smh blocked {robot.ultrasonic['forward']}")
                         blocked = True
                 robot.justRotate(-20)
