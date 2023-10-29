@@ -43,7 +43,7 @@ class MovingPlatform:
         self.sendCommand(f"G {vec[0]} {vec[1]} 0 {dist / math.sqrt(vec[0] * vec[0] + vec[1] * vec[1])}\n")
 
     def goForward(self, dist):
-        self.goVector([0, 100], dist)
+        self.goVector([0, 500], dist)
 
     def rotateCW(self, deg):
         if not self.isDone():
