@@ -14,7 +14,7 @@ while True:
     if dist == 0:
         serial.rotateCW(deg)
     else:
-        dx = math.cos(deg* math.pi / 180.0) * speed
-        dy = -math.sin(deg* math.pi / 180.0) * speed
+        dy = math.cos(deg* math.pi / 180.0) * speed
+        dx = -math.sin(deg* math.pi / 180.0) * speed
 
         serial.goVector((dx,dy), dist)
