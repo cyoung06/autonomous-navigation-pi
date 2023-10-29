@@ -8,7 +8,7 @@ from threading import Thread
 
 class MovingPlatform:
     def __init__(self, port):
-        self.port = serial.Serial(port)
+        self.port = serial.Serial(port, baudrate=115200)
         read = ""
         while b'Cnc shield init!\r\n' != read:
             read = self.port.readline()
