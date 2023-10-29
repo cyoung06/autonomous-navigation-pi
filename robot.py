@@ -101,7 +101,7 @@ class Robot:
         time.sleep(0.05)
         while abs(toMove) > 2:
             print(f"Performing rotation!: {self.orientation} : {supposedTobe} : {toMove}")
-            self.platform.rotateCW(toMove/2)
+            self.platform.rotateCW(1000, toMove/2)
 
             welp = 0
             while True:
@@ -129,7 +129,7 @@ class Robot:
             while toMove < -180:
                 toMove += 360
     def justRotate(self, deg):
-        self.platform.rotateCW(deg)
+        self.platform.rotateCW(1000, deg)
         welp = 0
         while True:
             while self.amIsafe() and not self.platform.isDone():
