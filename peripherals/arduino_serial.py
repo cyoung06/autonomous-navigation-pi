@@ -10,16 +10,14 @@ class MovingPlatform:
     def __init__(self, port):
         self.port = serial.Serial(port)
         read = ""
-        # while b'Cnc shield init!\r\n' != read:
-        #     read = self.port.readline()
-        #     print(read)
+        while b'Cnc shield init!\r\n' != read:
+            read = self.port.readline()
+            print(read)
 
         self.thread = threading.Thread(target=self.readLines)
         self.thread.daemon = True
         self.thread.start()
         self.ready = True
-
-        time.sleep(2.0)
 
     def readLines(self):
         while True:
