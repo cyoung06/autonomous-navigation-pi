@@ -143,6 +143,7 @@ if __name__ == '__main__':
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     stack = []
+    nodes[50][50] = 1
     while True:
         x,y = currentLoc
         print(f"Visiting {x} {y}")
@@ -160,6 +161,7 @@ if __name__ == '__main__':
                 robot.platform.rotateCW(500, 40)
                 while not robot.platform.isDone():
                     if robot.ultrasonic["forward"] < 20:
+                        print(f"smh blocked {robot.ultrasonic['forward']}")
                         blocked = True
                 robot.justRotate(-20)
 
