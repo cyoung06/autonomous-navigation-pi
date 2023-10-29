@@ -145,6 +145,7 @@ if __name__ == '__main__':
     stack = []
     while True:
         x,y = currentLoc
+        print(f"Visiting {x} {y}")
         refDir = currentDir
         found = False
         for i in range(0, 4):
@@ -153,9 +154,19 @@ if __name__ == '__main__':
                 robot.justRotate((i+refDir-currentDir) * 90)
                 currentDir = (i + refDir) % 4
                 # check
-                if robot.ultrasonic["forward"] < 20:
-                    nodes[dy+y][dx+x] = -1
+                blocked = False
+                robot.justRotate(-45)
+                robot.platform.rotateCW(500, 90)
+                while not robot.platform.isDone():
+                    if robot.ultrasonic["forward"] < 20:
+                        blocked = True
+                robot.justRotate(-45)
+
+                if blocked:
+                    nodes[dy + y][dx + x] = -1
+                    print("BLOCKED NODE!")
                     continue
+
                 nodes[dy+y][dx+x] = 1
                 robot.goForward(100)
                 stack.append(currentLoc)
