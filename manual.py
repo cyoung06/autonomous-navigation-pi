@@ -12,7 +12,7 @@ while True:
     dist = int(dist)
 
     if dist == 0:
-        serial.rotateCW(deg)
+        serial.rotateCW(speed, deg)
     else:
         dy = math.cos(deg* math.pi / 180.0) * speed
         dx = -math.sin(deg* math.pi / 180.0) * speed

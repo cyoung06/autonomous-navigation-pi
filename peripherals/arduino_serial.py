@@ -45,11 +45,11 @@ class MovingPlatform:
     def goForward(self, dist):
         self.goVector([0, 500], dist)
 
-    def rotateCW(self, deg):
+    def rotateCW(self, speed, degs):
         if not self.isDone():
             raise "Not done"
         self.ready = False
-        self.sendCommand(f'G 0 0 {"{:.8f}".format(deg * math.pi / 180.0)} 1\n')
+        self.sendCommand(f'G 0 0 {"{:.8f}".format(speed * math.pi / 180.0)} {degs/speed}\n')
 
     def waitForReady(self):
         while not self.isDone():
