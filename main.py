@@ -66,8 +66,6 @@ if __name__ == '__main__':
             pickle.dump(macAddrsToListenTo, f)
         # cam.stop()
 
-
-
     print("Trying to connect to " + sys.argv[1])
     robot = Robot(sys.argv[1])
     if os.path.isfile('world.dat'):
@@ -135,10 +133,59 @@ if __name__ == '__main__':
         return np.array(meanVals), np.array(devitation)
 
 
-    # pos = measurePosition(3)
-    robot.justRotate(360 * 100)
-    # pos = measurePosition(3)
+    pos = measurePosition(3)
+    robot.justRotate(90)
+    pos = measurePosition(3)
+    robot.justRotate(-90)
 
+    nodes = [[0] * 100 for i in range(0, 100)]
+    currentLoc = (50, 50)
+    currentDir = 0
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    stack = []
+    while True:
+        x,y = currentLoc
+        refDir = currentDir
+        found = False
+        for i in range(0, 4):
+            dx, dy = directions[(i + refDir) % 4]
+            if nodes[dy+y][dx+x] == 0:
+                robot.justRotate((i+refDir-currentDir) * 90)
+                currentDir = (i + refDir) % 4
+                # check
+                if robot.ultrasonic["forward"] < 20:
+                    nodes[dy+y][dx+x] = -1
+                    continue
+                nodes[dy+y][dx+x] = 1
+                robot.goForward(100)
+                stack.append(currentLoc)
+                currentLoc = (x+dx, y+dy)
+                found = True
+                break
+
+        if found:
+            continue
+
+        if len(stack) == 0:
+            break
+        ox,oy = stack.pop()
+        dx, dy = (ox - x, oy - y)
+        targetDir = directions.index((dx,dy))
+        robot.justRotate((targetDir - currentDir) * 90)
+        robot.goForward(100)
+        currentDir = targetDir
+        currentLoc = (ox, oy)
+
+    for y in range(0, 100):
+        line = ''
+        for x in range(0, 100):
+            if nodes[y][x] == 1:
+                line += " "
+            elif nodes[y][x] == -1:
+                line += 'X'
+            elif nodes[y][x] == 0:
+                line += '?'
+        print(line)
     # posVecMap = {}
     #
     # lines = [
