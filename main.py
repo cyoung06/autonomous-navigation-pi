@@ -151,7 +151,8 @@ if __name__ == '__main__':
         for i in range(0, 4):
             dx, dy = directions[(i + refDir) % 4]
             if nodes[dy+y][dx+x] == 0:
-                robot.justRotate((i+refDir-currentDir) * 90)
+                if (i + refDir - currentDir) % 4 != 0:
+                    robot.justRotate((i+refDir-currentDir) * 90)
                 currentDir = (i + refDir) % 4
                 # check
                 blocked = False
