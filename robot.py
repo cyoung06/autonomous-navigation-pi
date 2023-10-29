@@ -129,6 +129,10 @@ class Robot:
             while toMove < -180:
                 toMove += 360
     def justRotate(self, deg):
+        while deg > 180:
+            deg -= 360
+        while deg < -180:
+            deg += 360
         self.platform.rotateCW(1000, deg)
         welp = 0
         while True:
