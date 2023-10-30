@@ -27,9 +27,6 @@ while True:
     numpy.array([vx, vy])
 
     for i in range(len(vx)):
-        if i > 9:
-            serial.ready = False
+        serial.ready = False
         serial.sendCommand(f'G {vx[i]} {vy[i]} {rad} {step}')
-        time.sleep(0.001)
-        if i > 9:
-            serial.waitForReady()
+        serial.waitForReady()
