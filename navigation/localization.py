@@ -1,6 +1,7 @@
 import random
 
 import numpy
+import numpy as np
 
 
 def calculateProbability(averageFunc, stdFunc, measurement):
@@ -9,7 +10,8 @@ def calculateProbability(averageFunc, stdFunc, measurement):
         std = stdFunc(loc)
         invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
 
-
+        print(f'to Expect: {avg[invalidIdx]}')
+        print(f'found: {measurement}')
         vals = 1 / (std[invalidIdx] * numpy.pi * 2) * numpy.exp(-1/2 * (numpy.divide(measurement[invalidIdx] - avg[invalidIdx], std[invalidIdx]) ** 2))
         print(vals)
         return numpy.prod(vals)
@@ -18,10 +20,12 @@ def calculateProbability(averageFunc, stdFunc, measurement):
 
 
 def monteCarloLocalization(belief, updateFunc, probabilityFunc, size, gaussian):
-    beliefs = [updateFunc(belief[i]) for i in range(len(belief))]
+    beliefs = np.array([updateFunc(belief[i]) for i in range(len(belief))])
     print(f"After update: {beliefs}")
-    weights = [probabilityFunc(belief[i]) for i in range(len(belief))]
-    print(f"Weights: {weights}")
-    samples = random.choices(beliefs, weights=weights, k=size)
+    weights = np.array([probabilityFunc(belief[i]) for i in range(len(belief))])
+    filter = numpy.in1d(weights, [numpy.nan], invert=True)
+    print(f"Weights: {weights[filter]}")
+
+    samples = random.choices(beliefs[filter], weights=weights[filter], k=size)
     samples = [gaussian(sample) for sample in samples]
     return samples
