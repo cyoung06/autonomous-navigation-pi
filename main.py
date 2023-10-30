@@ -481,7 +481,7 @@ if __name__ == '__main__':
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
-            updateFunc=lambda t: (t[0]-smh*math.sin(rot * math.pi/180) + random.gauss(0, 500), t[1]+smh*math.cos(rot * math.pi/180) + random.gauss(0, 500)),
+            updateFunc=lambda t: (t[0]+smh*math.sin(rot * math.pi/180) + random.gauss(0, 500), t[1]+smh*math.cos(rot * math.pi/180) + random.gauss(0, 500)),
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, wifi, 0)
                 , lambda pos: lolz(pos, wifi, 1)
@@ -504,9 +504,9 @@ if __name__ == '__main__':
         new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
 
         arrow1 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  -smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
+                  smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
         arrow2 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  mean([x for x, y in beliefs]), mean([y for x, y in beliefs]), edgecolor='#FF00FF')
+                  mean([x for x, y in beliefs])-mean([x for x, y in old_beliefs]), mean([y for x, y in beliefs])- mean([y for x, y in old_beliefs]), edgecolor='#FF00FF')
 
         plt.draw()
 
