@@ -8,7 +8,7 @@ def calculateProbability(averageFunc, stdFunc, measurement):
     def actualStuff(loc):
         avg = averageFunc(loc)
         std = stdFunc(loc)
-        invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
+        invalidIdx = numpy.isfinite(avg) & numpy.isfinite(std) & numpy.isfinite(measurement)
 
         print(f'to Expect: {avg[invalidIdx]}')
         print(f'found: {measurement[invalidIdx]}')
@@ -23,7 +23,7 @@ def monteCarloLocalization(belief, updateFunc, probabilityFunc, size, gaussian):
     beliefs = np.array([updateFunc(belief[i]) for i in range(len(belief))])
     print(f"After update: {beliefs}")
     weights = np.array([probabilityFunc(belief[i]) for i in range(len(belief))])
-    filter = numpy.in1d(weights, [numpy.nan], invert=True)
+    filter = numpy.isfinite(weights)
     print(f"Weights: {weights[filter]}")
 
     samples = random.choices(beliefs[filter], weights=weights[filter], k=size)
