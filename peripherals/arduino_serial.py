@@ -18,6 +18,7 @@ class MovingPlatform:
         self.thread.daemon = True
         self.thread.start()
         self.ready = True
+        self.received = False
 
     def readLines(self):
         while True:
@@ -27,13 +28,18 @@ class MovingPlatform:
                 self.ready = True
             if lastLine == b'MOVED\r\n':
                 self.ready = True
+            if lastLine == b'RECEIVED\r\n':
+                self.received = True
 
     # y is forward x is sideways
 
     def sendCommand(self, command):
-        self.port.write(command.encode())
+        self.received = False
         print("Sending... " + command)
+        self.port.write(command.encode())
         self.port.flush()
+        while not self.received:
+            pass
 
 
     def goVector(self, vec, dist):
