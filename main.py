@@ -140,7 +140,7 @@ if __name__ == '__main__':
     robot.justRotate(-90)
 
     nodes = [[0] * 100 for i in range(0, 100)]
-    wifi = [[(np.array(maxMacAddrs + 1), np.zeros(maxMacAddrs + 1)) for x in range(0, 100)] for y in range(0, 100)]
+    wifi = [[None for x in range(0, 100)] for y in range(0, 100)]
     currentLoc = (50, 50)
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -177,7 +177,7 @@ if __name__ == '__main__':
                     continue
 
                 nodes[dy+y][dx+x] = 1
-                robot.goForward(500)
+                robot.goForward(1000)
                 stack.append(currentLoc)
                 currentLoc = (x+dx, y+dy)
                 found = True
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         dx, dy = (ox - x, oy - y)
         targetDir = directions.index((dx,dy))
         robot.justRotate((targetDir - currentDir) * 90)
-        robot.goForward(500)
+        robot.goForward(1000)
         currentDir = targetDir
         currentLoc = (ox, oy)
 
@@ -275,13 +275,16 @@ if __name__ == '__main__':
             maxY = math.ceil(pos[1] / 500)
             maxX = math.ceil(pos[0] / 500)
             x, y = (pos[0]/500, pos[1]/500)
+            if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
+                return np.zeros(maxMacAddrs + 1)
             def dist(x1,y1,x2,y2):
                 return math.sqrt((x1-x2)**2 + (y1-y2) ** 2)
             sumDist = dist(x,y, minX, minY) + dist(x,y, maxX, minY) + dist(x,y, minX, maxY) +  dist(x,y, maxX, maxY)
-            val = access[minY][minX][idx] * dist(x,y, minX, minY)
-            +access[minY][maxX][idx] * dist(x,y, maxX, minY)
-            +access[maxY][minX][idx] * dist(x,y, minX, maxY)
-            +access[maxY][maxX][idx] * dist(x,y, maxX, maxY)
+            val = access[minY][minX][idx] * dist(x,y, minX, minY)+\
+                  access[minY][maxX][idx] * dist(x,y, maxX, minY)+\
+                  access[maxY][minX][idx] * dist(x,y, minX, maxY)+\
+                  access[maxY][maxX][idx] * dist(x,y, maxX, maxY)
+
             val /= sumDist
             return val
 
