@@ -23,10 +23,9 @@ while True:
     vy = -numpy.sin(-theta) * -dx + numpy.cos(-theta) * dy
 
     rad = w * math.pi / 180
-    step = 0.1
+    step = 0.01
     numpy.array([vx, vy])
 
     for i in range(len(vx)):
         serial.sendCommand(f'G {vx[i]} {vy[i]} {rad} {step}')
         time.sleep(0.1)
-        serial.waitForReady()
