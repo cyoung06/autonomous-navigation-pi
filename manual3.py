@@ -12,7 +12,7 @@ cnt = 0
 def doStuff(dx, dy, w, dist):
 
     global cnt
-    times = numpy.linspace(0, dist, int(dist * 10))
+    times = numpy.linspace(0, dist, int(dist * 100))
 
     # vx * cos theta
     theta = times * w * math.pi / 180
@@ -20,7 +20,7 @@ def doStuff(dx, dy, w, dist):
     vy = -numpy.sin(-theta) * dx + numpy.cos(-theta) * dy
 
     rad = w * math.pi / 180
-    step = 0.1
+    step = 0.01
     numpy.array([vx, vy])
 
     for i in range(len(vx)):
