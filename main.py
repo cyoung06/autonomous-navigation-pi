@@ -100,7 +100,7 @@ if __name__ == '__main__':
         for (k, v) in macAddrMapping.items():
             if k in currentMeasurement:
                 positionVector[v] = currentMeasurement[k]
-        positionVector[-1] = robot.orientation[0]
+        # positionVector[-1] = robot.orientation[0]
         return numpy.array(positionVector), measuredAt
 
 
@@ -139,6 +139,7 @@ if __name__ == '__main__':
     robot.justRotate(-90)
 
     nodes = [[0] * 100 for i in range(0, 100)]
+    wifi = [[(np.array(maxMacAddrs + 1), np.zeros(maxMacAddrs + 1)) for x in range(0, 100)] for y in range(0, 100)]
     currentLoc = (50, 50)
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -149,8 +150,13 @@ if __name__ == '__main__':
         print(f"Visiting {x} {y}")
         refDir = currentDir
         found = False
+        if wifi[y][x] is None:
+            wifi[y][x] = measurePosition(10)
+
         for i in range(0, 4):
             dx, dy = directions[(i + refDir) % 4]
+            if not (dy + y in range(0, 100) and dx + x in range(0, 100)):
+                continue
             if nodes[dy+y][dx+x] == 0:
                 robot.justRotate((i+refDir-currentDir) * 90 - 30)
 
@@ -170,7 +176,7 @@ if __name__ == '__main__':
                     continue
 
                 nodes[dy+y][dx+x] = 1
-                robot.goForward(300)
+                robot.goForward(500)
                 stack.append(currentLoc)
                 currentLoc = (x+dx, y+dy)
                 found = True
@@ -185,7 +191,7 @@ if __name__ == '__main__':
         dx, dy = (ox - x, oy - y)
         targetDir = directions.index((dx,dy))
         robot.justRotate((targetDir - currentDir) * 90)
-        robot.goForward(300)
+        robot.goForward(500)
         currentDir = targetDir
         currentLoc = (ox, oy)
 
@@ -235,33 +241,51 @@ if __name__ == '__main__':
     # print(posVecMap)
     #
     # robot.goForward(-5000)
-    # beliefs = [ (0, random.uniform(0, 10000)) for i in range(1000) ] # start with 1000 points
-    # print(f"Starting with: {beliefs}")
-    # while True:
-    #     smh = random.randint(-5, 5) * 250
-    #     if smh == 0:
-    #         smh = 1500
-    #
-    #     robot.goForward(smh)
-    #     def lolz(pos, access, idx):
-    #         a1 = math.floor(pos[1] / 500)
-    #         a2 = math.ceil(pos[1] / 500)
-    #         return (access[(0, a1*500, 0)][idx] * (a2*500 - pos[1]) + access[(0, a2*500, 0)][idx] * (pos[1] - a1 * 500)) / 500
-    #
-    #     beliefs = monteCarloLocalization(
-    #         beliefs,
-    #         updateFunc=lambda t: (t[0], t[1]+smh + random.gauss(0, 500)),
-    #         probabilityFunc=calculateProbability(
-    #             lambda pos: lolz(pos, posVecMap, 0)
-    #             , lambda pos: lolz(pos, posVecMap, 1)
-    #             , measureSingle(robot.routerUpdate)[0]
-    #         ),
-    #         size=980,
-    #         gaussian=lambda t: (t[0], t[1] + random.gauss(0, 300))
-    #     )
-    #     print(beliefs)
-    #     print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
-    #     beliefs += [ (0, random.uniform(0, 10000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
-    #     input()
-    #     time.sleep(2)
-    #
+    # 300 by 300
+    # arena is 100 by 100
+    beliefs = [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(1000) ] # start with 1000 points
+    print(f"Starting with: {beliefs}")
+    currentDeg = currentDir * 90
+    while True:
+        smh = random.randint(-5, 5) * 250
+        if smh == 0:
+            smh = 1500
+
+        rot = random.randint(-5, 5) * 30
+        robot.justRotate(rot)
+        currentDeg += rot
+        robot.goForward(smh)
+        def lolz(pos, access, idx):
+            minY = math.floor(pos[1] / 500)
+            minX = math.floor(pos[0] / 500)
+
+            maxY = math.ceil(pos[1] / 500)
+            maxX = math.ceil(pos[0] / 500)
+            x, y = (pos[0]/500, pos[1]/500)
+            def dist(x1,y1,x2,y2):
+                return math.sqrt((x1-x2)**2 + (y1-y2) ** 2)
+            sumDist = dist(x,y, minX, minY) + dist(x,y, maxX, minY) + dist(x,y, minX, maxY) +  dist(x,y, maxX, maxY)
+            val = access[minY][minX][idx] * dist(x,y, minX, minY)
+            +access[minY][maxX][idx] * dist(x,y, maxX, minY)
+            +access[maxY][minX][idx] * dist(x,y, minX, maxY)
+            +access[maxY][maxX][idx] * dist(x,y, maxX, maxY)
+            val /= sumDist
+            return val
+
+        beliefs = monteCarloLocalization(
+            beliefs,
+            updateFunc=lambda t: (t[0]-smh*math.sin(rot * math.pi/180) + random.gauss(0, 500), t[1]+smh*math.cos(rot * math.pi/180) + random.gauss(0, 500)),
+            probabilityFunc=calculateProbability(
+                lambda pos: lolz(pos, wifi, 0)
+                , lambda pos: lolz(pos, wifi, 1)
+                , measureSingle(robot.routerUpdate)[0]
+            ),
+            size=980,
+            gaussian=lambda t: (t[0] + random.gauss(0, 300), t[1] + random.gauss(0, 300))
+        )
+        print(beliefs)
+        print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
+        beliefs += [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+        input()
+        time.sleep(2)
+

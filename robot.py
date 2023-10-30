@@ -133,6 +133,8 @@ class Robot:
             deg -= 360
         while deg < -180:
             deg += 360
+        if deg == 0:
+            return
         self.platform.rotateCW(1000, deg)
         welp = 0
         while True:

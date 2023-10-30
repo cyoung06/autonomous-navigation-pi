@@ -144,11 +144,13 @@ zCoord1 = dist * alphaX / (betaX - alphaX)
 zCoord2 = dist * alphaY / (betaY - alphaY)
 avg = (zCoord1 + zCoord2) / 2
 
+print(avg)
+avg = np.log(avg) * 5
+print(avg)
+avg = np.clip(avg, 0, 255).astype(np.uint8)
 
-avg = avg / 1000 * 255
-avg = np.clip(avg, 0, 255)
 
-cv.imshow('frame', zCoord1)
+cv.imshow('frame', avg)
 # cv.imshow('frame', avg)
 
 cv.waitKey(-1)
