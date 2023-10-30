@@ -11,7 +11,7 @@ def calculateProbability(averageFunc, stdFunc, measurement):
         invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
 
         print(f'to Expect: {avg[invalidIdx]}')
-        print(f'found: {measurement}')
+        print(f'found: {measurement[invalidIdx]}')
         vals = 1 / (std[invalidIdx] * numpy.pi * 2) * numpy.exp(-1/2 * (numpy.divide(measurement[invalidIdx] - avg[invalidIdx], std[invalidIdx]) ** 2))
         print(vals)
         return numpy.prod(vals)
