@@ -330,10 +330,10 @@ if __name__ == '__main__':
               math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
               math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
               math.inf,        math.inf,        math.inf,        math.inf]))]]
-    # currentLoc = (1, 1)
-    # currentDir = 0
-    # directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    # stack = []
+    currentLoc = (1, 1)
+    currentDir = 0
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    stack = []
     # nodes[1][1] = 1
     # while True:
     #     x,y = currentLoc
