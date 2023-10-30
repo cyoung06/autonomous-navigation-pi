@@ -459,9 +459,9 @@ if __name__ == '__main__':
             x, y = (pos[0]/1000, pos[1]/1000)
             # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
             if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
-                return np.zeros(maxMacAddrs + 1)
+                return np.zeros(maxMacAddrs + 1) * np.nan
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
-                return np.zeros(maxMacAddrs + 1)
+                return np.zeros(maxMacAddrs + 1)* np.nan
             def dist(x1,y1,x2,y2):
                 return math.sqrt((x1-x2)**2 + (y1-y2) ** 2)
             sumDist = dist(x,y, minX, minY) + dist(x,y, maxX, minY) + dist(x,y, minX, maxY) +  dist(x,y, maxX, maxY)
