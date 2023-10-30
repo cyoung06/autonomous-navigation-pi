@@ -247,6 +247,18 @@ if __name__ == '__main__':
     beliefs = [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(1000) ] # start with 1000 points
     print(f"Starting with: {beliefs}")
     currentDeg = currentDir * 90
+
+    plt.ion()
+    plt.show()
+
+    plt.ylim(0, 50000)
+    plt.xlim(0, 50000)
+
+    old = plt.scatter([], [], alpha=0.1, c='#FF5555')
+    new = plt.scatter([], [], alpha=0.9, c='#00FF00')
+
+    arrow1 = plt.arrow(0,0,0,0)
+    arrow2 = plt.arrow(0,0,0,0)
     while True:
         smh = random.randint(-5, 5) * 250
         if smh == 0:
@@ -289,15 +301,15 @@ if __name__ == '__main__':
 
         def column(matrix, i):
             return [row[i] for row in matrix]
-        plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
-        plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.9, c='#00FF00')
-        plt.arrow(mean([x for x,y in old_beliefs]),mean([y for x,y in old_beliefs]), -smh*math.sin(rot * math.pi/180), smh*math.cos(rot * math.pi/180))
-        plt.arrow(mean([x for x,y in old_beliefs]),mean([y for x,y in old_beliefs]),
-                  mean([x for x,y in beliefs]),mean([y for x,y in beliefs]))
-        plt.xlim(0, 50000)
-        plt.ylim(0, 50000)
 
-        plt.show()
+
+        old.set_data(column(old_beliefs, 0), column(old_beliefs, 1))
+        new.set_data(column(beliefs, 0), column(beliefs, 1))
+        arrow1.set_data(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
+                  -smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
+        arrow2.set_data(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
+                  mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+        plt.draw()
 
         print(f'MEAN: {mean([x for x,y in beliefs])}, {mean([y for x,y in beliefs])}')
         beliefs += [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
