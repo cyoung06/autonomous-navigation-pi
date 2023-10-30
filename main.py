@@ -139,9 +139,9 @@ if __name__ == '__main__':
     pos = measurePosition(3)
     robot.justRotate(-90)
 
-    nodes = [[0] * 100 for i in range(0, 100)]
-    wifi = [[None for x in range(0, 100)] for y in range(0, 100)]
-    currentLoc = (50, 50)
+    nodes = [[0] * 3 for i in range(0, 3)]
+    wifi = [[None for x in range(0, 3)] for y in range(0, 3)]
+    currentLoc = (1, 1)
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     stack = []
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
         for i in range(0, 4):
             dx, dy = directions[(i + refDir) % 4]
-            if not (dy + y in range(0, 100) and dx + x in range(0, 100)):
+            if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
                 continue
             if nodes[dy+y][dx+x] == 0:
                 robot.justRotate((i+refDir-currentDir) * 90 - 30)
@@ -245,15 +245,15 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(1000) ] # start with 1000 points
+    beliefs = [ (random.uniform(0, 1500), random.uniform(0, 1500)) for i in range(1000) ] # start with 1000 points
     print(f"Starting with: {beliefs}")
     currentDeg = currentDir * 90
 
     plt.ion()
     plt.show()
 
-    plt.ylim(0, 50000)
-    plt.xlim(0, 50000)
+    plt.ylim(0, 1500)
+    plt.xlim(0, 1500)
 
     old = plt.scatter([], [], alpha=0.1, c='#FF5555')
     new = plt.scatter([], [], alpha=0.9, c='#00FF00')
@@ -261,7 +261,7 @@ if __name__ == '__main__':
     arrow1 = plt.arrow(0,0,0,0)
     arrow2 = plt.arrow(0,0,0,0)
     while True:
-        smh = random.randint(-5, 5) * 250
+        smh = random.randint(-5, 5) * 50
         if smh == 0:
             smh = 1500
 
