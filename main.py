@@ -159,17 +159,17 @@ if __name__ == '__main__':
             if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
                 continue
             if nodes[dy+y][dx+x] == 0:
-                robot.justRotate((i+refDir-currentDir) * 90 - 30)
+                robot.justRotate((i+refDir-currentDir) * 90)
 
                 currentDir = (i + refDir) % 4
                 # check
                 blocked = False
-                robot.platform.rotateCW(500, 60)
-                while not robot.platform.isDone():
-                    if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
-                        print(f"smh blocked {robot.ultrasonic['forward']}")
-                        blocked = True
-                robot.justRotate(-30)
+                # robot.platform.rotateCW(500, 60)
+                # while not robot.platform.isDone():
+                #     if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
+                #         print(f"smh blocked {robot.ultrasonic['forward']}")
+                #         blocked = True
+                # robot.justRotate(-30)
 
                 if blocked:
                     nodes[dy + y][dx + x] = -1
