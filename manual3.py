@@ -7,13 +7,7 @@ import numpy
 
 serial = MovingPlatform(sys.argv[1])
 
-while True:
-    a = input()
-    dx, dy, w, dist = a.split(" ")
-    dx = float(dx)
-    dy = float(dy)
-    w = float(w)
-    dist = float(dist)
+def doStuff(dx, dy, w, dist):
 
     times = numpy.linspace(0, dist, int(dist * 100))
 
@@ -33,3 +27,11 @@ while True:
         serial.sendCommand(f'M {vx[i]} {vy[i]} {-rad} {step}\n')
         if i > 5:
             serial.waitForReady()
+
+
+
+while True:
+    # a = input()
+    doStuff(0, 500, 30, 1)
+    doStuff(250, 250 * math.sqrt(3), -60, 1)
+    doStuff(-250, 250 * math.sqrt(3), 30, 1)
