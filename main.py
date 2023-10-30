@@ -466,7 +466,7 @@ if __name__ == '__main__':
             maxX = math.ceil(pos[0] / 1000)
             x, y = (pos[0]/1000, pos[1]/1000)
             print(f'{minX} {minY} {maxX} {maxY}')
-            if minY < 0 | minX < 0 | maxY >= 3 | maxX >= 3:
+            if minY < 0 or minX < 0 or maxY >= 3 or maxX >= 3:
                 return np.zeros(maxMacAddrs + 1)
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
                 return np.zeros(maxMacAddrs + 1)
