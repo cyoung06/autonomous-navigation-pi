@@ -7,8 +7,11 @@ import numpy
 
 serial = MovingPlatform(sys.argv[1])
 
+
+needWait = False
 def doStuff(dx, dy, w, dist):
 
+    global needWait
     times = numpy.linspace(0, dist, int(dist * 10))
 
     # vx * cos theta
@@ -22,10 +25,11 @@ def doStuff(dx, dy, w, dist):
 
     cnt = 0
     for i in range(len(vx)):
-        if i == 5:
+        if i == 5 and not needWait:
             serial.ready = False
+            needWait = True
         serial.sendCommand(f'M {vx[i]} {vy[i]} {-rad} {step}\n')
-        if i > 5:
+        if i > 5 or needWait:
             serial.waitForReady()
             serial.ready = False
 
