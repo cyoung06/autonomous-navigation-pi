@@ -442,11 +442,16 @@ if __name__ == '__main__':
     plt.show()
 
     while True:
-        smh = random.randint(-5, 5) * 50
-        if smh == 0:
-            smh = 300
 
-        rot = random.randint(-5, 5) * 30
+        rot, smh = a.split(" ")
+        rot = float(rot)
+        smh = float(smh)
+
+        # smh = random.randint(-5, 5) * 50
+        # if smh == 0:
+        #     smh = 300
+
+        # rot = random.randint(-5, 5) * 30
         robot.justRotate(rot)
         currentDeg += rot
         robot.goForward(smh)
