@@ -501,12 +501,12 @@ if __name__ == '__main__':
         plt.xlim(0, 3000)
 
         old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
-        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.9, c='#00FF00')
+        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
 
         arrow1 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
                   -smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
         arrow2 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+                  mean([x for x, y in beliefs]), mean([y for x, y in beliefs]), edgecolor='#FF00FF')
 
         plt.draw()
 
