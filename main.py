@@ -196,9 +196,9 @@ if __name__ == '__main__':
         currentDir = targetDir
         currentLoc = (ox, oy)
 
-    for y in range(0, 100):
+    for y in range(0, 3):
         line = ''
-        for x in range(0, 100):
+        for x in range(0, 3):
             if nodes[y][x] == 1:
                 line += " "
             elif nodes[y][x] == -1:
