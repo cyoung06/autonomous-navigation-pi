@@ -1,3 +1,5 @@
+import time
+
 from peripherals.arduino_serial import MovingPlatform
 import sys
 import math
@@ -13,7 +15,7 @@ while True:
     w = float(w)
     dist = float(dist)
 
-    times = numpy.linspace(0, dist, int(dist * 100))
+    times = numpy.linspace(0, dist, int(dist * 10))
 
     # vx * cos theta
     theta = times * w * math.pi / 180
@@ -21,12 +23,13 @@ while True:
     vy = -numpy.sin(theta) * dx + numpy.cos(theta) * dy
 
     rad = w * math.pi / 180
-    step = 0.01
+    step = 0.1
     numpy.array([vx, vy])
 
     for i in range(len(vx)):
         if i > 9:
             serial.ready = False
         serial.sendCommand(f'G {vx[i]} {vy[i]} {rad} {step}')
+        time.sleep(0.001)
         if i > 9:
             serial.waitForReady()
