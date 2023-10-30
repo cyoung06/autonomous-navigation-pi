@@ -13,7 +13,7 @@ while True:
     w = float(w)
     dist = float(dist)
 
-    times = numpy.linspace(0, dist, dist * 100)
+    times = numpy.linspace(0, dist, int(dist * 100))
 
     # vx * cos theta
     theta = times * w * math.pi / 180
