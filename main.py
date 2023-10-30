@@ -442,15 +442,15 @@ if __name__ == '__main__':
 
     while True:
 
-        rot, smh = input().split(" ")
+        t, rot, smh = input().split(" ")
         rot = float(rot)
         smh = float(smh)
 
-        # smh = random.randint(-5, 5) * 50
-        # if smh == 0:
-        #     smh = 300
+        if t == 'M':
+            x, y = (mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+            rot = math.atan2(rot-x, smh-y)
+            smh = math.sqrt((rot-x)**2 + (smh-y) ** 2)
 
-        # rot = random.randint(-5, 5) * 30
         robot.justRotate(rot)
         robot.goForward(smh)
         def lolz(pos, access, idx):
