@@ -8,6 +8,10 @@ serial = MovingPlatform(sys.argv[1])
 while True:
     a = input()
     dx, dy, w, dist = a.split(" ")
+    dx = float(dx)
+    dy = float(dy)
+    w = float(w)
+    dist = float(dist)
 
     times = numpy.linspace(0, dist, dist * 100)
 
