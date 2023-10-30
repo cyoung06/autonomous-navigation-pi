@@ -30,6 +30,6 @@ while True:
     for i in range(len(vx)):
         if i > 5:
             serial.ready = False
-        serial.sendCommand(f'G {vx[i]} {vy[i]} {rad} {step}\n')
+        serial.sendCommand(f'G {vx[i]} {vy[i]} {-rad} {step}\n')
         if i > 5:
             serial.waitForReady()
