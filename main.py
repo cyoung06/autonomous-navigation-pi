@@ -441,14 +441,6 @@ if __name__ == '__main__':
     plt.ion()
     plt.show()
 
-    plt.ylim(0, 3000)
-    plt.xlim(0, 3000)
-
-    old = plt.scatter([], [], alpha=0.1, c='#FF5555')
-    new = plt.scatter([], [], alpha=0.9, c='#00FF00')
-
-    arrow1 = plt.arrow(0,0,0,0)
-    arrow2 = plt.arrow(0,0,0,0)
     while True:
         smh = random.randint(-5, 5) * 50
         if smh == 0:
@@ -498,13 +490,19 @@ if __name__ == '__main__':
         def column(matrix, i):
             return [row[i] for row in matrix]
 
+        plt.clf()
 
-        old.set_data(column(old_beliefs, 0), column(old_beliefs, 1))
-        new.set_data(column(beliefs, 0), column(beliefs, 1))
-        arrow1.set_data(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
+        plt.ylim(0, 3000)
+        plt.xlim(0, 3000)
+
+        old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
+        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.9, c='#00FF00')
+
+        arrow1 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
                   -smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
-        arrow2.set_data(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
+        arrow2 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
                   mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+
         plt.draw()
 
         print(f'MEAN: {mean([x for x,y in beliefs])}, {mean([y for x,y in beliefs])}')
