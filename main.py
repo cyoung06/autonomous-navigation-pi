@@ -177,7 +177,7 @@ if __name__ == '__main__':
                     continue
 
                 nodes[dy+y][dx+x] = 1
-                robot.goForward(500)
+                robot.goForward(1000)
                 stack.append(currentLoc)
                 currentLoc = (x+dx, y+dy)
                 found = True
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         dx, dy = (ox - x, oy - y)
         targetDir = directions.index((dx,dy))
         robot.justRotate((targetDir - currentDir) * 90)
-        robot.goForward(500)
+        robot.goForward(1000)
         currentDir = targetDir
         currentLoc = (ox, oy)
 
@@ -245,15 +245,15 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 1500), random.uniform(0, 1500)) for i in range(1000) ] # start with 1000 points
+    beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000)) for i in range(1000) ] # start with 1000 points
     print(f"Starting with: {beliefs}")
     currentDeg = currentDir * 90
 
     plt.ion()
     plt.show()
 
-    plt.ylim(0, 1500)
-    plt.xlim(0, 1500)
+    plt.ylim(0, 3000)
+    plt.xlim(0, 3000)
 
     old = plt.scatter([], [], alpha=0.1, c='#FF5555')
     new = plt.scatter([], [], alpha=0.9, c='#00FF00')
@@ -263,19 +263,19 @@ if __name__ == '__main__':
     while True:
         smh = random.randint(-5, 5) * 50
         if smh == 0:
-            smh = 1500
+            smh = 300
 
         rot = random.randint(-5, 5) * 30
         robot.justRotate(rot)
         currentDeg += rot
         robot.goForward(smh)
         def lolz(pos, access, idx):
-            minY = math.floor(pos[1] / 500)
-            minX = math.floor(pos[0] / 500)
+            minY = math.floor(pos[1] / 1000)
+            minX = math.floor(pos[0] / 1000)
 
-            maxY = math.ceil(pos[1] / 500)
-            maxX = math.ceil(pos[0] / 500)
-            x, y = (pos[0]/500, pos[1]/500)
+            maxY = math.ceil(pos[1] / 1000)
+            maxX = math.ceil(pos[0] / 1000)
+            x, y = (pos[0]/1000, pos[1]/1000)
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
                 return np.zeros(maxMacAddrs + 1)
             def dist(x1,y1,x2,y2):
@@ -316,6 +316,6 @@ if __name__ == '__main__':
         plt.draw()
 
         print(f'MEAN: {mean([x for x,y in beliefs])}, {mean([y for x,y in beliefs])}')
-        beliefs += [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+        beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
