@@ -434,9 +434,8 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000)) for i in range(1000) ] # start with 1000 points
+    beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
     print(f"Starting with: {beliefs}")
-    currentDeg = currentDir * 90
 
     plt.ion()
     plt.show()
@@ -453,7 +452,6 @@ if __name__ == '__main__':
 
         # rot = random.randint(-5, 5) * 30
         robot.justRotate(rot)
-        currentDeg += rot
         robot.goForward(smh)
         def lolz(pos, access, idx):
             minY = math.floor(pos[1] / 1000)
@@ -484,14 +482,14 @@ if __name__ == '__main__':
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
-            updateFunc=lambda t: (t[0]+smh*math.sin(rot * math.pi/180) + random.gauss(0, 500), t[1]+smh*math.cos(rot * math.pi/180) + random.gauss(0, 500)),
+            updateFunc=lambda t: (t[0]+smh*math.sin(t[2] * math.pi/180) + random.gauss(0, smh / 10), t[1]+smh*math.cos(t[2] * math.pi/180) + random.gauss(0, smh / 10), t[2] + random.gauss(0, smh / 120)),
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, wifi, 0)
                 , lambda pos: lolz(pos, wifi, 1)
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=980,
-            gaussian=lambda t: (t[0] + random.gauss(0, 300), t[1] + random.gauss(0, 300))
+            gaussian=lambda t: (t[0], t[1], t[2])
         )
 
 
@@ -509,7 +507,7 @@ if __name__ == '__main__':
         arrow1 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
                   smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
         arrow2 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  mean([x for x, y in beliefs])-mean([x for x, y in old_beliefs]), mean([y for x, y in beliefs])- mean([y for x, y in old_beliefs]), edgecolor='#FF00FF')
+                  mean([x for x, y in beliefs])-mean([x for x, y in old_beliefs]), mean([y for x, y in beliefs]) - mean([y for x, y in old_beliefs]), edgecolor='#FF00FF')
 
         plt.draw()
 
