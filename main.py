@@ -206,6 +206,7 @@ if __name__ == '__main__':
             elif nodes[y][x] == 0:
                 line += '?'
         print(line)
+    print(wifi)
     # posVecMap = {}
     #
     # lines = [
