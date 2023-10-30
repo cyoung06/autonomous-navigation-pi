@@ -15,6 +15,7 @@ from navigation.localization import monteCarloLocalization, calculateProbability
 from navigation.pathfinding import find_path
 
 from picamera2 import Picamera2
+import matplotlib.pyplot as plt
 
 import numpy
 import numpy as np
@@ -272,6 +273,7 @@ if __name__ == '__main__':
             val /= sumDist
             return val
 
+        old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
             updateFunc=lambda t: (t[0]-smh*math.sin(rot * math.pi/180) + random.gauss(0, 500), t[1]+smh*math.cos(rot * math.pi/180) + random.gauss(0, 500)),
@@ -283,9 +285,21 @@ if __name__ == '__main__':
             size=980,
             gaussian=lambda t: (t[0] + random.gauss(0, 300), t[1] + random.gauss(0, 300))
         )
-        print(beliefs)
-        print(f'MEAN y coord: {mean([y for x,y in beliefs])}')
+
+
+        def column(matrix, i):
+            return [row[i] for row in matrix]
+        plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
+        plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.9, c='#00FF00')
+        plt.arrow(mean([x for x,y in old_beliefs]),mean([y for x,y in old_beliefs]), -smh*math.sin(rot * math.pi/180), smh*math.cos(rot * math.pi/180))
+        plt.arrow(mean([x for x,y in old_beliefs]),mean([y for x,y in old_beliefs]),
+                  mean([x for x,y in beliefs]),mean([y for x,y in beliefs]))
+        plt.xlim(0, 50000)
+        plt.ylim(0, 50000)
+
+        plt.show()
+
+        print(f'MEAN: {mean([x for x,y in beliefs])}, {mean([y for x,y in beliefs])}')
         beliefs += [ (random.uniform(0, 50000), random.uniform(0, 50000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
-

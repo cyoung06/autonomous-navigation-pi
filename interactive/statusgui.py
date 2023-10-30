@@ -3,15 +3,10 @@ import logging
 import time
 from threading import Thread
 
-import pygame
-from pygame import DOUBLEBUF, OPENGL
 from websocket_server import WebsocketServer
 
 from robot import Robot
 from navigation.world import World
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
 
 class StatusGUI:
     def __init__(self, robot: Robot, world: World):
