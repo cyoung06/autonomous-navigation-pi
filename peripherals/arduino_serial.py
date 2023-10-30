@@ -17,7 +17,7 @@ class MovingPlatform:
         self.thread = threading.Thread(target=self.readLines)
         self.thread.daemon = True
         self.thread.start()
-        self.ready = True
+        self.ready = 0
         self.received = False
 
     def readLines(self):
@@ -25,9 +25,9 @@ class MovingPlatform:
             lastLine = self.port.readline()
             print(f"received... {lastLine}")
             if lastLine == b'Cnc shield init!\r\n':
-                self.ready = True
+                self.ready -= 1
             if lastLine == b'MOVED\r\n':
-                self.ready = True
+                self.ready -= 1
             if lastLine == b'RECEIVED\r\n':
                 self.received = True
 
@@ -45,7 +45,7 @@ class MovingPlatform:
     def goVector(self, vec, dist):
         if not self.isDone():
             raise "Not done"
-        self.ready = False
+        self.ready += 1
         self.sendCommand(f"G {vec[0]} {vec[1]} 0 {dist / math.sqrt(vec[0] * vec[0] + vec[1] * vec[1])}\n")
 
     def goForward(self, dist):
@@ -54,7 +54,7 @@ class MovingPlatform:
     def rotateCW(self, speed, degs):
         if not self.isDone():
             raise "Not done"
-        self.ready = False
+        self.ready += 1
         self.sendCommand(f'G 0 0 {"{:.8f}".format(speed * math.pi / 180.0)} {degs/speed}\n')
 
     def waitForReady(self):
@@ -70,4 +70,4 @@ class MovingPlatform:
     def cancel(self):
         self.sendCommand(f"S\n")
     def isDone(self):
-        return self.ready
+        return self.ready == 0

@@ -7,8 +7,6 @@ import numpy
 
 serial = MovingPlatform(sys.argv[1])
 
-
-cnt = 0
 def doStuff(dx, dy, w, dist):
 
     global cnt
@@ -24,11 +22,9 @@ def doStuff(dx, dy, w, dist):
     numpy.array([vx, vy])
 
     for i in range(len(vx)):
-        if cnt == 5:
-            serial.ready = False
-        cnt += 1
+        serial.ready += 1
         serial.sendCommand(f'M {vx[i]} {vy[i]} {-rad} {step}\n')
-        if cnt > 5:
+        if serial.ready > 5:
             serial.waitForReady()
             serial.ready = False
 
