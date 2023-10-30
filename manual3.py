@@ -33,5 +33,3 @@ while True:
         serial.sendCommand(f'G {vx[i]} {vy[i]} {rad} {step}\n')
         if i > 5:
             serial.waitForReady()
-        else:
-            time.sleep(1)
