@@ -23,7 +23,7 @@ def doStuff(dx, dy, w, dist):
 
     for i in range(len(vx)):
         serial.ready += 1
-        serial.sendCommand(f'M {vx[i]} {vy[i]} {-rad} {step}\n')
+        serial.sendCommand(f'G {vx[i]} {vy[i]} {-rad} {step}\n')
         if serial.ready > 5:
             serial.waitForReady()
             serial.ready = False
