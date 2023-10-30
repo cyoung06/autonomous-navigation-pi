@@ -467,15 +467,18 @@ if __name__ == '__main__':
                 return np.zeros(maxMacAddrs + 1) * np.nan
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
                 return np.zeros(maxMacAddrs + 1)* np.nan
-            def dist(x1,y1,x2,y2):
-                return math.sqrt((x1-x2)**2 + (y1-y2) ** 2)
-            sumDist = dist(x,y, minX, minY) + dist(x,y, maxX, minY) + dist(x,y, minX, maxY) +  dist(x,y, maxX, maxY)
-            val = access[minY][minX][idx] * dist(x,y, minX, minY)+\
-                  access[minY][maxX][idx] * dist(x,y, maxX, minY)+\
-                  access[maxY][minX][idx] * dist(x,y, minX, maxY)+\
-                  access[maxY][maxX][idx] * dist(x,y, maxX, maxY)
 
-            val /= sumDist
+            dx1 = x - minX
+            dy1 = y - minY
+            dx2 = maxX - x
+            dy2 = maxY - y
+
+            val = access[minY][minX][idx] * dx2 * dy2 +\
+                  access[minY][maxX][idx] * dx1 * dy2 +\
+                  access[maxY][minX][idx] * dx2 * dy1 +\
+                  access[maxY][maxX][idx] * dx1 * dy1
+
+            val /= 1000 * 1000
             return val
 
         old_beliefs = beliefs
