@@ -177,7 +177,7 @@ if __name__ == '__main__':
                     continue
 
                 nodes[dy+y][dx+x] = 1
-                robot.goForward(1000)
+                robot.goForward(500)
                 stack.append(currentLoc)
                 currentLoc = (x+dx, y+dy)
                 found = True
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         dx, dy = (ox - x, oy - y)
         targetDir = directions.index((dx,dy))
         robot.justRotate((targetDir - currentDir) * 90)
-        robot.goForward(1000)
+        robot.goForward(500)
         currentDir = targetDir
         currentLoc = (ox, oy)
 
