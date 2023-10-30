@@ -443,7 +443,7 @@ if __name__ == '__main__':
 
     while True:
 
-        rot, smh = a.split(" ")
+        rot, smh = input().split(" ")
         rot = float(rot)
         smh = float(smh)
 
