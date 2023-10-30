@@ -32,6 +32,6 @@ def doStuff(dx, dy, w, dist):
 
 while True:
     # a = input()
-    doStuff(0, 1000, 120, 0.25)
-    doStuff(-1000, 1000 * math.sqrt(3), -120, 0.5)
-    doStuff(1000, 1000 * math.sqrt(3), 120, 0.25)
+    doStuff(0, 500, 120, 0.25)
+    doStuff(-500, 500 * math.sqrt(3), -120, 0.5)
+    doStuff(500, 500 * math.sqrt(3), 120, 0.25)
