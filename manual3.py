@@ -9,7 +9,7 @@ serial = MovingPlatform(sys.argv[1])
 
 def doStuff(dx, dy, w, dist):
 
-    times = numpy.linspace(0, dist, int(dist * 100))
+    times = numpy.linspace(0, dist, int(dist * 10))
 
     # vx * cos theta
     theta = times * w * math.pi / 180
@@ -17,7 +17,7 @@ def doStuff(dx, dy, w, dist):
     vy = -numpy.sin(-theta) * dx + numpy.cos(-theta) * dy
 
     rad = w * math.pi / 180
-    step = 0.01
+    step = 0.1
     numpy.array([vx, vy])
 
     cnt = 0
