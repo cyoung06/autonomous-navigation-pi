@@ -23,7 +23,6 @@ def doStuff(dx, dy, w, dist):
     step = 0.1
     numpy.array([vx, vy])
 
-    cnt = 0
     for i in range(len(vx)):
         if i == 5 and not needWait:
             serial.ready = False
