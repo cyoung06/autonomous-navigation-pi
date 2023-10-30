@@ -26,6 +26,12 @@ while True:
     step = 0.01
     numpy.array([vx, vy])
 
+    cnt = 0
     for i in range(len(vx)):
+        if i > 5:
+            serial.ready = False
         serial.sendCommand(f'G {-vx[i]} {vy[i]} {-rad} {step}')
-        time.sleep(0.5)
+        if i > 5:
+            serial.waitForReady()
+        else:
+            time.sleep(1)
