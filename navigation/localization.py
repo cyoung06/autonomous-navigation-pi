@@ -8,7 +8,7 @@ def calculateProbability(averageFunc, stdFunc, measurement):
     def actualStuff(loc):
         avg = averageFunc(loc)
         std = stdFunc(loc)
-        invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) & numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
+        invalidIdx = numpy.in1d(measurement, [numpy.nan, numpy.inf], invert=True) | numpy.in1d(avg, [numpy.nan, numpy.inf], invert=True) | numpy.in1d(std, [numpy.nan, numpy.inf], invert=True)
 
         print(f'to Expect: {avg[invalidIdx]}')
         print(f'found: {measurement[invalidIdx]}')
