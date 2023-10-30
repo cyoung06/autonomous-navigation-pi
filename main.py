@@ -145,7 +145,7 @@ if __name__ == '__main__':
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     stack = []
-    nodes[50][50] = 1
+    nodes[1][1] = 1
     while True:
         x,y = currentLoc
         print(f"Visiting {x} {y}")
