@@ -459,17 +459,17 @@ if __name__ == '__main__':
 
             maxY = math.ceil(pos[1] / 1000)
             maxX = math.ceil(pos[0] / 1000)
-            x, y = (pos[0]/1000, pos[1]/1000)
+            x, y = (pos[0], pos[1])
             # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
             if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
                 return np.zeros(maxMacAddrs + 1) * np.nan
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
                 return np.zeros(maxMacAddrs + 1)* np.nan
 
-            dx1 = x - minX
-            dy1 = y - minY
-            dx2 = maxX - x
-            dy2 = maxY - y
+            dx1 = x - minX*1000
+            dy1 = y - minY*1000
+            dx2 = maxX * 1000 - x
+            dy2 = maxY * 1000 - y
 
             val = access[minY][minX][idx] * dx2 * dy2 +\
                   access[minY][maxX][idx] * dx1 * dy2 +\
