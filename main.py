@@ -513,6 +513,6 @@ if __name__ == '__main__':
         plt.draw()
 
         print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}')
-        beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+        beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
