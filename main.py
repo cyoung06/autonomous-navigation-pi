@@ -504,14 +504,15 @@ if __name__ == '__main__':
         old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
         new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
 
-        arrow1 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  smh * math.sin(rot * math.pi / 180), smh * math.cos(rot * math.pi / 180))
-        arrow2 = plt.arrow(mean([x for x, y in old_beliefs]), mean([y for x, y in old_beliefs]),
-                  mean([x for x, y in beliefs])-mean([x for x, y in old_beliefs]), mean([y for x, y in beliefs]) - mean([y for x, y in old_beliefs]), edgecolor='#FF00FF')
+        avgRot = mean([t for x, y, t in beliefs])
+        arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
+                  smh * math.sin(avgRot * math.pi / 180), smh * math.cos(avgRot * math.pi / 180))
+        arrow2 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y,t in old_beliefs]),
+                  mean([x for x, y,t in beliefs])-mean([x for x, y,t in old_beliefs]), mean([y for x, y,t in beliefs]) - mean([y for x, y,t in old_beliefs]), edgecolor='#FF00FF')
 
         plt.draw()
 
-        print(f'MEAN: {mean([x for x,y in beliefs])}, {mean([y for x,y in beliefs])}')
+        print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}')
         beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
