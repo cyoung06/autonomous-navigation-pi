@@ -22,10 +22,10 @@ def calculateProbability(averageFunc, stdFunc, measurement):
 
 def monteCarloLocalization(belief, updateFunc, probabilityFunc, size, gaussian):
     beliefs = np.array([updateFunc(belief[i]) for i in range(len(belief))])
-    print(f"After update: {beliefs}")
+    # print(f"After update: {beliefs}")
     weights = np.array([probabilityFunc(belief[i]) for i in range(len(belief))])
     filter = numpy.isfinite(weights)
-    print(f"Weights: {weights[filter]}")
+    # print(f"Weights: {weights[filter]}")
 
     print(f"After filter: {len(beliefs[filter])} weights: {len(weights)}")
 

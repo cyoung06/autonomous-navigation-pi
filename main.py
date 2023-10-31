@@ -886,6 +886,10 @@ if __name__ == '__main__':
 
         print(beliefs)
         print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
+        varX = numpy.var([x for x,y,t in beliefs])
+        varY = numpy.var([y for x,y,t in beliefs])
+        print(f'Variance X: {varX}, {varY}, {varX+varY}')
+        print(f'SD: {math.sqrt(varX)} {math.sqrt(varY)} {math.sqrt(varX+varY)}')
         beliefs += [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(1000) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
