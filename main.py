@@ -334,56 +334,56 @@ if __name__ == '__main__':
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     stack = []
-    # nodes[1][1] = 1
-    # while True:
-    #     x,y = currentLoc
-    #     print(f"Visiting {x} {y}")
-    #     refDir = currentDir
-    #     found = False
-    #     if wifi[y][x] is None:
-    #         wifi[y][x] = measurePosition(10)
-    # 
-    #     for i in range(0, 4):
-    #         dx, dy = directions[(i + refDir) % 4]
-    #         if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
-    #             continue
-    #         if nodes[dy+y][dx+x] == 0:
-    #             robot.justRotate((i+refDir-currentDir) * 90)
-    # 
-    #             currentDir = (i + refDir) % 4
-    #             # check
-    #             blocked = False
-    #             # robot.platform.rotateCW(500, 60)
-    #             # while not robot.platform.isDone():
-    #             #     if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
-    #             #         print(f"smh blocked {robot.ultrasonic['forward']}")
-    #             #         blocked = True
-    #             # robot.justRotate(-30)
-    # 
-    #             if blocked:
-    #                 nodes[dy + y][dx + x] = -1
-    #                 print("BLOCKED NODE!")
-    #                 continue
-    # 
-    #             nodes[dy+y][dx+x] = 1
-    #             robot.goForward(1000)
-    #             stack.append(currentLoc)
-    #             currentLoc = (x+dx, y+dy)
-    #             found = True
-    #             break
-    # 
-    #     if found:
-    #         continue
-    # 
-    #     if len(stack) == 0:
-    #         break
-    #     ox,oy = stack.pop()
-    #     dx, dy = (ox - x, oy - y)
-    #     targetDir = directions.index((dx,dy))
-    #     robot.justRotate((targetDir - currentDir) * 90)
-    #     robot.goForward(1000)
-    #     currentDir = targetDir
-    #     currentLoc = (ox, oy)
+    nodes[1][1] = 1
+    while True:
+        x,y = currentLoc
+        print(f"Visiting {x} {y}")
+        refDir = currentDir
+        found = False
+        if wifi[y][x] is None:
+            wifi[y][x] = measurePosition(10)
+
+        for i in range(0, 4):
+            dx, dy = directions[(i + refDir) % 4]
+            if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
+                continue
+            if nodes[dy+y][dx+x] == 0:
+                robot.justRotate((i+refDir-currentDir) * 90)
+
+                currentDir = (i + refDir) % 4
+                # check
+                blocked = False
+                # robot.platform.rotateCW(500, 60)
+                # while not robot.platform.isDone():
+                #     if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
+                #         print(f"smh blocked {robot.ultrasonic['forward']}")
+                #         blocked = True
+                # robot.justRotate(-30)
+
+                if blocked:
+                    nodes[dy + y][dx + x] = -1
+                    print("BLOCKED NODE!")
+                    continue
+
+                nodes[dy+y][dx+x] = 1
+                robot.goForward(1000)
+                stack.append(currentLoc)
+                currentLoc = (x+dx, y+dy)
+                found = True
+                break
+
+        if found:
+            continue
+
+        if len(stack) == 0:
+            break
+        ox,oy = stack.pop()
+        dx, dy = (ox - x, oy - y)
+        targetDir = directions.index((dx,dy))
+        robot.justRotate((targetDir - currentDir) * 90)
+        robot.goForward(1000)
+        currentDir = targetDir
+        currentLoc = (ox, oy)
     # 
     # for y in range(0, 3):
     #     line = ''
@@ -434,95 +434,95 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
-    print(f"Starting with: {beliefs}")
-
-    plt.ion()
-    plt.show()
-
-    while True:
-        input()
-
-
-        beliefs = [(random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in
-                   range(1000)]  # start with 1000 points
-
-
-        # t, rot, smh = input().split(" ")
-        # rot = float(rot)
-        # smh = float(smh)
-        #
-        # if t == 'M':
-        #     x, y = (mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
-        #     rot = math.atan2(rot-x, smh-y)
-        #     smh = math.sqrt((rot-x)**2 + (smh-y) ** 2)
-        #
-        # robot.justRotate(rot)
-        # robot.goForward(smh)
-        def lolz(pos, access, idx):
-            minY = math.floor(pos[1] / 1000)
-            minX = math.floor(pos[0] / 1000)
-
-            maxY = math.ceil(pos[1] / 1000)
-            maxX = math.ceil(pos[0] / 1000)
-            x, y = (pos[0], pos[1])
-            # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
-            if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
-                return np.zeros(maxMacAddrs + 1) * np.nan
-            if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
-                return np.zeros(maxMacAddrs + 1)* np.nan
-
-            dx1 = x - minX*1000
-            dy1 = y - minY*1000
-            dx2 = maxX * 1000 - x
-            dy2 = maxY * 1000 - y
-
-            val = access[minY][minX][idx] * dx2 * dy2 +\
-                  access[minY][maxX][idx] * dx1 * dy2 +\
-                  access[maxY][minX][idx] * dx2 * dy1 +\
-                  access[maxY][maxX][idx] * dx1 * dy1
-
-            val /= 1000 * 1000
-            return val
-        def update(t):
-            return t
-            # newRot = t[2] + rot + random.gauss(0, smh / 120)
-            # return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
-        old_beliefs = beliefs
-        beliefs = monteCarloLocalization(
-            beliefs,
-            updateFunc=update,
-            probabilityFunc=calculateProbability(
-                lambda pos: lolz(pos, wifi, 0)
-                , lambda pos: lolz(pos, wifi, 1)
-                , measureSingle(robot.routerUpdate)[0]
-            ),
-            size=980,
-            gaussian=lambda t: (t[0] + random.gauss(0, 0), t[1]+ random.gauss(0, 0), t[2]+ random.gauss(0, 1))
-        )
-
-
-        def column(matrix, i):
-            return [row[i] for row in matrix]
-
-        plt.clf()
-
-        plt.ylim(0, 3000)
-        plt.xlim(0, 3000)
-
-        # old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
-        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
-
-        # avgRot = mean([t for x, y, t in beliefs])
-        # arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
-        #           smh * math.sin(avgRot * math.pi / 180), smh * math.cos(avgRot * math.pi / 180))
-        # arrow2 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y,t in old_beliefs]),
-        #           mean([x for x, y,t in beliefs])-mean([x for x, y,t in old_beliefs]), mean([y for x, y,t in beliefs]) - mean([y for x, y,t in old_beliefs]), edgecolor='#FF00FF')
-
-        plt.draw()
-
-        print(beliefs)
-        print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
-        beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
-        input()
-        time.sleep(2)
+    # beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
+    # print(f"Starting with: {beliefs}")
+    #
+    # plt.ion()
+    # plt.show()
+    #
+    # while True:
+    #     input()
+    #
+    #
+    #     beliefs = [(random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in
+    #                range(1000)]  # start with 1000 points
+    #
+    #
+    #     # t, rot, smh = input().split(" ")
+    #     # rot = float(rot)
+    #     # smh = float(smh)
+    #     #
+    #     # if t == 'M':
+    #     #     x, y = (mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+    #     #     rot = math.atan2(rot-x, smh-y)
+    #     #     smh = math.sqrt((rot-x)**2 + (smh-y) ** 2)
+    #     #
+    #     # robot.justRotate(rot)
+    #     # robot.goForward(smh)
+    #     def lolz(pos, access, idx):
+    #         minY = math.floor(pos[1] / 1000)
+    #         minX = math.floor(pos[0] / 1000)
+    #
+    #         maxY = math.ceil(pos[1] / 1000)
+    #         maxX = math.ceil(pos[0] / 1000)
+    #         x, y = (pos[0], pos[1])
+    #         # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
+    #         if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
+    #             return np.zeros(maxMacAddrs + 1) * np.nan
+    #         if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
+    #             return np.zeros(maxMacAddrs + 1)* np.nan
+    #
+    #         dx1 = x - minX*1000
+    #         dy1 = y - minY*1000
+    #         dx2 = maxX * 1000 - x
+    #         dy2 = maxY * 1000 - y
+    #
+    #         val = access[minY][minX][idx] * dx2 * dy2 +\
+    #               access[minY][maxX][idx] * dx1 * dy2 +\
+    #               access[maxY][minX][idx] * dx2 * dy1 +\
+    #               access[maxY][maxX][idx] * dx1 * dy1
+    #
+    #         val /= 1000 * 1000
+    #         return val
+    #     def update(t):
+    #         return t
+    #         # newRot = t[2] + rot + random.gauss(0, smh / 120)
+    #         # return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
+    #     old_beliefs = beliefs
+    #     beliefs = monteCarloLocalization(
+    #         beliefs,
+    #         updateFunc=update,
+    #         probabilityFunc=calculateProbability(
+    #             lambda pos: lolz(pos, wifi, 0)
+    #             , lambda pos: lolz(pos, wifi, 1)
+    #             , measureSingle(robot.routerUpdate)[0]
+    #         ),
+    #         size=980,
+    #         gaussian=lambda t: (t[0] + random.gauss(0, 0), t[1]+ random.gauss(0, 0), t[2]+ random.gauss(0, 1))
+    #     )
+    #
+    #
+    #     def column(matrix, i):
+    #         return [row[i] for row in matrix]
+    #
+    #     plt.clf()
+    #
+    #     plt.ylim(0, 3000)
+    #     plt.xlim(0, 3000)
+    #
+    #     # old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
+    #     new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
+    #
+    #     # avgRot = mean([t for x, y, t in beliefs])
+    #     # arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
+    #     #           smh * math.sin(avgRot * math.pi / 180), smh * math.cos(avgRot * math.pi / 180))
+    #     # arrow2 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y,t in old_beliefs]),
+    #     #           mean([x for x, y,t in beliefs])-mean([x for x, y,t in old_beliefs]), mean([y for x, y,t in beliefs]) - mean([y for x, y,t in old_beliefs]), edgecolor='#FF00FF')
+    #
+    #     plt.draw()
+    #
+    #     print(beliefs)
+    #     print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
+    #     beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+    #     input()
+    #     time.sleep(2)
