@@ -797,7 +797,7 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
+    beliefs = [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(10000) ] # start with 10000 points
     print(f"Starting with: {beliefs}")
 
     plt.ion()
@@ -860,7 +860,7 @@ if __name__ == '__main__':
                 , lambda pos: lolz(pos, wifi, 1)
                 , measureSingle(robot.routerUpdate)[0]
             ),
-            size=980,
+            size=9000,
             gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1]+ random.gauss(0, 10), t[2]+ random.gauss(0, 10))
         )
 
@@ -886,6 +886,6 @@ if __name__ == '__main__':
 
         print(beliefs)
         print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
-        beliefs += [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+        beliefs += [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(1000) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
