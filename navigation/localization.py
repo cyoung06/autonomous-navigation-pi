@@ -27,6 +27,8 @@ def monteCarloLocalization(belief, updateFunc, probabilityFunc, size, gaussian):
     filter = numpy.isfinite(weights)
     print(f"Weights: {weights[filter]}")
 
+    print(f"After filter: {len(beliefs[filter])} weights: {len(weights)}")
+
     samples = random.choices(beliefs[filter], weights=weights[filter], k=size)
     samples = [gaussian(sample) for sample in samples]
     return samples
