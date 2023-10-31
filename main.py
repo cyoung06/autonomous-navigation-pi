@@ -873,8 +873,8 @@ if __name__ == '__main__':
         plt.ylim(0, 2000)
         plt.xlim(0, 2000)
 
-        old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
-        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
+        old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.01, c='#FF5555')
+        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.05, c='#00FF00')
 
         avgRot = mean([t for x, y, t in beliefs])
         arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
