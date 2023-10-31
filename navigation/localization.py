@@ -13,7 +13,6 @@ def calculateProbability(averageFunc, stdFunc, measurement):
         # print(f'to Expect: {avg[invalidIdx]}')
         # print(f'found: {measurement[invalidIdx]}')
         vals = 1 / (std[invalidIdx] * numpy.pi * 2) * numpy.exp(-1/2 * (numpy.divide(measurement[invalidIdx] - avg[invalidIdx], std[invalidIdx]) ** 2))
-        print(vals)
         if len(vals) == 0:
             return numpy.array(numpy.nan)
         return numpy.prod(vals)
