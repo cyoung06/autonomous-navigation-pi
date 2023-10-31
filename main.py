@@ -111,7 +111,6 @@ if __name__ == '__main__':
         positionVectors = []
         sum = [0] * (maxMacAddrs + 1)
         measurementsPer = [0] * (maxMacAddrs + 1)
-        lastMeasurement = robot.routerUpdate
         while measurements < samples:
             vec, lastMeasurement = measureSingle(lastMeasurement)
             positionVectors.append(vec)
@@ -121,6 +120,7 @@ if __name__ == '__main__':
                     measurementsPer[i] += 1
             measurements += 1
             robot.justRotate(360 / samples)
+            lastMeasurement = robot.routerUpdate
         def smhmin(vec):
             if len(vec) == 0:
                 return math.inf
