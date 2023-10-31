@@ -479,8 +479,8 @@ if __name__ == '__main__':
             val /= 1000 * 1000
             return val
         def update(t):
-            newRot = t[2] + rot
-            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot + random.gauss(0, smh / 120)
+            newRot = t[2] + rot + random.gauss(0, smh / 120)
+            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
