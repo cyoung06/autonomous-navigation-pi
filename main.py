@@ -486,73 +486,283 @@ if __name__ == '__main__':
     #           math.inf,        math.inf, 0.91651514,        math.inf,        math.inf,
     #           math.inf, 0.5       ,        math.inf,        math.inf,        math.inf,
     #           math.inf, 0.5       ,        math.inf,        math.inf]))]]
+    wifi = [[(np.array([47.        , 56.6       , 55.3       , 64.        , 73.2       ,
+       67.2       , 65.9       , 81.3       , 62.3       , 82.3       ,
+       89.8       , 71.        , 81.3       , 81.9       , 81.        ,
+       81.3       , 74.1       , 69.1       , 66.2       , 89.3       ,
+       85.        , 87.8       , 90.9       , 86.7       , 88.9       ,
+       86.33333333, 77.        , 84.3       , 85.4       , 86.2       ,
+               math.inf, 84.6       , 90.7       ,         math.inf,         math.inf,
+               math.inf, 85.6       , 86.4       ,         math.inf, 79.6       ,
+       87.2       , 92.        , 84.        , 90.7       ,         math.inf,
+               math.inf,         math.inf,         math.inf, 94.        , 93.5       ,
+               math.inf,         math.inf, 95.        ,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf, 95.5       ,         math.inf,         math.inf]), np.array([6.14817046, 5.12249939, 4.85901225, 3.3763886 , 4.70744092,
+       5.54616985, 5.20480547, 1.84661853, 4.1       , 4.92036584,
+       2.4       , 4.02492236, 3.28785644, 5.52177508, 3.25576412,
+       3.76961536, 4.65725241, 5.75239081, 6.36867333, 2.36854386,
+       1.8973666 , 1.6       , 1.97230829, 2.72213152, 0.94339811,
+       2.98142397, 4.81663783, 3.40734501, 2.72763634, 1.72046505,
+              math.inf, 4.36348485, 1.26885775,        math.inf,        math.inf,
+              math.inf, 2.37486842, 2.4979992 ,        math.inf, 1.2       ,
+       3.42928564, 1.        , 0.5       , 1.26885775,        math.inf,
+              math.inf,        math.inf,        math.inf, 0.5       , 2.5       ,
+              math.inf,        math.inf, 0.5       ,        math.inf,        math.inf,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf, 0.5       ,        math.inf,        math.inf])), (np.array([44.2       , 60.6       , 53.6       , 59.7       , 73.4       ,
+       66.3       , 64.        , 83.9       , 65.9       , 80.4       ,
+       90.3       , 76.9       , 84.4       , 82.7       , 80.5       ,
+       79.        , 74.7       , 78.4       , 64.6       , 89.3       ,
+       82.6       , 86.4       , 92.2       , 87.7       , 88.2       ,
+       85.        , 79.2       , 85.1       , 87.66666667, 90.2       ,
+       94.4       , 83.3       , 88.6       ,         math.inf,         math.inf,
+       90.        , 84.6       , 82.        ,         math.inf, 82.8       ,
+       86.8       , 92.        , 84.        ,         math.inf,         math.inf,
+       89.        , 92.        ,         math.inf, 91.        , 90.        ,
+               math.inf,         math.inf, 85.        ,         math.inf, 82.9       ,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf, 96.        ,         math.inf,         math.inf]), np.array([3.18747549, 5.62494444, 4.29418211, 5.91692488, 4.40908154,
+       6.54293512, 5.53172667, 2.80891438, 5.50363516, 5.46260011,
+       2.86530976, 4.03608721, 4.54312668, 2.60959767, 5.42678542,
+       4.24264069, 5.0009999 , 5.85149554, 5.44426304, 1.67630546,
+       1.8547237 , 3.00665928, 2.0880613 , 1.41774469, 1.88679623,
+       0.5       , 3.45832329, 2.7       , 2.49443826, 3.51567917,
+       3.2       , 2.19317122, 3.49857114,        math.inf,        math.inf,
+       0.5       , 4.69467784, 3.49284984,        math.inf, 2.27156334,
+       1.98997487, 0.5       , 0.5       ,        math.inf,        math.inf,
+       0.5       , 0.5       ,        math.inf, 0.5       , 0.5       ,
+              math.inf,        math.inf, 0.5       ,        math.inf, 2.7       ,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf, 0.5       ,        math.inf,        math.inf])), (np.array([44.5       , 60.2       , 53.5       , 58.2       , 76.4       ,
+       68.9       , 63.5       , 82.4       , 67.        , 82.3       ,
+       92.8       , 82.        , 81.        , 84.8       , 82.4       ,
+       81.        , 75.5       , 75.7       , 68.4       , 89.7       ,
+       81.2       , 83.33333333, 94.6       , 88.4       , 91.1       ,
+       87.        , 81.4       , 86.6       , 78.8       , 88.        ,
+       86.875     , 80.2       , 89.4       ,         math.inf,         math.inf,
+       90.        , 85.9       , 85.3       ,         math.inf, 82.9       ,
+       82.5       , 95.        ,         math.inf, 95.        ,         math.inf,
+       89.        , 88.71428571, 89.        , 92.        , 90.        ,
+               math.inf,         math.inf, 85.        ,         math.inf, 91.        ,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf]), np.array([6.11964051, 5.97996656, 5.31507291, 3.21869539, 4.22374242,
+       5.18555686, 4.10487515, 3.95474399, 5.09901951, 3.84837628,
+       1.4       , 2.68328157, 3.09838668, 3.86781592, 4.24735212,
+       4.42718872, 4.45533388, 1.73493516, 4.56508488, 3.03479818,
+       3.05941171, 1.88561808, 1.2       , 2.72763634, 1.13578167,
+       0.5       , 1.42828569, 1.95959179, 3.6       , 2.19089023,
+       2.3150324 , 2.67581763, 2.37486842,        math.inf,        math.inf,
+       0.5       , 4.01123422, 2.28254244,        math.inf, 1.04403065,
+       1.74642492, 0.5       ,        math.inf, 0.5       ,        math.inf,
+       0.5       , 2.76272566, 0.5       , 2.        , 0.5       ,
+              math.inf,        math.inf, 0.5       ,        math.inf, 0.5       ,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf,        math.inf,        math.inf,        math.inf]))], [(np.array([45.4       , 54.7       , 53.4       , 65.4       , 70.        ,
+       65.4       , 64.9       , 81.8       , 61.6       , 81.2       ,
+       91.5       , 74.2       , 80.1       , 84.4       , 75.9       ,
+       79.9       , 75.7       , 71.9       , 68.5       , 85.8       ,
+       81.6       , 85.88888889, 90.8       , 88.1       , 89.8       ,
+       83.2       , 81.5       , 78.4       , 79.9       , 86.        ,
+               math.inf, 82.        , 87.9       ,         math.inf,         math.inf,
+               math.inf, 87.5       , 87.2       ,         math.inf, 83.8       ,
+       83.2       , 93.        , 84.        , 93.2       ,         math.inf,
+               math.inf, 91.125     ,         math.inf, 95.        , 91.4       ,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf, 95.        ,         math.inf,         math.inf]), np.array([6.93108938, 5.15848815, 4.60868745, 3.82622529, 3.74165739,
+       3.52703842, 6.8767725 , 4.4       , 4.73708771, 3.18747549,
+       2.29128785, 2.74954542, 5.59374651, 3.1685959 , 4.6141088 ,
+       3.88458492, 3.46554469, 6.62495283, 4.45533388, 1.53622915,
+       1.28062485, 0.5       , 2.92574777, 1.5132746 , 1.53622915,
+       3.99499687, 3.66742416, 1.95959179, 3.88458492, 0.5       ,
+              math.inf, 0.5       , 1.75783958,        math.inf,        math.inf,
+              math.inf, 2.6925824 , 1.07703296,        math.inf, 2.22710575,
+       1.66132477, 0.5       , 0.5       , 3.31058907,        math.inf,
+              math.inf, 0.5       ,        math.inf, 0.5       , 1.2       ,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf, 0.5       ,        math.inf,        math.inf])), (np.array([40.5       , 57.2       , 52.6       , 59.1       , 73.7       ,
+       67.8       , 65.5       , 79.2       , 64.1       , 83.3       ,
+       91.3       , 72.66666667, 79.4       , 78.9       , 76.9       ,
+       81.3       , 76.1       , 73.2       , 68.2       , 85.5       ,
+       83.7       , 87.6       , 93.1       , 87.4       , 89.6       ,
+       86.77777778, 79.6       , 84.4       , 80.        , 91.8       ,
+       93.        , 82.3       , 90.2       ,         math.inf,         math.inf,
+               math.inf, 85.8       , 87.4       ,         math.inf, 81.4       ,
+       81.71428571, 94.7       , 89.        ,         math.inf,         math.inf,
+               math.inf, 93.5       ,         math.inf, 95.        , 92.        ,
+               math.inf,         math.inf,         math.inf,         math.inf, 83.        ,
+               math.inf, 94.        ,         math.inf,         math.inf,         math.inf,
+       92.5       ,         math.inf,         math.inf,         math.inf]), np.array([5.0645829 , 5.47357287, 6.11882342, 3.23882695, 4.56179789,
+       3.96988665, 5.25832673, 3.94461658, 4.80520551, 4.26731766,
+       2.05182845, 3.09120617, 4.1761226 , 4.32319326, 5.3       ,
+       2.72213152, 2.58650343, 4.30813185, 4.11825206, 2.61725047,
+       4.19642705, 2.00997512, 2.80891438, 2.90516781, 1.68522995,
+       1.03040206, 3.29241553, 1.2       , 1.77281052, 1.83303028,
+       0.5       , 1.61554944, 1.16619038,        math.inf,        math.inf,
+              math.inf, 3.73630834, 2.72763634,        math.inf, 0.91651514,
+       0.69985421, 0.9       , 0.5       ,        math.inf,        math.inf,
+              math.inf, 1.5       ,        math.inf, 0.5       , 0.5       ,
+              math.inf,        math.inf,        math.inf,        math.inf, 0.5       ,
+              math.inf, 0.5       ,        math.inf,        math.inf,        math.inf,
+       0.80622577,        math.inf,        math.inf,        math.inf])), (np.array([42.9, 56.9, 49.6, 61.4, 72.3, 66.8, 65.2, 80.3, 67.1, 81.6, 91.8,
+       74. , 77. , 82.2, 77.8, 81.1, 76.9, 74.4, 69.8, 86.7, 78.7, 81.9,
+       90.8, 85.7, 89.4, 83. , 81.6, 86. , 83.4, 86. , 96. , 79.7, 88.2,
+        math.inf,  math.inf,  math.inf, 86.2, 86.8,  math.inf, 80.4, 84.9, 95.2,  math.inf, 96.8,
+        math.inf,  math.inf, 91.9, 89. , 88. , 95.8,  math.inf,  math.inf,  math.inf,  math.inf,  math.inf,
+        math.inf,  math.inf,  math.inf,  math.inf,  math.inf, 95. , 96. ,  math.inf,  math.inf]), np.array([6.57951366, 4.88773976, 5.29528092, 5.33291665, 3.03479818,
+       5.43691089, 4.28485706, 4.47325385, 4.25323406, 3.90384426,
+       2.6       , 0.5       , 3.87298335, 3.91918359, 5.70613705,
+       3.7       , 3.23882695, 2.97321375, 6.30555311, 2.49198716,
+       2.57099203, 2.11896201, 2.52190404, 2.75862284, 1.56204994,
+       0.5       , 2.57681975, 0.5       , 2.2       , 0.5       ,
+       0.5       , 3.06757233, 1.2489996 ,        math.inf,        math.inf,
+              math.inf, 1.88679623, 3.84187454,        math.inf, 2.93938769,
+       3.20780299, 1.32664992,        math.inf, 1.46969385,        math.inf,
+              math.inf, 3.20780299, 0.5       , 0.5       , 0.6       ,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+       0.5       , 0.5       ,        math.inf,        math.inf]))], [(np.array([47.5       , 63.        , 58.4       , 64.8       , 68.1       ,
+       66.6       , 64.4       , 83.1       , 59.1       , 82.8       ,
+       90.4       , 74.4       , 80.8       , 86.1       , 74.2       ,
+       81.9       , 76.5       , 73.2       , 69.2       , 88.2       ,
+       86.1       , 86.1       , 91.9       , 87.4       , 90.3       ,
+       85.33333333, 80.2       , 84.8       , 79.9       , 86.6       ,
+               math.inf, 87.9       , 91.8       ,         math.inf,         math.inf,
+       92.        , 86.4       , 88.        ,         math.inf, 79.9       ,
+       81.7       , 92.8       ,         math.inf, 95.1       ,         math.inf,
+               math.inf,         math.inf,         math.inf, 95.        , 90.        ,
+               math.inf,         math.inf, 86.8       ,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+               math.inf, 95.875     ,         math.inf,         math.inf]), np.array([8.10246876, 4.75394573, 7.88923317, 4.83321839, 3.26955654,
+       3.95474399, 3.55527777, 3.44818793, 3.96106046, 3.78945906,
+       2.33238076, 3.29241553, 4.2142615 , 4.45982062, 6.06300256,
+       4.10974452, 4.67439836, 4.35430821, 3.09192497, 3.57211422,
+       4.03608721, 1.37477271, 3.20780299, 3.72021505, 2.23830293,
+       2.98142397, 4.42266888, 4.4       , 2.7       , 0.91651514,
+              math.inf, 5.48543526, 0.9797959 ,        math.inf,        math.inf,
+       0.5       , 3.63868108, 2.82842712,        math.inf, 1.37477271,
+       2.1       , 0.5       ,        math.inf, 1.92093727,        math.inf,
+              math.inf,        math.inf,        math.inf, 0.5       , 0.5       ,
+              math.inf,        math.inf, 0.5       ,        math.inf,        math.inf,
+              math.inf,        math.inf,        math.inf,        math.inf,        math.inf,
+              math.inf, 0.5       ,        math.inf,        math.inf])), (np.array([52.4       , 59.4       , 52.8       , 65.4       , 70.7       ,
+       67.6       , 65.6       , 80.5       , 65.5       , 84.6       ,
+       91.2       , 75.9       , 77.7       , 84.5       , 79.4       ,
+       84.        , 77.3       , 74.        , 73.7       , 89.6       ,
+       84.9       , 87.11111111, 93.1       , 89.3       , 89.        ,
+       89.9       , 84.6       , 82.        , 82.4       , 87.5       ,
+       95.        , 84.7       , 87.9       ,         math.inf,         math.inf,
+               math.inf, 87.2       , 89.3       ,         math.inf, 85.4       ,
+       85.        ,         math.inf, 86.        ,         math.inf,         math.inf,
+               math.inf, 95.        ,         math.inf, 96.        ,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf, 83.        ,
+               math.inf, 94.        ,         math.inf,         math.inf,         math.inf,
+       92.75      , 93.6       ,         math.inf,         math.inf]), np.array([11.74904251,  3.38230691,  3.51567917,  7.85111457,  5.40462765,
+        4.98397432,  4.94368284,  4.36463057,  3.66742416,  3.52703842,
+        1.46969385,  4.67867503,  3.71618084,  3.82753184,  4.1761226 ,
+        3.06594194,  4.40567815,  5.01996016,  6.98641539,  3.35261092,
+        3.04795013,  2.51415744,  1.97230829,  3.79605058,  2.23606798,
+        2.7       ,  2.97321375,  0.5       ,  2.8       ,  1.85741756,
+        0.5       ,  2.23830293,  1.37477271,         math.inf,         math.inf,
+               math.inf,  3.51567917,  4.1       ,         math.inf,  3.2       ,
+        1.61245155,         math.inf,  0.5       ,         math.inf,         math.inf,
+               math.inf,  0.5       ,         math.inf,  0.5       ,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,  0.5       ,
+               math.inf,  0.5       ,         math.inf,         math.inf,         math.inf,
+        1.29903811,  0.8       ,         math.inf,         math.inf])), (np.array([53.1       , 60.2       , 51.4       , 60.5       , 73.4       ,
+       70.3       , 60.8       , 78.9       , 66.1       , 81.4       ,
+       91.7       , 76.9       , 77.8       , 83.        , 76.        ,
+       82.5       , 75.6       , 71.2       , 74.2       , 86.8       ,
+       80.8       , 87.4       , 90.8       , 86.5       , 89.4       ,
+       87.77777778, 82.6       , 86.        , 80.8       , 88.        ,
+       92.3       , 82.2       , 90.66666667,         math.inf,         math.inf,
+               math.inf, 86.6       , 85.5       ,         math.inf, 82.4       ,
+       81.9       , 91.3       , 86.        ,         math.inf,         math.inf,
+               math.inf, 95.        ,         math.inf,         math.inf, 94.88888889,
+               math.inf,         math.inf, 84.        ,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+       89.5       , 96.        ,         math.inf,         math.inf]), np.array([12.05363016,  3.4       ,  3.8       ,  4.17731971,  4.05462699,
+        6.85638389,  6.11228272,  2.91376046,  5.26212885,  4.45421149,
+        1.95192213,  1.37477271,  5.50999093,  3.76828874,  4.28952212,
+        5.55427763,  3.38230691,  5.17300686,  5.89576119,  3.15594677,
+        2.99332591,  2.93938769,  2.13541565,  2.57875939,  2.69072481,
+        0.62853936,  2.05912603,  0.5       ,  1.46969385,  0.5       ,
+        0.9       ,  3.86781592,  0.5       ,         math.inf,         math.inf,
+               math.inf,  3.87814389,  4.36463057,         math.inf,  2.33238076,
+        4.01123422,  0.9       ,  0.5       ,         math.inf,         math.inf,
+               math.inf,  0.5       ,         math.inf,         math.inf,  0.5       ,
+               math.inf,         math.inf,  0.5       ,         math.inf,         math.inf,
+               math.inf,         math.inf,         math.inf,         math.inf,         math.inf,
+        5.23927476,  1.15470054,         math.inf,         math.inf]))]]
     currentLoc = (1, 1)
     currentDir = 0
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    stack = []
-    nodes[1][1] = 1
-    while True:
-        x,y = currentLoc
-        print(f"Visiting {x} {y}")
-        refDir = currentDir
-        found = False
-        if wifi[y][x] is None:
-            wifi[y][x] = measurePosition(10)
-
-        for i in range(0, 4):
-            dx, dy = directions[(i + refDir) % 4]
-            if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
-                continue
-            if nodes[dy+y][dx+x] == 0:
-                robot.justRotate((i+refDir-currentDir) * 90)
-
-                currentDir = (i + refDir) % 4
-                # check
-                blocked = False
-                # robot.platform.rotateCW(500, 60)
-                # while not robot.platform.isDone():
-                #     if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
-                #         print(f"smh blocked {robot.ultrasonic['forward']}")
-                #         blocked = True
-                # robot.justRotate(-30)
-
-                if blocked:
-                    nodes[dy + y][dx + x] = -1
-                    print("BLOCKED NODE!")
-                    continue
-
-                nodes[dy+y][dx+x] = 1
-                robot.goForward(1000)
-                stack.append(currentLoc)
-                currentLoc = (x+dx, y+dy)
-                found = True
-                break
-
-        if found:
-            continue
-
-        if len(stack) == 0:
-            break
-        ox,oy = stack.pop()
-        dx, dy = (ox - x, oy - y)
-        targetDir = directions.index((dx,dy))
-        robot.justRotate((targetDir - currentDir) * 90)
-        robot.goForward(1000)
-        currentDir = targetDir
-        currentLoc = (ox, oy)
-
-    for y in range(0, 3):
-        line = ''
-        for x in range(0, 3):
-            if nodes[y][x] == 1:
-                line += " "
-            elif nodes[y][x] == -1:
-                line += 'X'
-            elif nodes[y][x] == 0:
-                line += '?'
-        print(line)
-    print(wifi)
-    posVecMap = {}
+    # stack = []
+    # nodes[1][1] = 1
+    # while True:
+    #     x,y = currentLoc
+    #     print(f"Visiting {x} {y}")
+    #     refDir = currentDir
+    #     found = False
+    #     if wifi[y][x] is None:
+    #         wifi[y][x] = measurePosition(10)
+    #
+    #     for i in range(0, 4):
+    #         dx, dy = directions[(i + refDir) % 4]
+    #         if not (dy + y in range(0, 3) and dx + x in range(0, 3)):
+    #             continue
+    #         if nodes[dy+y][dx+x] == 0:
+    #             robot.justRotate((i+refDir-currentDir) * 90)
+    #
+    #             currentDir = (i + refDir) % 4
+    #             # check
+    #             blocked = False
+    #             # robot.platform.rotateCW(500, 60)
+    #             # while not robot.platform.isDone():
+    #             #     if robot.ultrasonic["forward"] != 0 and robot.ultrasonic["forward"] < 30:
+    #             #         print(f"smh blocked {robot.ultrasonic['forward']}")
+    #             #         blocked = True
+    #             # robot.justRotate(-30)
+    #
+    #             if blocked:
+    #                 nodes[dy + y][dx + x] = -1
+    #                 print("BLOCKED NODE!")
+    #                 continue
+    #
+    #             nodes[dy+y][dx+x] = 1
+    #             robot.goForward(1000)
+    #             stack.append(currentLoc)
+    #             currentLoc = (x+dx, y+dy)
+    #             found = True
+    #             break
+    #
+    #     if found:
+    #         continue
+    #
+    #     if len(stack) == 0:
+    #         break
+    #     ox,oy = stack.pop()
+    #     dx, dy = (ox - x, oy - y)
+    #     targetDir = directions.index((dx,dy))
+    #     robot.justRotate((targetDir - currentDir) * 90)
+    #     robot.goForward(1000)
+    #     currentDir = targetDir
+    #     currentLoc = (ox, oy)
+    #
+    # for y in range(0, 3):
+    #     line = ''
+    #     for x in range(0, 3):
+    #         if nodes[y][x] == 1:
+    #             line += " "
+    #         elif nodes[y][x] == -1:
+    #             line += 'X'
+    #         elif nodes[y][x] == 0:
+    #             line += '?'
+    #     print(line)
+    # print(wifi)
+    # posVecMap = {}
     #
     # lines = [
     #     (pos, (0, 0), (0, 10000), 500)
@@ -590,95 +800,95 @@ if __name__ == '__main__':
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    # beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
-    # print(f"Starting with: {beliefs}")
-    #
-    # plt.ion()
-    # plt.show()
-    #
-    # while True:
-    #     input()
-    #
-    #
-    #     beliefs = [(random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in
-    #                range(1000)]  # start with 1000 points
-    #
-    #
-    #     # t, rot, smh = input().split(" ")
-    #     # rot = float(rot)
-    #     # smh = float(smh)
-    #     #
-    #     # if t == 'M':
-    #     #     x, y = (mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
-    #     #     rot = math.atan2(rot-x, smh-y)
-    #     #     smh = math.sqrt((rot-x)**2 + (smh-y) ** 2)
-    #     #
-    #     # robot.justRotate(rot)
-    #     # robot.goForward(smh)
-    #     def lolz(pos, access, idx):
-    #         minY = math.floor(pos[1] / 1000)
-    #         minX = math.floor(pos[0] / 1000)
-    #
-    #         maxY = math.ceil(pos[1] / 1000)
-    #         maxX = math.ceil(pos[0] / 1000)
-    #         x, y = (pos[0], pos[1])
-    #         # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
-    #         if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
-    #             return np.zeros(maxMacAddrs + 1) * np.nan
-    #         if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
-    #             return np.zeros(maxMacAddrs + 1)* np.nan
-    #
-    #         dx1 = x - minX*1000
-    #         dy1 = y - minY*1000
-    #         dx2 = maxX * 1000 - x
-    #         dy2 = maxY * 1000 - y
-    #
-    #         val = access[minY][minX][idx] * dx2 * dy2 +\
-    #               access[minY][maxX][idx] * dx1 * dy2 +\
-    #               access[maxY][minX][idx] * dx2 * dy1 +\
-    #               access[maxY][maxX][idx] * dx1 * dy1
-    #
-    #         val /= 1000 * 1000
-    #         return val
-    #     def update(t):
-    #         return t
-    #         # newRot = t[2] + rot + random.gauss(0, smh / 120)
-    #         # return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
-    #     old_beliefs = beliefs
-    #     beliefs = monteCarloLocalization(
-    #         beliefs,
-    #         updateFunc=update,
-    #         probabilityFunc=calculateProbability(
-    #             lambda pos: lolz(pos, wifi, 0)
-    #             , lambda pos: lolz(pos, wifi, 1)
-    #             , measureSingle(robot.routerUpdate)[0]
-    #         ),
-    #         size=980,
-    #         gaussian=lambda t: (t[0] + random.gauss(0, 0), t[1]+ random.gauss(0, 0), t[2]+ random.gauss(0, 1))
-    #     )
-    #
-    #
-    #     def column(matrix, i):
-    #         return [row[i] for row in matrix]
-    #
-    #     plt.clf()
-    #
-    #     plt.ylim(0, 3000)
-    #     plt.xlim(0, 3000)
-    #
-    #     # old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
-    #     new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
-    #
-    #     # avgRot = mean([t for x, y, t in beliefs])
-    #     # arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
-    #     #           smh * math.sin(avgRot * math.pi / 180), smh * math.cos(avgRot * math.pi / 180))
-    #     # arrow2 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y,t in old_beliefs]),
-    #     #           mean([x for x, y,t in beliefs])-mean([x for x, y,t in old_beliefs]), mean([y for x, y,t in beliefs]) - mean([y for x, y,t in old_beliefs]), edgecolor='#FF00FF')
-    #
-    #     plt.draw()
-    #
-    #     print(beliefs)
-    #     print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
-    #     beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
-    #     input()
-    #     time.sleep(2)
+    beliefs = [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(1000) ] # start with 1000 points
+    print(f"Starting with: {beliefs}")
+
+    plt.ion()
+    plt.show()
+
+    while True:
+        input()
+
+
+        beliefs = [(random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in
+                   range(1000)]  # start with 1000 points
+
+
+        # t, rot, smh = input().split(" ")
+        # rot = float(rot)
+        # smh = float(smh)
+        #
+        # if t == 'M':
+        #     x, y = (mean([x for x, y in beliefs]), mean([y for x, y in beliefs]))
+        #     rot = math.atan2(rot-x, smh-y)
+        #     smh = math.sqrt((rot-x)**2 + (smh-y) ** 2)
+        #
+        # robot.justRotate(rot)
+        # robot.goForward(smh)
+        def lolz(pos, access, idx):
+            minY = math.floor(pos[1] / 1000)
+            minX = math.floor(pos[0] / 1000)
+
+            maxY = math.ceil(pos[1] / 1000)
+            maxX = math.ceil(pos[0] / 1000)
+            x, y = (pos[0], pos[1])
+            # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
+            if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
+                return np.zeros(maxMacAddrs + 1) * np.nan
+            if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
+                return np.zeros(maxMacAddrs + 1)* np.nan
+
+            dx1 = x - minX*1000
+            dy1 = y - minY*1000
+            dx2 = maxX * 1000 - x
+            dy2 = maxY * 1000 - y
+
+            val = access[minY][minX][idx] * dx2 * dy2 +\
+                  access[minY][maxX][idx] * dx1 * dy2 +\
+                  access[maxY][minX][idx] * dx2 * dy1 +\
+                  access[maxY][maxX][idx] * dx1 * dy1
+
+            val /= 1000 * 1000
+            return val
+        def update(t):
+            return t
+            # newRot = t[2] + rot + random.gauss(0, smh / 120)
+            # return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
+        old_beliefs = beliefs
+        beliefs = monteCarloLocalization(
+            beliefs,
+            updateFunc=update,
+            probabilityFunc=calculateProbability(
+                lambda pos: lolz(pos, wifi, 0)
+                , lambda pos: lolz(pos, wifi, 1)
+                , measureSingle(robot.routerUpdate)[0]
+            ),
+            size=980,
+            gaussian=lambda t: (t[0] + random.gauss(0, 0), t[1]+ random.gauss(0, 0), t[2]+ random.gauss(0, 1))
+        )
+
+
+        def column(matrix, i):
+            return [row[i] for row in matrix]
+
+        plt.clf()
+
+        plt.ylim(0, 3000)
+        plt.xlim(0, 3000)
+
+        # old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.1, c='#FF5555')
+        new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.5, c='#00FF00')
+
+        # avgRot = mean([t for x, y, t in beliefs])
+        # arrow1 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y, t in old_beliefs]),
+        #           smh * math.sin(avgRot * math.pi / 180), smh * math.cos(avgRot * math.pi / 180))
+        # arrow2 = plt.arrow(mean([x for x, y, t in old_beliefs]), mean([y for x, y,t in old_beliefs]),
+        #           mean([x for x, y,t in beliefs])-mean([x for x, y,t in old_beliefs]), mean([y for x, y,t in beliefs]) - mean([y for x, y,t in old_beliefs]), edgecolor='#FF00FF')
+
+        plt.draw()
+
+        print(beliefs)
+        print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
+        beliefs += [ (random.uniform(0, 3000), random.uniform(0, 3000), random.uniform(0, 360)) for i in range(20) ] # add 20 new points in case the robot has been kidnapped.
+        input()
+        time.sleep(2)
