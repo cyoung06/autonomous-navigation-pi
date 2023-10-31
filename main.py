@@ -137,9 +137,6 @@ if __name__ == '__main__':
 
 
     pos = measurePosition(3)
-    robot.justRotate(90)
-    pos = measurePosition(3)
-    robot.justRotate(-90)
 
     nodes = [[0] * 3 for i in range(0, 3)]
     wifi = [[None for x in range(0, 3)] for y in range(0, 3)]
