@@ -823,8 +823,8 @@ if __name__ == '__main__':
         robot.justRotate(rot)
         robot.goForward(smh)
         def lolz(pos, access, idx):
-            minY = pos[1] // 1000
-            minX = pos[0] // 1000
+            minY = int(pos[1] // 1000)
+            minX = int(pos[0] // 1000)
 
             maxY = minY + 1
             maxX = minX + 1
