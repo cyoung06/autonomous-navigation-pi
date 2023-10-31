@@ -478,11 +478,13 @@ if __name__ == '__main__':
 
             val /= 1000 * 1000
             return val
-
+        def update(t):
+            newRot = t[2] + rot
+            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot + random.gauss(0, smh / 120)
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
-            updateFunc=lambda t: (t[0]+smh*math.sin(t[2] * math.pi/180) + random.gauss(0, smh / 10), t[1]+smh*math.cos(t[2] * math.pi/180) + random.gauss(0, smh / 10), t[2] + random.gauss(0, smh / 120)),
+            updateFunc=update,
             probabilityFunc=calculateProbability(
                 lambda pos: lolz(pos, wifi, 0)
                 , lambda pos: lolz(pos, wifi, 1)
