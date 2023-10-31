@@ -384,19 +384,19 @@ if __name__ == '__main__':
         robot.goForward(1000)
         currentDir = targetDir
         currentLoc = (ox, oy)
-    # 
-    # for y in range(0, 3):
-    #     line = ''
-    #     for x in range(0, 3):
-    #         if nodes[y][x] == 1:
-    #             line += " "
-    #         elif nodes[y][x] == -1:
-    #             line += 'X'
-    #         elif nodes[y][x] == 0:
-    #             line += '?'
-    #     print(line)
-    # print(wifi)
-    # posVecMap = {}
+
+    for y in range(0, 3):
+        line = ''
+        for x in range(0, 3):
+            if nodes[y][x] == 1:
+                line += " "
+            elif nodes[y][x] == -1:
+                line += 'X'
+            elif nodes[y][x] == 0:
+                line += '?'
+        print(line)
+    print(wifi)
+    posVecMap = {}
     #
     # lines = [
     #     (pos, (0, 0), (0, 10000), 500)
