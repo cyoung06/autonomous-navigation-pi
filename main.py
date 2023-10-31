@@ -823,11 +823,11 @@ if __name__ == '__main__':
         robot.justRotate(rot)
         robot.goForward(smh)
         def lolz(pos, access, idx):
-            minY = math.floor(pos[1] / 1000)
-            minX = math.floor(pos[0] / 1000)
+            minY = pos[1] // 1000
+            minX = pos[0] // 1000
 
-            maxY = math.ceil(pos[1] / 1000)
-            maxX = math.ceil(pos[0] / 1000)
+            maxY = minY + 1
+            maxX = minX + 1
             x, y = (pos[0], pos[1])
             print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
             if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
