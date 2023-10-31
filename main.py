@@ -861,7 +861,7 @@ if __name__ == '__main__':
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=980,
-            gaussian=lambda t: (t[0] + random.gauss(0, 50), t[1]+ random.gauss(0, 50), t[2]+ random.gauss(0, 50))
+            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1]+ random.gauss(0, 10), t[2]+ random.gauss(0, 10))
         )
 
 
