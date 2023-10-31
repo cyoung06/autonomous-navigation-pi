@@ -829,7 +829,7 @@ if __name__ == '__main__':
             maxY = minY + 1
             maxX = minX + 1
             x, y = (pos[0], pos[1])
-            print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
+            # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
             if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
                 return np.zeros(maxMacAddrs + 1) * np.nan
             if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
