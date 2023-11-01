@@ -64,7 +64,7 @@ class Robot:
             self.i2cUpdate = time.time()
 
             self.sensorfusion.computeAndUpdateRollPitchYaw(self.imu.AccelVals[0], self.imu.AccelVals[1], self.imu.AccelVals[2],
-                                                      self.imu.GyroVals[0], self.imu.GyroVals[1], self.imu.GyroVals[2], \
+                                                      self.imu.GyroVals[0], self.imu.GyroVals[1], self.imu.GyroVals[2],
                                                       self.imu.MagVals[0], self.imu.MagVals[1], self.imu.MagVals[2], dt)
 
             self.fuckkalman = [self.sensorfusion.yaw, self.sensorfusion.roll, self.sensorfusion.pitch]

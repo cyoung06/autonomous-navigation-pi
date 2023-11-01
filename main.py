@@ -101,11 +101,11 @@ if __name__ == '__main__':
         for (k, v) in macAddrMapping.items():
             if k in currentMeasurement:
                 positionVector[v] = currentMeasurement[k]
-        # positionVector[-1] = robot.orientation[0]
+        positionVector[-1] = robot.orientation[0]
         return numpy.array(positionVector), measuredAt
 
 
-    def measurePosition(samples) -> Tuple[ndarray, ndarray]:
+    def measurePosition(samples) -> Tuple[ndarray, ndarray, list]:
         measurements = 0
 
         positionVectors = []
@@ -215,30 +215,34 @@ if __name__ == '__main__':
 
     currentBelief = (0, 0, 0)
 
-    while len(lines) > 0:
-        toPos, fromCoord, toCoord, segLen = lines.pop()
+    with open('wifi_data.csv', 'w') as f:
 
-        print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
+        while len(lines) > 0:
+            toPos, fromCoord, toCoord, segLen = lines.pop()
 
-        pathVec = tuple(map(sub, toCoord, fromCoord))
-        pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
-        measurements = pathLen / segLen
+            print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
 
-        angle = math.atan2(pathVec[0], pathVec[1])
-        deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
+            pathVec = tuple(map(sub, toCoord, fromCoord))
+            pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
+            measurements = pathLen / segLen
 
-        # move to angle
-        # move to fromCoord
+            angle = math.atan2(pathVec[0], pathVec[1])
+            deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
 
-        posVecMap[currentBelief] = measurePosition(10)
-        print(posVecMap[currentBelief])
+            # move to angle
+            # move to fromCoord
 
-        for i in range(math.ceil(measurements)):
-            beliefX, beliefY, beliefTheta = currentBelief
-            currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
-            robot.goForward(segLen)
-            posVecMap[currentBelief] = measurePosition(10)
-            print(posVecMap[currentBelief])
+            for pos in measurePosition(10)[2]:
+                f.write(f'{pos}\n')
+
+            for i in range(math.ceil(measurements)):
+                beliefX, beliefY, beliefTheta = currentBelief
+                currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
+                robot.goForward(segLen)
+
+                for pos in measurePosition(10)[2]:
+                    f.write(f'{pos}\n')
+            f.flush()
     #
     # print(posVecMap)
     #
