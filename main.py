@@ -121,7 +121,7 @@ if __name__ == '__main__':
             currentTime = int(time.time() * 1000)
             name = f"images/{currentTime}.jpg"
             cam.capture_file(name)
-            file.write(f'{currentTime}, {pos}, {lastMeasurement}')
+            file.write(f'{currentTime}, {pos}, {lastMeasurement}\n')
 
 
             positionVectors.append(vec)
