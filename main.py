@@ -249,7 +249,7 @@ if __name__ == '__main__':
     # posVecMap = {}
     #
     lines = [
-        (pos, (0, 0), (0, 40000), 1000)
+        (pos, (0, 0), (0, 50000), 1000)
     ]
 
     currentBelief = (0, 0, 0)
