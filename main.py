@@ -58,14 +58,14 @@ def runGUI():
 
 
 if __name__ == '__main__':
-    # cam = Picamera2()
+    cam = Picamera2()
     def exit_handler():
         print('My application is ending!')
         with open('world.dat', 'wb') as f:
             pickle.dump(world, f)
         with open('mac_addrs.dat', 'wb') as f:
             pickle.dump(macAddrsToListenTo, f)
-        # cam.stop()
+        cam.stop()
 
     print("Trying to connect to " + sys.argv[1])
     robot = Robot(sys.argv[1])
@@ -83,6 +83,10 @@ if __name__ == '__main__':
     if sys.argv[2] == 'go':
         threading.Thread(target=runGUI).start()
 
+    config = cam.create_still_configuration()
+    cam.configure(config)
+
+    cam.start()
 
     def measureSingle(lastMeasurement) -> Tuple[ndarray, int]:
         while robot.routerUpdate == lastMeasurement:
@@ -104,8 +108,43 @@ if __name__ == '__main__':
         positionVector[-1] = robot.orientation[0]
         return numpy.array(positionVector), measuredAt
 
+    def measurePositionAndSave(samples, file, pos) -> Tuple[ndarray, ndarray]:
+        measurements = 0
 
-    def measurePosition(samples) -> Tuple[ndarray, ndarray, list]:
+        positionVectors = []
+        sum = [0] * (maxMacAddrs + 1)
+        measurementsPer = [0] * (maxMacAddrs + 1)
+        while measurements < samples:
+            lastMeasurement = robot.routerUpdate
+            vec, lastMeasurement = measureSingle(lastMeasurement)
+
+            currentTime = int(time.time() * 1000)
+            name = f"images/{currentTime}.jpg"
+            cam.capture_file(name)
+            file.write(f'{currentTime}, {pos}, {lastMeasurement}')
+
+
+            positionVectors.append(vec)
+            for i in range(len(vec)):
+                if vec[i] != math.inf:
+                    sum[i] += vec[i]
+                    measurementsPer[i] += 1
+            measurements += 1
+            robot.justRotate(360 / samples)
+        def smhmin(vec):
+            if len(vec) == 0:
+                return math.inf
+            return mean(vec)
+        meanVals = [math.inf if measurementsPer[i] == 0 else sum[i] /  measurementsPer[i] for i in range(len(sum))]
+        devitation = [
+            max(0.5, math.sqrt(smhmin([(positionVectors[j][i] - meanVals[i]) ** 2
+                            for j in range(len(positionVectors))
+                            if positionVectors[j][i] != math.inf])))
+            for i in range(len(sum))
+        ]
+        return np.array(meanVals), np.array(devitation)
+
+    def measurePosition(samples) -> Tuple[ndarray, ndarray]:
         measurements = 0
 
         positionVectors = []
@@ -232,17 +271,14 @@ if __name__ == '__main__':
             # move to angle
             # move to fromCoord
 
-            for pos in measurePosition(10)[2]:
-                f.write(f'{pos}\n')
+            measurePositionAndSave(10, f, currentBelief)
 
             for i in range(math.ceil(measurements)):
                 beliefX, beliefY, beliefTheta = currentBelief
                 currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
                 robot.goForward(segLen)
-
-                for pos in measurePosition(10)[2]:
-                    f.write(f'{pos}\n')
-            f.flush()
+                measurePositionAndSave(10, f, currentBelief)
+                f.flush()
     #
     # print(posVecMap)
     #
