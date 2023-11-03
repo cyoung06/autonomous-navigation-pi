@@ -94,7 +94,7 @@ if __name__ == '__main__':
             pass
         measuredAt = robot.routerUpdate
         currentMeasurement = robot.routers
-        positionVector = [math.inf] * (maxMacAddrs + 1)
+        positionVector = [math.inf] * (maxMacAddrs)
         if len(macAddrMapping) < maxMacAddrs:
             for (k, router) in currentMeasurement.items():
                 if k not in macAddrMapping:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
         for (k, v) in macAddrMapping.items():
             if k in currentMeasurement:
                 positionVector[v] = currentMeasurement[k]
-        positionVector[-1] = robot.orientation[0]
+        # positionVector[-1] = robot.orientation[0]
         return numpy.array(positionVector), measuredAt
 
     def measurePositionAndSave(samples, file, pos) -> Tuple[ndarray, ndarray]:
