@@ -293,7 +293,6 @@ if __name__ == '__main__':
     plt.show()
 
     while True:
-        input()
 
 
         # beliefs = [(random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in
