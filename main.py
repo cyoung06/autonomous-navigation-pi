@@ -347,7 +347,7 @@ if __name__ == '__main__':
 
         plt.draw()
 
-        print(beliefs)
+        # print(beliefs)
         print(f'MEAN: {mean([x for x,y,t in beliefs])}, {mean([y for x,y,t in beliefs])}, ')
         varX = numpy.var([x for x,y,t in beliefs])
         varY = numpy.var([y for x,y,t in beliefs])

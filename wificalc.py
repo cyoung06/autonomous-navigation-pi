@@ -76,7 +76,7 @@ def interpolateIdxAt(pos, access, idx, mult):
 def interpolatedWifiValue(x,y):
     return interpolateIdxAt((x,y), wifiGrid, 0, numpy.zeros(63)) + calculateExpectedRSSIs(x,y,0)
 def interpolatedWifiSTD(x, y):
-    return interpolateIdxAt((x,y), wifiGrid, 2, numpy.ones(63) * 20)
+    return interpolateIdxAt((x,y), wifiGrid, 2, numpy.ones(63) * 0.5)
 
 
 print(interpolatedWifiValue(0, 0))

@@ -28,6 +28,7 @@ def monteCarloLocalization(belief, updateFunc, probabilityFunc, size, gaussian):
     # print(f"Weights: {weights[filter]}")
 
     print(f"After filter: {len(beliefs[filter])} weights: {len(weights)}")
+    print(f"Weights: {weights[filter]}")
 
     samples = random.choices(beliefs[filter], weights=weights[filter], k=size)
     samples = [gaussian(sample) for sample in samples]
