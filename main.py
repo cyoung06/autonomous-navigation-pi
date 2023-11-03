@@ -94,7 +94,7 @@ if __name__ == '__main__':
             pass
         measuredAt = robot.routerUpdate
         currentMeasurement = robot.routers
-        positionVector = [math.inf] * (maxMacAddrs)
+        positionVector = [math.inf] * (maxMacAddrs + 1)
         if len(macAddrMapping) < maxMacAddrs:
             for (k, router) in currentMeasurement.items():
                 if k not in macAddrMapping:
@@ -319,8 +319,8 @@ if __name__ == '__main__':
             beliefs,
             updateFunc=update,
             probabilityFunc=calculateProbability(
-                lambda pos: wificalc.interpolatedWifiValue(pos[0], pos[1])
-                , lambda pos: wificalc.interpolatedWifiSTD(pos[0], pos[1])
+                lambda pos: numpy.append(wificalc.interpolatedWifiValue(pos[0], pos[1]), 0)
+                , lambda pos: numpy.append(wificalc.interpolatedWifiSTD(pos[0], pos[1]), 0)
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=9000,
