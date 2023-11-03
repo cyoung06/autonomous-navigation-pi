@@ -314,8 +314,8 @@ if __name__ == '__main__':
         robot.goForward(smh)
         def update(t):
             # return t
-            newRot = t[2] + rot + random.gauss(0, smh / 500)
-            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
+            newRot = t[2] + rot + random.gauss(0, smh / 100)
+            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 3), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 3), newRot
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
@@ -326,7 +326,7 @@ if __name__ == '__main__':
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=9500,
-            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1] + random.gauss(0, 10), t[2] + random.gauss(0, 2))
+            gaussian=lambda t: (t[0] + random.gauss(0, 1000), t[1] + random.gauss(0, 1000), t[2] + random.gauss(0, 2))
         )
 
 
