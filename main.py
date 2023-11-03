@@ -323,7 +323,7 @@ if __name__ == '__main__':
                 , lambda pos: numpy.append(wificalc.interpolatedWifiSTD(pos[0], pos[1]), 0)
                 , measureSingle(robot.routerUpdate)[0]
             ),
-            size=9000,
+            size=9500,
             gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1] + random.gauss(0, 10), t[2] + random.gauss(0, 5))
         )
 
@@ -334,7 +334,7 @@ if __name__ == '__main__':
         plt.clf()
 
         plt.ylim(0, 50000)
-        plt.xlim(-1000, 2000)
+        plt.xlim(-2000, 3000)
 
         old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.01, c='#FF5555')
         new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.05, c='#00FF00')
@@ -353,6 +353,6 @@ if __name__ == '__main__':
         varY = numpy.var([y for x,y,t in beliefs])
         print(f'Variance X: {varX}, {varY}, {varX+varY}')
         print(f'SD: {math.sqrt(varX)} {math.sqrt(varY)} {math.sqrt(varX+varY)}')
-        beliefs += [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(1000) ] # add 20 new points in case the robot has been kidnapped.
+        beliefs += [ (random.uniform(- 1000, 2000), random.uniform(-1000, 50000), random.uniform(0, 360)) for i in range(500) ] # add 20 new points in case the robot has been kidnapped.
         input()
         time.sleep(2)
