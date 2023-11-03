@@ -44,7 +44,7 @@ with open('double_processed_wifi_data.csv', 'r') as f:
         wifiGrid[int(y / 1000)][int(x / 1000)] = (np.array(wifis) - calculateExpectedRSSIs(x,y,z), np.array(wifis), np.array(stds))
 
 def getValueAt(pos, access, idx, default):
-    x,y = int(pos[0] // 1000), int(pos[1]//1000)
+    x,y = int(pos[0]), int(pos[1])
     if x < 0 or y < 0 or x >= width or y >= height:
         return default
     if access[y][x] is None:
