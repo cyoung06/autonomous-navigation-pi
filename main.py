@@ -11,6 +11,7 @@ from statistics import mean
 from typing import Tuple
 from operator import sub, truediv
 
+import wificalc
 from navigation.localization import monteCarloLocalization, calculateProbability
 from navigation.pathfinding import find_path
 
@@ -248,44 +249,44 @@ if __name__ == '__main__':
     # print(wifi)
     # posVecMap = {}
     #
-    lines = [
-        (pos, (0, 0), (0, 50000), 1000)
-    ]
-
-    currentBelief = (0, 0, 0)
-
-    with open('wifi_data.csv', 'w') as f:
-
-        while len(lines) > 0:
-            toPos, fromCoord, toCoord, segLen = lines.pop()
-
-            print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
-
-            pathVec = tuple(map(sub, toCoord, fromCoord))
-            pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
-            measurements = pathLen / segLen
-
-            angle = math.atan2(pathVec[0], pathVec[1])
-            deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
-
-            # move to angle
-            # move to fromCoord
-
-            measurePositionAndSave(10, f, currentBelief)
-
-            for i in range(math.ceil(measurements)):
-                beliefX, beliefY, beliefTheta = currentBelief
-                currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
-                robot.goForward(segLen)
-                measurePositionAndSave(10, f, currentBelief)
-                f.flush()
+    # lines = [
+    #     (pos, (0, 0), (0, 50000), 1000)
+    # ]
+    #
+    # currentBelief = (0, 0, 0)
+    #
+    # with open('wifi_data.csv', 'w') as f:
+    #
+    #     while len(lines) > 0:
+    #         toPos, fromCoord, toCoord, segLen = lines.pop()
+    #
+    #         print(f"Measuring from {fromCoord} to {toCoord}, segLen {segLen}")
+    #
+    #         pathVec = tuple(map(sub, toCoord, fromCoord))
+    #         pathLen = math.sqrt(pathVec[0] ** 2 + pathVec[1] ** 2)
+    #         measurements = pathLen / segLen
+    #
+    #         angle = math.atan2(pathVec[0], pathVec[1])
+    #         deltaPath = (pathVec[0] / measurements, pathVec[1] / measurements)
+    #
+    #         # move to angle
+    #         # move to fromCoord
+    #
+    #         measurePositionAndSave(10, f, currentBelief)
+    #
+    #         for i in range(math.ceil(measurements)):
+    #             beliefX, beliefY, beliefTheta = currentBelief
+    #             currentBelief = (beliefX + deltaPath[0], beliefY + deltaPath[1], beliefTheta)
+    #             robot.goForward(segLen)
+    #             measurePositionAndSave(10, f, currentBelief)
+    #             f.flush()
     #
     # print(posVecMap)
     #
     # robot.goForward(-5000)
     # 300 by 300
     # arena is 100 by 100
-    beliefs = [ (random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in range(10000) ] # start with 10000 points
+    beliefs = [ (random.uniform(-1000, 2000), random.uniform(-1000, 50000), random.uniform(0, 360)) for i in range(10000) ] # start with 10000 points
     print(f"Starting with: {beliefs}")
 
     plt.ion()
@@ -310,31 +311,6 @@ if __name__ == '__main__':
 
         robot.justRotate(rot)
         robot.goForward(smh)
-        def lolz(pos, access, idx):
-            minY = int(pos[1] // 1000)
-            minX = int(pos[0] // 1000)
-
-            maxY = minY + 1
-            maxX = minX + 1
-            x, y = (pos[0], pos[1])
-            # print(f'{minX} {minY} {maxX} {maxY} {minX < 0} {minY < 0} {maxX >= 3} {maxY >= 3}')
-            if minX < 0 or minY < 0 or maxX >= 3 or maxY >= 3:
-                return np.zeros(maxMacAddrs + 1) * np.nan
-            if access[minY][minX] is None or access[minY][maxX] is None or access[maxY][minX] is None or access[maxY][maxX] is None:
-                return np.zeros(maxMacAddrs + 1)* np.nan
-
-            dx1 = x - minX*1000
-            dy1 = y - minY*1000
-            dx2 = maxX * 1000 - x
-            dy2 = maxY * 1000 - y
-
-            val = access[minY][minX][idx] * dx2 * dy2 +\
-                  access[minY][maxX][idx] * dx1 * dy2 +\
-                  access[maxY][minX][idx] * dx2 * dy1 +\
-                  access[maxY][maxX][idx] * dx1 * dy1
-
-            val /= 1000 * 1000
-            return val
         def update(t):
             # return t
             newRot = t[2] + rot + random.gauss(0, smh / 120)
@@ -344,12 +320,12 @@ if __name__ == '__main__':
             beliefs,
             updateFunc=update,
             probabilityFunc=calculateProbability(
-                lambda pos: lolz(pos, wifi, 0)
-                , lambda pos: lolz(pos, wifi, 1)
+                lambda pos: wificalc.interpolatedWifiValue(pos[0], pos[1])
+                , lambda pos: wificalc.interpolatedWifiSTD(pos[0], pos[1])
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=9000,
-            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1]+ random.gauss(0, 10), t[2]+ random.gauss(0, 10))
+            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1] + random.gauss(0, 10), t[2] + random.gauss(0, 5))
         )
 
 
