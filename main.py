@@ -333,8 +333,8 @@ if __name__ == '__main__':
 
         plt.clf()
 
-        plt.ylim(0, 2000)
-        plt.xlim(0, 2000)
+        plt.ylim(0, 50000)
+        plt.xlim(-1000, 2000)
 
         old = plt.scatter(column(old_beliefs, 0), column(old_beliefs, 1), alpha=0.01, c='#FF5555')
         new = plt.scatter(column(beliefs, 0), column(beliefs, 1), alpha=0.05, c='#00FF00')
