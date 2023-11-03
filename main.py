@@ -298,8 +298,8 @@ if __name__ == '__main__':
         # beliefs = [(random.uniform(0, 2000), random.uniform(0, 2000), random.uniform(0, 360)) for i in
         #            range(1000)]  # start with 1000 points
 
-        beliefs = [(random.uniform(-1000, 2000), random.uniform(-1000, 50000), random.uniform(0, 360)) for i in
-                   range(10000)]  # start with 10000 points
+        # beliefs = [(random.uniform(-1000, 2000), random.uniform(-1000, 50000), random.uniform(0, 360)) for i in
+        #            range(10000)]  # start with 10000 points
 
         t, rot, smh = input().split(" ")
         rot = float(rot)
@@ -313,9 +313,9 @@ if __name__ == '__main__':
         robot.justRotate(rot)
         robot.goForward(smh)
         def update(t):
-            return t
-            # newRot = t[2] + rot + random.gauss(0, smh / 120)
-            # return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
+            # return t
+            newRot = t[2] + rot + random.gauss(0, smh / 500)
+            return t[0] + smh * math.sin(newRot * math.pi / 180) + random.gauss(0, smh / 10), t[1] + smh * math.cos(newRot * math.pi / 180) + random.gauss(0, smh / 10), newRot
         old_beliefs = beliefs
         beliefs = monteCarloLocalization(
             beliefs,
@@ -326,7 +326,7 @@ if __name__ == '__main__':
                 , measureSingle(robot.routerUpdate)[0]
             ),
             size=9500,
-            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1] + random.gauss(0, 10), t[2] + random.gauss(0, 5))
+            gaussian=lambda t: (t[0] + random.gauss(0, 10), t[1] + random.gauss(0, 10), t[2] + random.gauss(0, 2))
         )
 
 
