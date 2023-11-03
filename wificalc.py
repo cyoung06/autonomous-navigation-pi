@@ -64,7 +64,6 @@ def interpolateIdxAt(pos, access, idx, mult):
     dy1 = y - minY * 1000
     dx2 = maxX * 1000 - x
     dy2 = maxY * 1000 - y
-
     val = getValueAt((minX, minY), access, idx, mult) * dx2 * dy2 + \
           getValueAt((maxX, minY), access, idx, mult) * dx1 * dy2 + \
           getValueAt((minX, maxY), access, idx, mult) * dx2 * dy1 + \
